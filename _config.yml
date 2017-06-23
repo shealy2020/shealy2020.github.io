@@ -1,6 +1,6 @@
 # Site wide configuration
 
-title: Site Title
+title: SjH
 locale: en_US
 description: Describe your website here.
 logo: site-logo.png
@@ -36,7 +36,7 @@ exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.
 
 # Site owner
 owner:
-  name: Your Name
+  name: SjH
   avatar: bio-photo.jpg
   email: you@email.com
   disqus-shortname:
