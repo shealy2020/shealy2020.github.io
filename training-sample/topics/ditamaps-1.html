@@ -1,0 +1,175 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "about:legacy-compat">
+<topicContainer xmlns="http://www.w3.org/1999/xhtml">
+    <h1 class="title topictitle1" id="ariaid-title1">DITA Maps</h1>
+        
+    <div class="body">
+        <p class="p"><strong class="ph b">Root Element</strong>: &lt;map/&gt;</p>
+        <ul class="ul">
+            <li class="li">How writers organize content for delivery.</li>
+        
+            <li class="li">DITA maps create sequence and hierarchy among topics.</li>
+        
+            <li class="li">When published, maps can be used in ways similar to a TOC or navigation.</li>
+        
+        </ul>
+        
+        <p class="p">Ditamaps are made up mainly of the following element sets:</p>
+        <ul class="ul">
+            <li class="li"><em class="ph i">Topicref</em> elements provide a link to a specific topic.</li>
+        
+            <li class="li"><em class="ph i">Mapref</em> elements provide a link to another map.</li>
+        
+        </ul>
+        
+
+    </div>
+        
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title2">DITA Map Example</h2>
+        
+        <div class="body">
+            <pre class="pre">&lt;map&gt;
+  &lt;title&gt;All about Ducks&lt;/title&gt;
+  &lt;topicref href="ducks.dita"&gt;
+     &lt;topicref href="range.dita"/&gt;
+     &lt;topicref href="size.dita"/&gt;
+     &lt;topicref href="nests.dita"/&gt;
+ &lt;/topicref&gt;
+&lt;/map&gt;</pre>
+        
+            <p class="p">The result is a TOC might be structured like this:</p>
+            <ul class="ul">
+                <li class="li">Ducks <ul class="ul">
+                        <li class="li">Range</li>
+        
+                        <li class="li">Size</li>
+        
+                        <li class="li">Nests </li>
+        
+                    </ul>
+        </li>
+        
+            </ul>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title3">Maps within Maps</h2>
+        
+        <div class="body">
+            <ul class="ul">
+                <li class="li">
+                    <p class="p">In addition to topics, you can reference DITA maps inside of DITA maps.</p>
+                </li>
+        
+                <li class="li">Subordinate maps (submaps) are usually a collection of related content.</li>
+        
+            </ul>
+        
+            <pre class="pre">&lt;map&gt;
+    &lt;title&gt;Water Birds&lt;/title&gt;
+    &lt;topicref href="geese.dita"&gt;
+    &lt;topicref href="swans.dita"&gt;
+    <em class="ph i"><strong class="ph b">&lt;mapref href="ducks.ditamap" format="ditamap"/&gt;</strong></em>
+&lt;/map&gt;</pre>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title4">Collection Type Attribute</h2>
+        
+        <div class="body">
+            <p class="p">The <em class="ph i">collection-type</em> attribute of the <em class="ph i">topicref</em> element defines the
+                relationship between any nested topic references within a ditamap.</p>
+            <ul class="ul">
+                <li class="li">Changing the collection type affects the way automatic links are generated when
+                    the ditamap is processed to an output format.</li>
+        
+                <li class="li">The <em class="ph i">collection-type</em> attribute can be set within relationship tables
+                    (reltables) as well as ditamaps.</li>
+        
+                <li class="li">Example of <em class="ph i">collection-type</em> syntax:
+                    <pre class="pre">&lt;topicref href="ducks.dita" collection-type="sequence" /&gt;</pre>
+        </li>
+        
+            </ul>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title5">Three <em class="ph i">collection-type</em> Attribute Values</h2>
+        
+        <div class="body">
+            <ul class="ul">
+                <li class="li"><strong class="ph b">Family</strong>: Links generated from parent to children, from children to parent,
+                    and from sibling to sibling.</li>
+        
+                <li class="li"><strong class="ph b">Sequence</strong>: Links generated from parent to children, from children to
+                    parent, and from child to previous sibling (if applicable) and next sibling (if
+                    applicable).</li>
+        
+                <li class="li"><strong class="ph b">Unordered</strong>: Links generated from parent to children, and from children to
+                    parent.</li>
+        
+            </ul>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title6">Family Collection Type</h2>
+        
+        <div class="body">
+            <pre class="pre">&lt;map&gt;
+    &lt;title&gt;Page Management in Ingeniux CMS&lt;/title&gt;
+    &lt;topicref href="topics/concept/checking-pages-in-out-1.dita" type="concept" <em class="ph i"><strong class="ph b">collection-type="family"</strong></em>&gt;
+        &lt;topicref href="topics/task/checking-pages-in-1.dita" type="task"/&gt;
+        &lt;topicref href="topics/task/checking-pages-out-1.dita" type="task"/&gt;
+        &lt;topicref href="topics/task/undoing-checked-out-pages-1.dita" type="task"/&gt;
+    &lt;/topicref&gt;
+    &lt;topicref href="topics/reference/shortcut-keys-1.dita" type="reference"/&gt;
+&lt;/map&gt;                           </pre>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title7">Sequence Collection Type</h2>
+        
+        <div class="body">
+            <pre class="pre">&lt;map&gt;
+    &lt;title&gt;Page Management in Ingeniux CMS&lt;/title&gt;
+    &lt;topicref href="topics/concept/checking-pages-in-out-1.dita" type="concept" <em class="ph i"><strong class="ph b">collection-type="sequence"</strong></em>&gt;
+        &lt;topicref href="topics/task/checking-pages-in-1.dita" type="task"/&gt;
+        &lt;topicref href="topics/task/checking-pages-out-1.dita" type="task"/&gt;
+        &lt;topicref href="topics/task/undoing-checked-out-pages-1.dita" type="task"/&gt;
+    &lt;/topicref&gt;
+    &lt;topicref href="topics/reference/shortcut-keys-1.dita" type="reference"/&gt;
+&lt;/map&gt;                </pre>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title8">Unordered Collection Type</h2>
+        
+        <div class="body">
+            <pre class="pre">&lt;map&gt;
+    &lt;title&gt;Page Management in Ingeniux CMS&lt;/title&gt;
+    &lt;topicref href="topics/concept/checking-pages-in-out-1.dita" type="concept" <em class="ph i"><strong class="ph b">collection-type="unordered"</strong></em>&gt;
+        &lt;topicref href="topics/task/checking-pages-in-1.dita" type="task"/&gt;
+        &lt;topicref href="topics/task/checking-pages-out-1.dita" type="task"/&gt;
+        &lt;topicref href="topics/task/undoing-checked-out-pages-1.dita" type="task"/&gt;
+    &lt;/topicref&gt;
+    &lt;topicref href="topics/reference/shortcut-keys-1.dita" type="reference"/&gt;
+&lt;/map&gt;                
+            </pre>
+        
+        </div>
+        
+    </topicContainer>
+</topicContainer>

@@ -1,0 +1,111 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "about:legacy-compat">
+<topicContainer xmlns="http://www.w3.org/1999/xhtml">
+    <h1 class="title topictitle1" id="ariaid-title1">Content Reuse</h1>
+        
+    <div class="body">
+        <img class="image" id="reuse-1__image-concept" src="../images/share-4-240.png" width="60"></img>
+        <p class="p">Types of content reuse in DITA:</p>
+        <ul class="ul">
+            <li class="li">Topics and maps</li>
+        
+            <li class="li">Fragments (conrefs)</li>
+        
+            <li class="li">Variables (keys)</li>
+        
+            <li class="li">Conditional filtering</li>
+        
+        </ul>
+        
+    </div>
+        
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title2">Content References (Conrefs)</h2>
+        
+        <div class="body">
+            <ul class="ul">
+                <li class="li">DITA authoring tools streamline the process for inserting conref code, but it's
+                    good to know how it works for troubleshooting purposes.</li>
+        
+                <li class="li">Every reusable piece of content (<strong class="ph b">and</strong> top-level element) requires an
+                    identifier (id).
+                    <pre><code class="hljs xml">                    &lt;concept id="abc123"&gt;
+                        &lt;title&gt;Apples&lt;/title&gt;
+                        &lt;conbody&gt;
+                            &lt;p id="def456"&gt;Many precautions are taken to ensure the quality and safety of the apples, after
+                                the cleaning and packing is complete.&lt;/p&gt;
+                            &lt;p&gt;During transport, all fruit must be kept below 65 degrees Fahrenheit.&lt;/p&gt;
+                        &lt;/conbody&gt;
+                    &lt;/concept&gt;                          </code></pre>
+                </li>
+        
+                <li class="li">Two parts to a conref:<ul class="ul">
+                        <li class="li"><strong class="ph b">Referencing element</strong>: Marks where to insert the reused
+                            content.</li>
+        
+                        <li class="li"><strong class="ph b">Referenced element</strong>: Contains the content you want to reuse. </li>
+        
+                    </ul>
+        </li>
+        
+            </ul>
+        
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title3">Anatomy of a Conref</h2>
+        
+        <div class="body">
+            <img class="image" id="topic_jsq_b4h_ysb__image-1" src="../images/apples-oranges-conref-example-1.png" width="1000"></img>
+            <p class="p">Conref addressing syntax: <code class="ph codeph">topicfilename#topicid/elementid</code></p>
+            <pre><code class="hljs xml">&lt;p conref="../concepts/apples-1.dita#abc123/ghi789"/&gt;</code></pre>
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title4">Published DITA with Conrefs</h2>
+        
+        <div class="body">
+            <img class="image" id="topic_jsq_b4h_173__image-2" src="../images/apples-oranges-conref-example-2.png"></img>
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title5">Organizing Shared Fragments</h2>
+        
+        <div class="body">
+            <ul class="ul" id="topic_jsq_b4h_185__ul_wr2_dg3_ysb">
+                <li class="li">You can reuse content "in place" or move the content to a "warehouse"
+                    location.</li>
+        
+            </ul>
+        
+            <img class="image" id="topic_jsq_b4h_185__image-3" src="../images/apples-oranges-conref-example-3.png" width="1100"></img>
+            <p class="p">Conref addressing syntax:</p>
+            <pre><code class="hljs xml">&lt;p conref="../content-warehouse/warehouse-topic-1.dita#wh-topic-1/xyz123"/&gt;</code></pre>
+        </div>
+        
+    </topicContainer>
+    <topicContainer>
+        <h2 class="title topictitle2" id="ariaid-title6">Keep this in mind...</h2>
+        
+        <div class="body">
+            <ul class="ul">
+                <li class="li">In the long run, moving your reused content to a "warehouse" is more scalable
+                    than the "in place" method.</li>
+        
+                <li class="li">Element parity: The target element must be the same element type as the element
+                    that contains the conref attribute. Thus, you can only conref a &lt;note&gt;
+                    element from another &lt;note&gt; element; you can only conref an &lt;li&gt; element
+                    from another &lt;li&gt; element, and so on.</li>
+        
+            </ul>
+        
+        </div>
+        
+
+
+    </topicContainer>
+  
+</topicContainer>
