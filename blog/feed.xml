@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>AI for Writing Teams</title>
+	<subtitle>Artificial Intelligence for Writing Teams</subtitle>
+	
+	<link href="https://github.com/shealy2020.github.io/feed.xml" rel="self"/>
+	<link href="https://github.com/shealy2020/shealy2020.github.io"/>
+	<updated>2025-09-15T00:00:00Z</updated>
+	<id>https://github.com/shealy2020/shealy2020.github.io</id>
+	<author>
+		<name>shealy</name>
+		<email>seanhealyconsulting@gmail.com</email>
+	</author>
+	
+	<entry>
+		<title>SjH Test 1</title>
+		<link href="https://github.com/shealy2020.github.io/sjh-test-1/"/>
+		<updated>2025-09-15T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/sjh-test-1/</id>
+		<content type="html">&lt;p&gt;This is just a test post.&lt;/p&gt;
+&lt;h2 id=&quot;my-test-heading&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/sjh-test-1/#my-test-heading&quot;&gt;My Test Heading&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Blah!&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with notices or alert boxes</title>
+		<link href="https://github.com/shealy2020.github.io/post-notice/"/>
+		<updated>2023-01-15T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-notice/</id>
+		<content type="html">&lt;p&gt;This post will show how to create different kinds of notice or alert boxes such as a regular box, as well as info, success, warning, and danger.&lt;/p&gt;
+&lt;p&gt;In all cases, use the paired shortcode &lt;code&gt;notice&lt;/code&gt; with the notice type (info, success, warning, danger).  Leave the notice type out for the regular notice box.  You can use markdown inside.&lt;/p&gt;
+&lt;div class=&quot;notice &quot;&gt;
+This is the default notice. You &lt;em&gt;can&lt;/em&gt; use Markdown.
+&lt;/div&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+This is an info notice. Info means &lt;a href=&quot;https://en.wikipedia.org/wiki/Information&quot;&gt;information&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;notice success&quot;&gt;
+This is a success notice. Great Success.
+&lt;/div&gt;
+&lt;div class=&quot;notice warning&quot;&gt;
+This is a warning notice.  Don’t use &lt;code&gt;GOTO&lt;/code&gt; statements!
+&lt;/div&gt;
+&lt;div class=&quot;notice danger&quot;&gt;
+This is a danger notice. &lt;strong&gt;Smoking is fatal&lt;/strong&gt;.
+&lt;/div&gt;
+&lt;p&gt;For a regular notice box,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% notice %}
+This is the default notice. You _can_ use Markdown.
+{% endnotice %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For an info notice box,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% notice &amp;quot;info&amp;quot; %}
+This is an info notice. Info means [information](https://en.wikipedia.org/wiki/Information)
+{% endnotice %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For a success notice box,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% notice &amp;quot;success&amp;quot; %}
+This is a success notice. Great Success.
+{% endnotice %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For a warning notice box,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% notice &amp;quot;warning&amp;quot; %}
+This is a warning notice.  Don&#39;t use `GOTO` statements!
+{% endnotice %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For a danger notice box,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% notice &amp;quot;danger&amp;quot; %}
+This is a danger notice. **Smoking is fatal**.
+{% endnotice %}
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>This draft post should only appear locally</title>
+		<link href="https://github.com/shealy2020.github.io/a-draft-post/"/>
+		<updated>2023-01-07T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/a-draft-post/</id>
+		<content type="html">&lt;p&gt;This post has been created in the &lt;code&gt;drafts&lt;/code&gt; folder.  It should only appear when the eleventy server runs with &lt;code&gt;--watch&lt;/code&gt; or &lt;code&gt;--serve&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In package.json, the start command has been given those flags, so drafts should appear when running via &lt;code&gt;npm run start&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In the docker-compose file from where this site runs, the command is &lt;code&gt;npm start&lt;/code&gt;, so running via &lt;code&gt;docker-compose up&lt;/code&gt; should show draft posts.&lt;/p&gt;
+&lt;p&gt;Since &lt;code&gt;npm run build&lt;/code&gt; doesn’t have the flags, drafts will not appear in the production build.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with various images</title>
+		<link href="https://github.com/shealy2020.github.io/post-with-an-image/"/>
+		<updated>2023-01-05T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-with-an-image/</id>
+		<content type="html">&lt;p&gt;There are a few different ways to display an image in a post.&lt;/p&gt;
+&lt;h2 id=&quot;using-regular-markdown-syntax&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#using-regular-markdown-syntax&quot;&gt;Using regular Markdown syntax&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Using regular Markdown syntax is possible. The image gets rendered as a figure with a caption. Clicking the image displays it in a lightbox.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;![A little `markdown` can work be used _here_](/assets/images/image003.jpg)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which results in:&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;figure&gt;&lt;a href=&quot;https://github.com/assets/images/image003.jpg&quot;&gt;
+    &lt;img src=&quot;https://github.com/assets/images/image003.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;&lt;/a&gt;
+    &lt;figcaption&gt;A little &lt;code&gt;markdown&lt;/code&gt; can work be used &lt;em&gt;here&lt;/em&gt;&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;p&gt;&lt;/p&gt;
+&lt;h2 id=&quot;using-the-figure-shortcode&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#using-the-figure-shortcode&quot;&gt;Using the &lt;code&gt;figure&lt;/code&gt; shortcode&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;figure&lt;/code&gt; shortcode is similar to the above, but it has some extra features.&lt;br /&gt;
+It produces a figure with an image, and a figcaption that supports Markdown.&lt;br /&gt;
+There are some width options, and the lightbox can be disabled.&lt;/p&gt;
+&lt;p&gt;Here is the code:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% figure &amp;quot;/assets/images/image001.jpg&amp;quot;, &amp;quot;Your **caption**&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is the output:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&quot;https://github.com/assets/images/image001.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image001.jpg&quot; alt=&quot;Your **caption**&quot; loading=&quot;lazy&quot; style=&quot;&quot; /&gt;&lt;/a&gt;&lt;figcaption&gt;Your &lt;strong&gt;caption&lt;/strong&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;width-options&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#width-options&quot;&gt;Width options&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The image width can also be set to &lt;code&gt;default&lt;/code&gt;, &lt;code&gt;half&lt;/code&gt;, &lt;code&gt;third&lt;/code&gt;, or &lt;code&gt;unconstrained&lt;/code&gt;.  It’s the third argument to pass to the shortcode.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% figure &amp;quot;/assets/images/image001.jpg&amp;quot;, &amp;quot;Your **caption**&amp;quot;, &amp;quot;third&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is the output:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&quot;https://github.com/assets/images/image001.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image001.jpg&quot; alt=&quot;Your **caption**&quot; loading=&quot;lazy&quot; style=&quot;width: calc(33% - 0.5em);&quot; /&gt;&lt;/a&gt;&lt;figcaption&gt;Your &lt;strong&gt;caption&lt;/strong&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;disable-lightbox&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#disable-lightbox&quot;&gt;Disable lightbox&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The lightbox can be disabled, it is the fourth argument to pass to the shortcode.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% figure &amp;quot;/assets/images/image001.jpg&amp;quot;, &amp;quot;&amp;quot;, &amp;quot;&amp;quot;, false %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;figure&gt;&lt;img src=&quot;https://github.com/assets/images/image001.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; style=&quot;&quot; /&gt;&lt;figcaption&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;unconstrained-full-width-image&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#unconstrained-full-width-image&quot;&gt;Unconstrained full width image&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;unconstrained&lt;/code&gt; width option will let the image render to its full width, across the entire page.  The lightbox is disabled if the width is set to unconstrained.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% figure &amp;quot;https://live.staticflickr.com/65535/49241129673_0f0d5f2751_4k.jpg&amp;quot;, 
+          &amp;quot;Photo credit [mendhak](https://www.flickr.com/photos/mendhak/49241129673/)&amp;quot;, 
+          &amp;quot;unconstrained&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;figure style=&quot;max-width: unset&quot;&gt;&lt;img src=&quot;https://live.staticflickr.com/65535/49241129673_0f0d5f2751_4k.jpg&quot; alt=&quot;Photo credit [mendhak](https://www.flickr.com/photos/mendhak/49241129673/)&quot; loading=&quot;lazy&quot; /&gt;&lt;figcaption&gt;Photo credit &lt;a href=&quot;https://www.flickr.com/photos/mendhak/49241129673/&quot;&gt;mendhak&lt;/a&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;straight-up-html&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#straight-up-html&quot;&gt;Straight up HTML&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;HTML can be directly used in Markdown.  In this example no lightbox is produced.&lt;/p&gt;
+&lt;pre class=&quot;language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;figure&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;img&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/images/image002.jpg&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;alt&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;Image served using HTML&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;figcaption&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+    An image served using HTML figure and figcaption
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;figcaption&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;figure&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which results in:&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;https://github.com/assets/images/image002.jpg&quot; alt=&quot;Image served using HTML&quot; /&gt;
+  &lt;figcaption&gt;
+    An image served using HTML figure and figcaption
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&quot;with-a-lightbox&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#with-a-lightbox&quot;&gt;…with a lightbox&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Adding a hyperlink to the image will make it appear in a lightbox.&lt;/p&gt;
+&lt;pre class=&quot;language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;figure&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;a&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;href&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/images/image002.jpg&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;img&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/images/image002.jpg&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;alt&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;Image served using HTML&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;a&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;figcaption&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+    An image served using HTML figure and figcaption
+  &lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;figcaption&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;figure&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which results in:&lt;/p&gt;
+&lt;figure&gt;
+  &lt;a href=&quot;https://github.com/assets/images/image002.jpg&quot;&gt;
+    &lt;img src=&quot;https://github.com/assets/images/image002.jpg&quot; alt=&quot;Image served using HTML&quot; /&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;
+    An image served using HTML figure and figcaption
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&quot;standalone-img&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-an-image/#standalone-img&quot;&gt;Standalone &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Using the &lt;code&gt;&amp;lt;img&amp;gt;&lt;/code&gt; HTML tag, the image is shown as-is, no lightbox, no center alignment.&lt;/p&gt;
+&lt;pre class=&quot;language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;img&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;/assets/images/image002.jpg&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;alt&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;Image served using HTML&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;img src=&quot;https://github.com/assets/images/image002.jpg&quot; alt=&quot;Image served using HTML&quot; /&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with image galleries</title>
+		<link href="https://github.com/shealy2020.github.io/post-with-a-gallery/"/>
+		<updated>2023-01-05T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-with-a-gallery/</id>
+		<content type="html">&lt;p&gt;To display a set of images in a gallery, just surround the images, written as Markdown, with the &lt;code&gt;gallery&lt;/code&gt; shortcode.&lt;/p&gt;
+&lt;p&gt;Clicking the image shows the image in lightbox, with the title as the caption (a little Markdown might in the caption might also work).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% gallery %}
+![First image](/assets/images/image001.jpg)
+![**Second** image](/assets/images/image002.jpg)
+![`Third` image](/assets/images/image003.jpg)
+{% endgallery %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces this:&lt;/p&gt;
+&lt;figure&gt;
+&lt;a href=&quot;https://github.com/assets/images/image001.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image001.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; title=&quot;First image&quot; style=&quot;width: calc(33% - 0.5em);&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://github.com/assets/images/image002.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image002.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; title=&quot;&amp;lt;strong&amp;gt;Second&amp;lt;/strong&amp;gt; image&quot; style=&quot;width: calc(33% - 0.5em);&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://github.com/assets/images/image003.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image003.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; title=&quot;&amp;lt;code&amp;gt;Third&amp;lt;/code&amp;gt; image&quot; style=&quot;width: calc(33% - 0.5em);&quot; /&gt;&lt;/a&gt;
+&lt;figcaption&gt;&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;The image’s own titles appear as captions in the lightbox, but not on the page, as it could get too crowded.&lt;/p&gt;
+&lt;h3 id=&quot;gallery-with-caption&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-a-gallery/#gallery-with-caption&quot;&gt;Gallery with caption&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;To set a caption for the gallery as a whole, pass it to the shortcode.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% gallery &amp;quot;~~Three~~ Two images side by side&amp;quot; %}
+![First image](/assets/images/image001.jpg)
+![**Second** image](/assets/images/image002.jpg)
+{% endgallery %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;figure&gt;
+&lt;a href=&quot;https://github.com/assets/images/image001.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image001.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; title=&quot;First image&quot; style=&quot;width: calc(50% - 0.5em);&quot; /&gt;&lt;/a&gt;
+&lt;a href=&quot;https://github.com/assets/images/image002.jpg&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/image002.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; title=&quot;&amp;lt;strong&amp;gt;Second&amp;lt;/strong&amp;gt; image&quot; style=&quot;width: calc(50% - 0.5em);&quot; /&gt;&lt;/a&gt;
+&lt;figcaption&gt;&lt;s&gt;Three&lt;/s&gt; Two images side by side&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;The gallery’s caption appears on the page.  The image’s own captions still appear in the lightbox, just not on the page.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with some code blocks</title>
+		<link href="https://github.com/shealy2020.github.io/post-with-code/"/>
+		<updated>2023-01-05T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-with-code/</id>
+		<content type="html">&lt;p&gt;A post with some code samples. These are using the Prism CSS library.&lt;/p&gt;
+&lt;h3 id=&quot;basic-code-blocks-using-indents&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-code/#basic-code-blocks-using-indents&quot;&gt;Basic code blocks using indents&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Any text that is indented by 4 spaces will be treated as a preformatted block.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;console.log(&amp;quot;hello&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;basic-code-blocks-using-backticks&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-code/#basic-code-blocks-using-backticks&quot;&gt;Basic code blocks using backticks&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Another way to do the same thing is surround the code with 3 backticks.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;```&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;console.log(&#39;hello&#39;);  &lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;```&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;console.log(&#39;hello&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;code-blocks-with-syntax-highlighting&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-code/#code-blocks-with-syntax-highlighting&quot;&gt;Code blocks with syntax highlighting&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;To get colorful syntax highlighting, follow the 3 backtickes with a &lt;a href=&quot;https://prismjs.com/#languages-list&quot;&gt;language name&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For example &lt;code&gt; ```javascript&lt;/code&gt;, then add the code, and close the block with &lt;code&gt;```&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Here is some Javascript&lt;/p&gt;
+&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;//If there&#39;s a JWT header, parse it and decode and put it in the response&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;JWT_HEADER&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; token &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;headers&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;process&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;env&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;JWT_HEADER&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;toLowerCase&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;token&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    echo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;jwt &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; token&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    token &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; token&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; decoded &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; jwt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;token&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token literal-property property&quot;&gt;complete&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    echo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;jwt &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; decoded&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Similarly for C#, use &lt;code&gt; ```csharp&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-csharp&quot;&gt;&lt;code class=&quot;language-csharp&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token return-type class-name&quot;&gt;Task&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;FindBucketLocationAsync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;IAmazonS3&lt;/span&gt; client&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;string&lt;/span&gt;&lt;/span&gt; bucketLocation&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token class-name&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt;&lt;/span&gt; request &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token constructor-invocation class-name&quot;&gt;GetBucketLocationRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        BucketName &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; bucketName
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token class-name&quot;&gt;GetBucketLocationResponse&lt;/span&gt; response &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; client&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;GetBucketLocationAsync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    bucketLocation &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; response&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Location&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; bucketLocation&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Have some  &lt;code&gt; ```bash&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token shebang important&quot;&gt;#!/usr/bin/env bash&lt;/span&gt;
+
+&lt;span class=&quot;token builtin class-name&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-euo&lt;/span&gt; pipefail
+
+&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function-name function&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;---------------------------------------------------------------&quot;&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$1&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;---------------------------------------------------------------&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-x&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-v&lt;/span&gt; jq&lt;span class=&quot;token variable&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;then&lt;/span&gt;
+    message &lt;span class=&quot;token string&quot;&gt;&quot;JQ not installed. Installing...&quot;&lt;/span&gt;
+    &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;apt&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-y&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt; jq
+&lt;span class=&quot;token keyword&quot;&gt;fi&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with Github Repo Cards</title>
+		<link href="https://github.com/shealy2020.github.io/github-repo-card/"/>
+		<updated>2022-12-20T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/github-repo-card/</id>
+		<content type="html">&lt;p&gt;How to display a Github repo card.  Fetches the description, stars and forks.&lt;/p&gt;
+&lt;p&gt;To display it on a page use the &lt;code&gt;githubrepocard&lt;/code&gt; shortcode.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% githubrepocard &#39;mendhak/gpslogger&#39; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;style&gt;.github-repo-card{--gh-bg-color:#fff;--gh-color:#586069;--gh-heading-color:#0366d6;font-family:var(--sans-font);width:fit-content;max-width:50%;background-color:var(--gh-bg-color)!important;border:1px solid var(--gh-color)!important;border-radius:6px!important;padding:16px!important;color:var(--gh-color)!important}@media screen and (max-width:1200px){.github-repo-card{max-width:80%}}@media screen and (max-width:800px){.github-repo-card{max-width:100%}}@media (prefers-color-scheme:dark){.github-repo-card{--gh-bg-color:#212224;--gh-color:#8b949e;--gh-heading-color:#58a6ff}}.github-repo-card svg{fill:var(--gh-color)}.github-repo-card .d-flex{display:flex!important;margin-bottom:4px!important;align-items:flex-start!important;justify-content:space-between!important}.github-repo-card a{color:var(--gh-heading-color)!important}.github-repo-card .stats-icons a{display:inline-block!important;margin-right:24px!important;color:var(--gh-color)!important;font-size:.95rem!important}.github-repo-card .github-repo-text{color:var(--gh-color)!important;font-size:1rem;display:flex!important;white-space:normal!important;margin-bottom:8px!important}.github-repo-card .github-repo-title{font-weight:bolder}&lt;/style&gt;&lt;div class=&quot;github-repo-card &quot;&gt;  &lt;div class=&quot;d-flex&quot;&gt;    &lt;a class=&quot;github-repo-title&quot; href=&quot;https://github.com/mendhak/gpslogger&quot;&gt;      &lt;svg height=&quot;30px&quot; width=&quot;30px&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 448 512&quot;&gt;        &lt;path d=&quot;M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66        49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08        55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45        235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z&quot;&gt;&lt;/path&gt;      &lt;/svg&gt;      &lt;span&gt;        mendhak/gpslogger      &lt;/span&gt;    &lt;/a&gt;  &lt;/div&gt;  &lt;div class=&quot;github-repo-text&quot;&gt;:satellite: Lightweight GPS Logging Application For Android. &lt;/div&gt;  &lt;div class=&quot;stats-icons&quot;&gt;    &lt;a href=&quot;https://github.com/mendhak/gpslogger/stargazers&quot; title=&quot;Stars&quot;&gt;      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16px&quot; height=&quot;16px&quot; viewBox=&quot;0 0 576 512&quot;&gt;        &lt;path d=&quot;M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288        439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7        17.8c-11.7-23.6-45.6-23.9-57.4 0z&quot;&gt;&lt;/path&gt;      &lt;/svg&gt;      2242    &lt;/a&gt;    &lt;a href=&quot;https://github.com/mendhak/gpslogger/network/members&quot; title=&quot;Forks&quot;&gt;      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16px&quot; height=&quot;16px&quot; viewBox=&quot;0 0 384 512&quot;&gt;        &lt;path d=&quot;M384 144c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 36.4 24.3 67.1 57.5 76.8-.6 16.1-4.2 28.5-11 36.9-15.4 19.2-49.3        22.4-85.2 25.7-28.2 2.6-57.4 5.4-81.3 16.9v-144c32.5-10.2 56-40.5 56-76.3 0-44.2-35.8-80-80-80S0 35.8 0 80c0 35.8 23.5        66.1 56 76.3v199.3C23.5 365.9 0 396.2 0 432c0 44.2 35.8 80 80 80s80-35.8 80-80c0-34-21.2-63.1-51.2-74.6 3.1-5.2 7.8-9.8        14.9-13.4 16.2-8.2 40.4-10.4 66.1-12.8 42.2-3.9 90-8.4 118.2-43.4 14-17.4 21.1-39.8 21.6-67.9 31.6-10.8 54.4-40.7        54.4-75.9zM80 64c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm0 384c-8.8 0-16-7.2-16-16s7.2-16 16-16 16        7.2 16 16-7.2 16-16 16zm224-320c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16z&quot;&gt;&lt;/path&gt;      &lt;/svg&gt;      626    &lt;/a&gt;    &lt;a title=&quot;Language&quot;&gt;      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16px&quot; height=&quot;16px&quot; viewBox=&quot;0 0 512 512&quot;&gt;&lt;path d=&quot;M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256        56s200 89.5 200 200-89.5 200-200 200z&quot;&gt;&lt;/path&gt; &lt;/svg&gt;      Java&lt;/a&gt;  &lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This should also work for third party Github repos, not just yours.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% githubrepocard &#39;mozilla/send&#39; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;style&gt;.github-repo-card{--gh-bg-color:#fff;--gh-color:#586069;--gh-heading-color:#0366d6;font-family:var(--sans-font);width:fit-content;max-width:50%;background-color:var(--gh-bg-color)!important;border:1px solid var(--gh-color)!important;border-radius:6px!important;padding:16px!important;color:var(--gh-color)!important}@media screen and (max-width:1200px){.github-repo-card{max-width:80%}}@media screen and (max-width:800px){.github-repo-card{max-width:100%}}@media (prefers-color-scheme:dark){.github-repo-card{--gh-bg-color:#212224;--gh-color:#8b949e;--gh-heading-color:#58a6ff}}.github-repo-card svg{fill:var(--gh-color)}.github-repo-card .d-flex{display:flex!important;margin-bottom:4px!important;align-items:flex-start!important;justify-content:space-between!important}.github-repo-card a{color:var(--gh-heading-color)!important}.github-repo-card .stats-icons a{display:inline-block!important;margin-right:24px!important;color:var(--gh-color)!important;font-size:.95rem!important}.github-repo-card .github-repo-text{color:var(--gh-color)!important;font-size:1rem;display:flex!important;white-space:normal!important;margin-bottom:8px!important}.github-repo-card .github-repo-title{font-weight:bolder}&lt;/style&gt;&lt;div class=&quot;github-repo-card &quot;&gt;  &lt;div class=&quot;d-flex&quot;&gt;    &lt;a class=&quot;github-repo-title&quot; href=&quot;https://github.com/mozilla/send&quot;&gt;      &lt;svg height=&quot;30px&quot; width=&quot;30px&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 448 512&quot;&gt;        &lt;path d=&quot;M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66        49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08        55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45        235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z&quot;&gt;&lt;/path&gt;      &lt;/svg&gt;      &lt;span&gt;        mozilla/send      &lt;/span&gt;    &lt;/a&gt;  &lt;/div&gt;  &lt;div class=&quot;github-repo-text&quot;&gt;Simple, private file sharing from the makers of Firefox&lt;/div&gt;  &lt;div class=&quot;stats-icons&quot;&gt;    &lt;a href=&quot;https://github.com/mozilla/send/stargazers&quot; title=&quot;Stars&quot;&gt;      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16px&quot; height=&quot;16px&quot; viewBox=&quot;0 0 576 512&quot;&gt;        &lt;path d=&quot;M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288        439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7        17.8c-11.7-23.6-45.6-23.9-57.4 0z&quot;&gt;&lt;/path&gt;      &lt;/svg&gt;      13275    &lt;/a&gt;    &lt;a href=&quot;https://github.com/mozilla/send/network/members&quot; title=&quot;Forks&quot;&gt;      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16px&quot; height=&quot;16px&quot; viewBox=&quot;0 0 384 512&quot;&gt;        &lt;path d=&quot;M384 144c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 36.4 24.3 67.1 57.5 76.8-.6 16.1-4.2 28.5-11 36.9-15.4 19.2-49.3        22.4-85.2 25.7-28.2 2.6-57.4 5.4-81.3 16.9v-144c32.5-10.2 56-40.5 56-76.3 0-44.2-35.8-80-80-80S0 35.8 0 80c0 35.8 23.5        66.1 56 76.3v199.3C23.5 365.9 0 396.2 0 432c0 44.2 35.8 80 80 80s80-35.8 80-80c0-34-21.2-63.1-51.2-74.6 3.1-5.2 7.8-9.8        14.9-13.4 16.2-8.2 40.4-10.4 66.1-12.8 42.2-3.9 90-8.4 118.2-43.4 14-17.4 21.1-39.8 21.6-67.9 31.6-10.8 54.4-40.7        54.4-75.9zM80 64c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm0 384c-8.8 0-16-7.2-16-16s7.2-16 16-16 16        7.2 16 16-7.2 16-16 16zm224-320c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16z&quot;&gt;&lt;/path&gt;      &lt;/svg&gt;      1612    &lt;/a&gt;    &lt;a title=&quot;Language&quot;&gt;      &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16px&quot; height=&quot;16px&quot; viewBox=&quot;0 0 512 512&quot;&gt;&lt;path d=&quot;M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256        56s200 89.5 200 200-89.5 200-200 200z&quot;&gt;&lt;/path&gt; &lt;/svg&gt;      FreeMarker&lt;/a&gt;  &lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;special-note-about-github-repo-cards-and-rate-limits&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/github-repo-card/#special-note-about-github-repo-cards-and-rate-limits&quot;&gt;Special note about Github Repo Cards and rate limits&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If the Repo Card area start to appear empty sometimes, this could be because the IP address you ran the build from was rate limited by Github. This can commonly happen when running from Github Actions.&lt;/p&gt;
+&lt;p&gt;If running from Github Actions, no need to do anything, the &lt;a href=&quot;https://docs.github.com/en/actions/security-guides/automatic-token-authentication&quot;&gt;automatically generated &lt;code&gt;GITHUB_TOKEN&lt;/code&gt;&lt;/a&gt; should get passed in to the action and used by the API calls.&lt;/p&gt;
+&lt;p&gt;If not running on Github Actions, you’ll need to &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;generate a token on Github&lt;/a&gt; with the &lt;code&gt;repos&lt;/code&gt; permission. Then pass that as a &lt;code&gt;--githubtoken&lt;/code&gt; argument when running the &lt;code&gt;npm run build&lt;/code&gt; or &lt;code&gt;npm run serve&lt;/code&gt; commands, for example:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; run serve &lt;span class=&quot;token parameter variable&quot;&gt;--githubtoken&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;xxxxxxxxxxxxxxxxx&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with seamless Github Gists</title>
+		<link href="https://github.com/shealy2020.github.io/post-with-github-gists/"/>
+		<updated>2022-12-19T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-with-github-gists/</id>
+		<content type="html">&lt;p&gt;Although it’s possible to embed a gist using the shortcode that Github provides, it looks awful on dark mode.  This post makes use of the &lt;code&gt;gist&lt;/code&gt; shortcode, which will render each file as a regular code block so that the Gist’s contents look like any other blog content.&lt;/p&gt;
+&lt;h3 id=&quot;github-gists-through-shortcode&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-github-gists/#github-gists-through-shortcode&quot;&gt;Github Gists through shortcode&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Just use the gist shortcode and give it the Gist ID which is easily visible &lt;a href=&quot;https://gist.github.com/mendhak/37b74037637b5752741160058e243094&quot;&gt;in the URL&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% gist &amp;quot;37b74037637b5752741160058e243094&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Gist description appears first, followed by each file name and the contents of the file.  Here is the output:&lt;/p&gt;
+&lt;h3 id=&quot;github-gists-with-markdown&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-github-gists/#github-gists-with-markdown&quot;&gt;Github Gists with Markdown&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If a Github Gist file &lt;a href=&quot;https://gist.github.com/mendhak/770907f98223b22b422be8b5e09803ab&quot;&gt;contains Markdown like this one&lt;/a&gt;, it’ll be rendered directly onto the page.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&quot;special-note-about-github-gists-and-rate-limits&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-github-gists/#special-note-about-github-gists-and-rate-limits&quot;&gt;Special note about Github Gists and rate limits&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If the Gists start to appear empty sometimes, this could be because the IP address you ran the build from was rate limited by Github. This can commonly happen when running from Github Actions.&lt;/p&gt;
+&lt;p&gt;To get gists to more reliably appear, &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;generate a token on Github&lt;/a&gt; with the &lt;code&gt;gists&lt;/code&gt; permission.&lt;/p&gt;
+&lt;p&gt;Under &lt;code&gt;Security &amp;gt; Secrets and variables &amp;gt; Actions&lt;/code&gt; create a new secret named &lt;code&gt;GH_GIST_TOKEN&lt;/code&gt; and paste that value in there.&lt;/p&gt;
+&lt;p&gt;This secret value should get picked up the next time the action runs.&lt;/p&gt;
+&lt;p&gt;If not running on Github Actions, you’ll need to &lt;a href=&quot;https://github.com/settings/tokens&quot;&gt;generate a token on Github&lt;/a&gt; with the &lt;code&gt;gists&lt;/code&gt; permission. Then pass that as a &lt;code&gt;--gisttoken&lt;/code&gt; argument when running the &lt;code&gt;npm run build&lt;/code&gt; or &lt;code&gt;npm run serve&lt;/code&gt; commands, for example:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; run serve &lt;span class=&quot;token parameter variable&quot;&gt;--gisttoken&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;xxxxxxxxxxxxxxxxx&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or set it as an environment variable:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;GH_GIST_TOKEN&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;xxxxxxxxxxxxxxxxx
+&lt;span class=&quot;token function&quot;&gt;npm&lt;/span&gt; run serve&lt;/code&gt;&lt;/pre&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Post with some videos, audio, and other media</title>
+		<link href="https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/"/>
+		<updated>2022-11-22T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/</id>
+		<content type="html">&lt;p&gt;It’s common to place third party audio, video, gists, etc. on a page using iframes. There’s a shortcode to do this for YouTube and Vimeo.&lt;/p&gt;
+&lt;h2 id=&quot;video-shortcode&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/#video-shortcode&quot;&gt;Video shortcode&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;video&lt;/code&gt; shortcode can work with YouTube and Vimeo URLs.&lt;/p&gt;
+&lt;h3 id=&quot;youtube-video&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/#youtube-video&quot;&gt;Youtube Video&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This code:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% video &amp;quot;https://www.youtube.com/embed/9qOvG9KeJ6c&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;div class=&quot;video&quot; style=&quot;&quot;&gt;
+    &lt;iframe src=&quot;https://www.youtube.com/embed/9qOvG9KeJ6c&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
+&lt;h3 id=&quot;vimeo-video&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/#vimeo-video&quot;&gt;Vimeo Video&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The same shortcode can be used for Vimeo videos.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% video &amp;quot;https://vimeo.com/35396305&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;div class=&quot;video&quot; style=&quot;&quot;&gt;
+    &lt;iframe src=&quot;https://player.vimeo.com/video/35396305&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
+&lt;h3 id=&quot;unconstrained-full-width-video&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/#unconstrained-full-width-video&quot;&gt;Unconstrained full width video&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Add the argument &lt;code&gt;unconstrained&lt;/code&gt; to the shortcode to let the video go full width across the page.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% video &amp;quot;https://www.youtube.com/watch?v=DppVAQqaNE4&amp;quot;, &amp;quot;unconstrained&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;div class=&quot;video&quot; style=&quot;max-width: unset;&quot;&gt;
+    &lt;iframe src=&quot;https://www.youtube.com/embed/DppVAQqaNE4&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;/div&gt;
+&lt;h2 id=&quot;straight-up-html&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/#straight-up-html&quot;&gt;Straight up HTML&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;It is possible to paste the iframe code directly in Markdown.  This works with YouTube, Vimeo, Twitch and any other video sources that provide HTML embed code.&lt;/p&gt;
+&lt;p&gt;Remember to remove the height and width, and wrap the iframe code in a div with class=“video” as shown here.&lt;/p&gt;
+&lt;pre class=&quot;language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;div&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;video&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;iframe&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;https://www.youtube.com/embed/VnT7pT6zCcA?si=RrOWxPtXQxtxaLG-&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;frameborder&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;0&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;allowfullscreen&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;true&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;scrolling&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;no&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;iframe&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;div&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;div class=&quot;video&quot;&gt;
+&lt;iframe src=&quot;https://www.youtube.com/embed/VnT7pT6zCcA?si=RrOWxPtXQxtxaLG-&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;true&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;soundcloud-audio&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-iframes-videos-third-party/#soundcloud-audio&quot;&gt;Soundcloud audio&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;For Soundcloud, there’s no need to change the height and width. Just copy pasting the iframe code works.&lt;/p&gt;
+&lt;div class=&quot;video&quot;&gt;
+&lt;iframe width=&quot;100%&quot; height=&quot;166&quot; scrolling=&quot;no&quot; frameborder=&quot;no&quot; allow=&quot;autoplay&quot; src=&quot;https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/65462299&amp;color=%23544d2d&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>About extra-wide images, videos and code blocks</title>
+		<link href="https://github.com/shealy2020.github.io/extra-wide-full-width-images-videos/"/>
+		<updated>2022-11-11T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/extra-wide-full-width-images-videos/</id>
+		<content type="html">&lt;p&gt;By default, images, videos and code blocks are displayed wider than the (text) content around it.  This is to make it stand out and give it a little emphasis. An example of this ‘full bleed’ behavior can be seen on the &lt;a href=&quot;https://github.com/posts/customary-lorem-ipsum.md&quot;&gt;lorem ipsum page&lt;/a&gt;.&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&quot;https://live.staticflickr.com/7280/27837260711_a4f38ee02e_k.jpg&quot;&gt;&lt;img src=&quot;https://live.staticflickr.com/7280/27837260711_a4f38ee02e_k.jpg&quot; alt=&quot;Example of extra wide image&quot; loading=&quot;lazy&quot; style=&quot;&quot; /&gt;&lt;/a&gt;&lt;figcaption&gt;Example of extra wide image&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;In some cases this might be a bit overwhelming or distracting.&lt;/p&gt;
+&lt;p&gt;This behavior can be disabled on a per-post basis by setting the value &lt;code&gt;extraWideMedia: false&lt;/code&gt; in the frontmatter of the post. An example of this can be seen on the &lt;a href=&quot;https://github.com/posts/2022-01-05-set-footer-links.md&quot;&gt;footer images and links page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To disable it for all posts, set the value in the &lt;code&gt;posts/posts.json&lt;/code&gt; file.&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  ...
+  &lt;span class=&quot;token property&quot;&gt;&quot;extraWideMedia&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that disabling the &lt;code&gt;extraWideMedia&lt;/code&gt; setting will also disable unconstrained (full width) images.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>How to set Opengraph preview image and metadata</title>
+		<link href="https://github.com/shealy2020.github.io/opengraph-preview-data/"/>
+		<updated>2022-03-03T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/opengraph-preview-data/</id>
+		<content type="html">&lt;p&gt;When sharing a URL, some sites will generate a preview with a title, description and image using certain &lt;a href=&quot;https://ogp.me/&quot;&gt;OpenGraph&lt;/a&gt; metadata.&lt;/p&gt;
+&lt;h3 id=&quot;set-the-preview-image&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/opengraph-preview-data/#set-the-preview-image&quot;&gt;Set the preview image&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;A default Opengraph preview image for all posts is set in the &lt;a href=&quot;https://github.com/posts/2022-01-01-edit-the-metadata.md#opengraph&quot;&gt;metadata.json&lt;/a&gt;, which looks like:&lt;/p&gt;
+&lt;figure&gt;&lt;a href=&quot;https://github.com/assets/images/article.png&quot;&gt;&lt;img src=&quot;https://github.com/assets/images/article.png&quot; alt=&quot;Default opengraph image&quot; loading=&quot;lazy&quot; style=&quot;width: calc(33% - 0.5em);&quot; /&gt;&lt;/a&gt;&lt;figcaption&gt;Default opengraph image&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;To override the preview image for a specific post, set the &lt;code&gt;opengraph.image&lt;/code&gt; value in the frontmatter:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: How to set Opengraph preview image and metadata
+opengraph:
+  image: /assets/images/image003.jpg
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;title-description-and-tags&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/opengraph-preview-data/#title-description-and-tags&quot;&gt;Title, description, and tags&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;All three of these are taken from the post’s frontmatter’s title, description, and tags.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: How to set Opengraph preview image and metadata
+description: Instructions on setting up various Opengraph headers
+tags:
+  - opengraph
+  - image
+  - preview
+opengraph:
+  image: /assets/images/image003.jpg
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If missing, the defaults are taken from the &lt;a href=&quot;https://github.com/posts/2022-01-01-edit-the-metadata.md#optional-but-useful&quot;&gt;metadata.json&lt;/a&gt; again.&lt;/p&gt;
+&lt;h3 id=&quot;author-and-type&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/opengraph-preview-data/#author-and-type&quot;&gt;Author and type&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The author and type are always taken from the metadata.json author and type.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>How to post links to another post or an external site</title>
+		<link href="https://github.com/shealy2020.github.io/posting-links/"/>
+		<updated>2022-03-01T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/posting-links/</id>
+		<content type="html">&lt;p&gt;Various ways to post links to other posts in the same blog, and external links too.&lt;/p&gt;
+&lt;h3 id=&quot;link-to-another-post-by-its-file-name&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/posting-links/#link-to-another-post-by-its-file-name&quot;&gt;Link to another post by its file name&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;This is a local editor friendly way, just link straight to the Markdown file.
+The link must start at the project root, and end in &lt;code&gt;.md&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;Link using Markdown path&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;/posts/customary-lorem-ipsum.md&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/posts/customary-lorem-ipsum.md&quot;&gt;Link using Markdown path&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You can also link to an anchor in the target file.&lt;/p&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;Link using Markdown path and heading anchor&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;/posts/customary-lorem-ipsum.md#tincidunt-arcu-non-sodales&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/posts/customary-lorem-ipsum.md#tincidunt-arcu-non-sodales&quot;&gt;Link using Markdown path and heading anchor&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&quot;links-inside-notice-and-figure&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/posting-links/#links-inside-notice-and-figure&quot;&gt;Links inside &lt;code&gt;notice&lt;/code&gt; and &lt;code&gt;figure&lt;/code&gt;&lt;/a&gt;&lt;/h4&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;{% notice &quot;warning&quot; %}
+You can also link inside shortcodes such as &lt;span class=&quot;token code-snippet code keyword&quot;&gt;`notice`&lt;/span&gt; and &lt;span class=&quot;token code-snippet code keyword&quot;&gt;`figure`&lt;/span&gt;, &lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;pointing at the file&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;/posts/customary-lorem-ipsum.md&lt;/span&gt;)&lt;/span&gt;.  
+You can also link to a heading anchor in the file &lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;like this&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;/posts/customary-lorem-ipsum.md#tincidunt-arcu-non-sodales&lt;/span&gt;)&lt;/span&gt;.
+{% endnotice %}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;div class=&quot;notice warning&quot;&gt;
+You can also link inside shortcodes such as &lt;code&gt;notice&lt;/code&gt; and &lt;code&gt;figure&lt;/code&gt;, &lt;a href=&quot;https://github.com/posts/customary-lorem-ipsum.md&quot;&gt;pointing at the file&lt;/a&gt;.&lt;br /&gt;
+You can also link to a heading anchor in the file &lt;a href=&quot;https://github.com/posts/customary-lorem-ipsum.md#tincidunt-arcu-non-sodales&quot;&gt;like this&lt;/a&gt;.
+&lt;/div&gt;
+&lt;h3 id=&quot;link-to-another-post-by-url&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/posting-links/#link-to-another-post-by-url&quot;&gt;Link to another post by URL&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;You can also link to the output URL of the post. The blog’s &lt;code&gt;pathPrefix&lt;/code&gt; gets added on automatically. Remember to include the trailing slash.&lt;/p&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;Link using root-relative URL&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;/customary-lorem-ipsum/&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/customary-lorem-ipsum/&quot;&gt;Link using root-relative URL&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;external-links&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/posting-links/#external-links&quot;&gt;External links&lt;/a&gt;&lt;/h3&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;External link&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;https://example.com&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://example.com/&quot;&gt;External link&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;link-with-a-title&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/posting-links/#link-with-a-title&quot;&gt;Link with a title&lt;/a&gt;&lt;/h3&gt;
+&lt;pre class=&quot;language-markdown&quot;&gt;&lt;code class=&quot;language-markdown&quot;&gt;&lt;span class=&quot;token url&quot;&gt;[&lt;span class=&quot;token content&quot;&gt;Link with a title&lt;/span&gt;](&lt;span class=&quot;token url&quot;&gt;https://example.com&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;title text!&quot;&lt;/span&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://example.com/&quot; title=&quot;title text!&quot;&gt;Link with a title&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;buttons&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/posting-links/#buttons&quot;&gt;Buttons&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;It’s also possible to use a button as a link.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{% button &amp;quot;Button with a link&amp;quot;, &amp;quot;/&amp;quot; %}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Produces:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/&quot;&gt;&lt;button&gt;Button with a link&lt;/button&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>How to set the date of a post</title>
+		<link href="https://github.com/shealy2020.github.io/set-date-of-post/"/>
+		<updated>2022-02-02T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/set-date-of-post/</id>
+		<content type="html">&lt;p&gt;When writing a new post, you can set the date of the post in a few different ways.  The date of the post determines the order it appears in the post listings.&lt;/p&gt;
+&lt;h3 id=&quot;in-the-filename&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-date-of-post/#in-the-filename&quot;&gt;In the filename&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The date can be set in the post’s filename.  For example, &lt;code&gt;./posts/2022-02-02-set-date-of-post.md&lt;/code&gt; will be published to the URL &lt;code&gt;/set-date-of-post/&lt;/code&gt; and the date appears as &lt;code&gt;02 Feb 2022&lt;/code&gt;.  This is the best way to write posts, since having the date at the beginning helps organize the posts in order.&lt;/p&gt;
+&lt;h3 id=&quot;in-the-frontmatter&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-date-of-post/#in-the-frontmatter&quot;&gt;In the frontmatter&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The date can also be set in the page’s frontmatter.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: How to set the date of a post
+date: 2022-02-02
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;both-the-file-name-and-the-frontmatter&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-date-of-post/#both-the-file-name-and-the-frontmatter&quot;&gt;Both the file name &lt;em&gt;and&lt;/em&gt; the frontmatter&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If the date is set both in the file name as well as the frontmatter, the frontmatter date takes precedence.&lt;/p&gt;
+&lt;h3 id=&quot;setting-a-last-modified-date-for-a-post&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-date-of-post/#setting-a-last-modified-date-for-a-post&quot;&gt;Setting a last modified date for a post&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Setting the &lt;code&gt;last_modified_at&lt;/code&gt; in the frontmatter modifies the display and metadata date, but without changing its order in the listing.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+title: How to set the date of a post
+last_modified_at: 2022-08-17
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;posts-without-a-date&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-date-of-post/#posts-without-a-date&quot;&gt;Posts without a date&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;If there’s no date in the file name, or the frontmatter, then the date defaults to the time of build, so it gets updated each time the site is built.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Anyway, the date appears at the bottom.&lt;/p&gt;
+&lt;p&gt;👇&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Set footer images and links</title>
+		<link href="https://github.com/shealy2020.github.io/set-footer-links/"/>
+		<updated>2022-01-05T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/set-footer-links/</id>
+		<content type="html">&lt;p&gt;How to set the links in the footer as well as the small thumbnails that appear.&lt;/p&gt;
+&lt;h3 id=&quot;links&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-footer-links/#links&quot;&gt;Links&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The links are controlled via the &lt;code&gt;_data/bottomlinks.json&lt;/code&gt; file.  It’s just an array of link URLs and the text to display.&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;https://example.com&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Example&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  ...
+&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can also link to relative paths.&lt;/p&gt;
+&lt;p&gt;To remove the links in the footer, empty the array, or empty the file, or delete the file.&lt;/p&gt;
+&lt;h3 id=&quot;photos&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/set-footer-links/#photos&quot;&gt;Photos&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The photos are controlled in the &lt;code&gt;_data/photostream.json&lt;/code&gt; file.  It’s an array of thumbnails and the URL to link to.&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;link&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;https://www.flickr.com/photos/mendhak/30454355997/&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;img&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;https://live.staticflickr.com/1932/30454355997_287063f84b_q.jpg&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  ...&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To remove the images in the footer, empty the array, or empty the file, or delete the file.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Set up the metadata.json</title>
+		<link href="https://github.com/shealy2020.github.io/edit-the-metadata/"/>
+		<updated>2022-01-01T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/edit-the-metadata/</id>
+		<content type="html">&lt;p&gt;The &lt;a href=&quot;https://github.com/mendhak/eleventy-satisfactory/blob/main/_data/metadata.json&quot;&gt;metadata.json file&lt;/a&gt; contains various configuration items that are needed to set up the blog. It controls things like title, URLs, tags, feeds, and some links. The &lt;code&gt;metadata.json&lt;/code&gt; file is located under &lt;a href=&quot;https://github.com/mendhak/eleventy-satisfactory/blob/main/_data/metadata.json&quot;&gt;&lt;code&gt;_data/metadata.json&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Starting with the important ones.&lt;/p&gt;
+&lt;h3 id=&quot;title&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#title&quot;&gt;title&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The site title that appears in the header. eg, “Joe’s Blog”&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;AI for Writing Teams&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;pathprefix&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#pathprefix&quot;&gt;pathPrefix&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Very important. The path where the blog will sit under its domain.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/blog/&lt;/code&gt; if it’s hosted on ‘https://example.com/blogs’&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/&lt;/code&gt; if it’s hosted on ‘https://example.com’&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;/shealy2020.github.io/&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;url&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#url&quot;&gt;url&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The Base URL where this site will be published. It gets used to construct the full URL to content, in the &lt;a href=&quot;https://github.com/sitemap.xml&quot;&gt;sitemap.xml&lt;/a&gt;, &lt;a href=&quot;https://github.com/feed.xml&quot;&gt;feed.xml&lt;/a&gt;, &lt;a href=&quot;https://github.com/feed.json&quot;&gt;feed.json&lt;/a&gt;, and the OpenGraph and JSON-LD headers in the HTML &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;https://username.github.io/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;https://example.com/blog/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;https://github.com/shealy2020/shealy2020.github.io&lt;/code&gt;
+&lt;/div&gt;
+&lt;p&gt;This value gets used to construct and correct various URLs throughout all content, such as images, links, stylesheets, etc.&lt;/p&gt;
+&lt;h2 id=&quot;optional-but-useful&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#optional-but-useful&quot;&gt;Optional, but useful&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;paginationsize&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#paginationsize&quot;&gt;paginationSize&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;How many post links should be shown per page.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;4&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;description&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#description&quot;&gt;description&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Sets the site description in the HTML head’s meta and OpenGraph/JSON-LD descriptions, as well as the JSON and Atom feed.
+If a blog post doesn’t contain a &lt;code&gt;description:&lt;/code&gt; frontmatter, this value gets used as a default in the HTML head.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;Artificial Intelligence for Writing Teams&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;tags&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#tags&quot;&gt;tags&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Sets the site’s tags in the HTML head’s meta keywords and OpenGraph/JSON-LD tags.
+If a blog post doesn’t contain a &lt;code&gt;tags:&lt;/code&gt; frontmatter, these values get used as a default in the HTML head.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;[&amp;quot;eleventy&amp;quot;,&amp;quot;blog&amp;quot;,&amp;quot;writing&amp;quot;,&amp;quot;technical&amp;quot;,&amp;quot;documentation&amp;quot;]&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;language&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#language&quot;&gt;language&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Sets the HTML &lt;code&gt;lang&lt;/code&gt; of the web page. It helps search engines and browsers.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;en&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;favicon&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#favicon&quot;&gt;favicon&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Path to the favicon.  Add your own image to the &lt;code&gt;/assets/images/&lt;/code&gt; folder and update the location.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;/assets/images/favicon.png&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;feed-path&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#feed-path&quot;&gt;feed.path&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The path where the Atom feed should be written to.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;/feed.xml&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;jsonfeed-path&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#jsonfeed-path&quot;&gt;jsonfeed.path&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The path where the JSON feed should be written to.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;/feed.json&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;author&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#author&quot;&gt;author&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;name&lt;/code&gt;: The author pseudonym or name that should appear in the HTML meta as well as the site’s footer.&lt;br /&gt;
+&lt;code&gt;email&lt;/code&gt;: The author email that should appear in the Atom feed.&lt;br /&gt;
+&lt;code&gt;url&lt;/code&gt;: The URL that should appear in the Atom feed.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;{&amp;quot;name&amp;quot;:&amp;quot;shealy&amp;quot;,&amp;quot;email&amp;quot;:&amp;quot;seanhealyconsulting@gmail.com&amp;quot;,&amp;quot;url&amp;quot;:&amp;quot;https://github.com/shealy2020/ai4writers&amp;quot;}&lt;/code&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;opengraph&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/edit-the-metadata/#opengraph&quot;&gt;opengraph&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Some opengraph settings.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;image&lt;/code&gt;: The image to use when an OpenGraph preview is being made for a URL on this site.  If a blog post doesn’t have a &lt;code&gt;opengraph.image&lt;/code&gt; frontmatter, then this default image gets used instead.  This value is also used in the JSON-LD data.
+&lt;code&gt;type&lt;/code&gt;: The OpenGraph content type of this content.  It’s a blog so, it’s an article.&lt;/p&gt;
+&lt;div class=&quot;notice info&quot;&gt;
+Current value: &lt;code&gt;{&amp;quot;image&amp;quot;:&amp;quot;/assets/images/article.png&amp;quot;,&amp;quot;type&amp;quot;:&amp;quot;article&amp;quot;}&lt;/code&gt;
+&lt;/div&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Showcase of various heading sizes</title>
+		<link href="https://github.com/shealy2020.github.io/post-with-various-headings/"/>
+		<updated>2021-12-24T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/post-with-various-headings/</id>
+		<content type="html">&lt;p&gt;A few different heading levels from H2 to H6.  H1 is already used by the post title.  H2 to H4 get permalinks, but H5 and H6 don’t.&lt;/p&gt;
+&lt;h2 id=&quot;malesuada-fames&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-various-headings/#malesuada-fames&quot;&gt;Malesuada fames&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Gravida in fermentum et sollicitudin ac orci phasellus egestas. Non tellus orci ac auctor augue mauris augue. Amet consectetur adipiscing elit duis tristique. Arcu ac tortor dignissim convallis aenean. A cras semper auctor neque vitae. Donec massa sapien faucibus et molestie ac. Platea dictumst vestibulum rhoncus est pellentesque. Viverra nam libero justo laoreet sit amet cursus sit. Amet volutpat consequat mauris nunc congue nisi. Cras ornare arcu dui vivamus arcu.&lt;/p&gt;
+&lt;p&gt;Malesuada fames ac turpis egestas. Porta nibh venenatis cras sed felis eget velit aliquet. Sagittis id consectetur purus ut faucibus pulvinar elementum integer enim. Arcu odio ut sem nulla pharetra. Rutrum tellus pellentesque eu tincidunt tortor aliquam nulla facilisi. Sed vulputate mi sit amet mauris commodo quis imperdiet massa. Ut etiam sit amet nisl purus in mollis nunc. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Etiam tempor orci eu lobortis elementum nibh tellus molestie nunc. Integer feugiat scelerisque varius morbi. Velit ut tortor pretium viverra suspendisse. Lectus quam id leo in vitae turpis. Consequat id porta nibh venenatis cras sed felis eget.&lt;/p&gt;
+&lt;h3 id=&quot;scelerisque-eleifend&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-various-headings/#scelerisque-eleifend&quot;&gt;Scelerisque eleifend&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Viverra justo nec ultrices dui sapien eget mi proin. Tortor at risus viverra adipiscing at in tellus. Elementum curabitur vitae nunc sed velit dignissim. Accumsan lacus vel facilisis volutpat est. Pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Turpis nunc eget lorem dolor sed viverra ipsum nunc. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Donec et odio pellentesque diam.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Tempus quam pellentesque nec nam aliquam. Fringilla est ullamcorper eget nulla facilisi etiam dignissim. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. Tellus id interdum velit laoreet id donec ultrices tincidunt. Platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Faucibus et molestie ac feugiat.&lt;/p&gt;
+&lt;h4 id=&quot;amet-purus-gravida&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/post-with-various-headings/#amet-purus-gravida&quot;&gt;Amet purus gravida&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Amet purus gravida quis blandit turpis cursus in hac habitasse. Risus feugiat in ante metus dictum at tempor commodo ullamcorper. Mus mauris vitae ultricies leo integer malesuada nunc. At varius vel pharetra vel. Sed viverra ipsum nunc aliquet. In fermentum posuere urna nec tincidunt praesent semper. Sed vulputate odio ut enim. Vel fringilla est ullamcorper eget nulla facilisi etiam dignissim. Etiam non quam lacus suspendisse faucibus interdum posuere lorem. Volutpat maecenas volutpat blandit aliquam etiam erat. Diam quis enim lobortis scelerisque fermentum dui faucibus in ornare. Vitae turpis massa sed elementum tempus egestas sed. Sed risus pretium quam vulputate dignissim suspendisse in est. Odio morbi quis commodo odio. Quis viverra nibh cras pulvinar. Velit egestas dui id ornare arcu odio ut sem nulla.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Quis enim lobortis scelerisque fermentum dui faucibus in ornare. Pellentesque nec nam aliquam sem et. Urna molestie at elementum eu facilisis sed odio morbi. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Gravida neque convallis a cras semper. Dui sapien eget mi proin sed. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt. Parturient montes nascetur ridiculus mus mauris vitae ultricies leo. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. Elit ullamcorper dignissim cras tincidunt. Laoreet sit amet cursus sit amet. At quis risus sed vulputate odio ut. Massa tincidunt nunc pulvinar sapien et.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5&gt;Amet purus gravida&lt;/h5&gt;
+&lt;p&gt;Only H1 to H4s get permalinks.  Don’t want to go overboard.&lt;/p&gt;
+&lt;h6&gt;Amet purus gravida&lt;/h6&gt;
+&lt;p&gt;That’s as far as we’ll go.&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Showcase of various `Markdown` features</title>
+		<link href="https://github.com/shealy2020.github.io/markdown-showcase/"/>
+		<updated>2018-07-04T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/markdown-showcase/</id>
+		<content type="html">&lt;p&gt;This page demos various markdown syntax and how it’s rendered.&lt;/p&gt;
+&lt;h1 id=&quot;h1-heading&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#h1-heading&quot;&gt;h1 Heading&lt;/a&gt;&lt;/h1&gt;
+&lt;h2 id=&quot;h2-heading&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#h2-heading&quot;&gt;h2 Heading&lt;/a&gt;&lt;/h2&gt;
+&lt;h3 id=&quot;h3-heading&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#h3-heading&quot;&gt;h3 Heading&lt;/a&gt;&lt;/h3&gt;
+&lt;h4 id=&quot;h4-heading&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#h4-heading&quot;&gt;h4 Heading&lt;/a&gt;&lt;/h4&gt;
+&lt;h5&gt;h5 Heading&lt;/h5&gt;
+&lt;h6&gt;h6 Heading&lt;/h6&gt;
+&lt;h2 id=&quot;horizontal-rules&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#horizontal-rules&quot;&gt;Horizontal Rules&lt;/a&gt;&lt;/h2&gt;
+&lt;hr /&gt;
+&lt;hr /&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;typographic-replacements&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#typographic-replacements&quot;&gt;Typographic replacements&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Enable typographer option to see result.&lt;/p&gt;
+&lt;p&gt;© © ® ® ™ ™ (p) (P) ±&lt;/p&gt;
+&lt;p&gt;test… test… test… test?.. test!..&lt;/p&gt;
+&lt;p&gt;!!! ??? ,  – —&lt;/p&gt;
+&lt;p&gt;“Smartypants, double quotes” and ‘single quotes’&lt;/p&gt;
+&lt;h2 id=&quot;emphasis&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#emphasis&quot;&gt;Emphasis&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;This is bold text&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is bold text&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This is italic text&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This is italic text&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;s&gt;Strikethrough&lt;/s&gt;&lt;/p&gt;
+&lt;h2 id=&quot;blockquotes&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#blockquotes&quot;&gt;Blockquotes&lt;/a&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Blockquotes can also be nested…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;…by using additional greater-than signs right next to each other…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;…or with spaces between arrows.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;lists&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#lists&quot;&gt;Lists&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Unordered&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a list by starting a line with &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;-&lt;/code&gt;, or &lt;code&gt;*&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Sub-lists are made by indenting 2 spaces:
+&lt;ul&gt;
+&lt;li&gt;Marker character change forces new list start:
+&lt;ul&gt;
+&lt;li&gt;Ac tristique libero volutpat at&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;Facilisis in pretium nisl aliquet&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;Nulla volutpat aliquam velit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Very easy!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ordered&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Consectetur adipiscing elit&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Integer molestie lorem at massa&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can use sequential numbers…&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;…or keep all the numbers as &lt;code&gt;1.&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Start numbering with offset:&lt;/p&gt;
+&lt;ol start=&quot;57&quot;&gt;
+&lt;li&gt;foo&lt;/li&gt;
+&lt;li&gt;bar&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;code&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#code&quot;&gt;Code&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Inline &lt;code&gt;code&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Indented code&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// Some comments
+line 1 of code
+line 2 of code
+line 3 of code
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Block code “fences”&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Sample text here...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Syntax highlighting&lt;/p&gt;
+&lt;pre class=&quot;language-js&quot;&gt;&lt;code class=&quot;language-js&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;tables&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#tables&quot;&gt;Tables&lt;/a&gt;&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Option&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;data&lt;/td&gt;
+&lt;td&gt;path to data files to supply the data that will be passed into templates.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;engine&lt;/td&gt;
+&lt;td&gt;engine to be used for processing templates. Handlebars is the default.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ext&lt;/td&gt;
+&lt;td&gt;extension to be used for dest files.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Right aligned columns&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&quot;text-align:right&quot;&gt;Option&lt;/th&gt;
+&lt;th style=&quot;text-align:right&quot;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;data&lt;/td&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;path to data files to supply the data that will be passed into templates.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;engine&lt;/td&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;engine to be used for processing templates. Handlebars is the default.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;ext&lt;/td&gt;
+&lt;td style=&quot;text-align:right&quot;&gt;extension to be used for dest files.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;links&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#links&quot;&gt;Links&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://example.com/&quot;&gt;link text&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://example.com/&quot; title=&quot;title text!&quot;&gt;link with title&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/customary-lorem-ipsum/&quot;&gt;link to another post&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;images&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/markdown-showcase/#images&quot;&gt;Images&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;/p&gt;&lt;figure&gt;&lt;a href=&quot;https://octodex.github.com/images/minion.png&quot;&gt;
+    &lt;img src=&quot;https://octodex.github.com/images/minion.png&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;&lt;/a&gt;
+    &lt;figcaption&gt;Minion&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;figure&gt;&lt;a href=&quot;https://octodex.github.com/images/stormtroopocat.jpg&quot;&gt;
+    &lt;img src=&quot;https://octodex.github.com/images/stormtroopocat.jpg&quot; alt=&quot;&quot; title=&quot;The Stormtroopocat&quot; loading=&quot;lazy&quot; /&gt;&lt;/a&gt;
+    &lt;figcaption&gt;Stormtroopocat&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Like links, Images also have a footnote style syntax&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;figure&gt;&lt;a href=&quot;https://octodex.github.com/images/dojocat.jpg&quot;&gt;
+    &lt;img src=&quot;https://octodex.github.com/images/dojocat.jpg&quot; alt=&quot;&quot; title=&quot;The Dojocat&quot; loading=&quot;lazy&quot; /&gt;&lt;/a&gt;
+    &lt;figcaption&gt;Alt text&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;With a reference later in the document defining the URL location:&lt;/p&gt;
+</content>
+	</entry>
+	
+	<entry>
+		<title>Customary Lorem Ipsum post</title>
+		<link href="https://github.com/shealy2020.github.io/customary-lorem-ipsum/"/>
+		<updated>2018-05-01T00:00:00Z</updated>
+		<id>https://github.com/shealy2020.github.io/customary-lorem-ipsum/</id>
+		<content type="html">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Amet facilisis magna etiam tempor orci eu lobortis elementum nibh. Pharetra sit amet aliquam id. Volutpat odio facilisis mauris sit amet massa vitae tortor condimentum. Semper viverra nam libero justo laoreet. Mattis rhoncus urna neque viverra justo nec ultrices dui. Mauris augue neque gravida in fermentum et sollicitudin. Nunc mattis enim ut tellus elementum sagittis vitae. Nibh sed pulvinar proin gravida hendrerit lectus. Diam quam nulla porttitor massa. Ac felis donec et odio pellentesque diam volutpat. Cursus eget nunc scelerisque viverra mauris in. Non curabitur gravida arcu ac tortor dignissim convallis. Adipiscing at in tellus integer feugiat.&lt;/p&gt;
+&lt;h2 id=&quot;consectetur-libero-id&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/customary-lorem-ipsum/#consectetur-libero-id&quot;&gt;Consectetur libero id&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Faucibus nisl tincidunt eget nullam non nisi. Tristique nulla aliquet enim tortor at auctor urna. Nisi scelerisque eu ultrices vitae auctor eu augue ut. Cras ornare arcu dui vivamus arcu felis bibendum ut. Eget nulla facilisi etiam dignissim diam quis enim. Consectetur purus ut faucibus pulvinar elementum. Ultricies tristique nulla aliquet enim tortor at auctor urna nunc. Ullamcorper velit sed ullamcorper morbi tincidunt ornare. Id semper risus in hendrerit gravida rutrum. Dignissim convallis aenean et tortor at.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;figure&gt;&lt;a href=&quot;https://live.staticflickr.com/397/31445325431_981b759c23_h.jpg&quot;&gt;
+    &lt;img src=&quot;https://live.staticflickr.com/397/31445325431_981b759c23_h.jpg&quot; alt=&quot;&quot; loading=&quot;lazy&quot; /&gt;&lt;/a&gt;
+    &lt;figcaption&gt;lorem photum&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Laoreet non curabitur gravida arcu. Neque sodales ut etiam sit amet. Vitae purus faucibus ornare suspendisse sed nisi lacus sed viverra. Ornare arcu dui vivamus arcu. Et leo duis ut diam quam nulla porttitor massa id. Diam sit amet nisl suscipit adipiscing bibendum est. Porttitor massa id neque aliquam vestibulum morbi blandit. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Dui ut ornare lectus sit amet est placerat in egestas. Vel elit scelerisque mauris pellentesque pulvinar.&lt;/p&gt;
+&lt;aside&gt;Odio tempor orci dapibus ultrices in iaculis nunc sed augue. Aenean pharetra magna ac placerat vestibulum lectus mauris.&lt;/aside&gt;
+&lt;p&gt;Sit amet justo donec enim diam vulputate ut pharetra sit. Mi proin sed libero enim sed faucibus. Tortor at auctor urna nunc id cursus metus. In pellentesque massa placerat duis ultricies. Semper feugiat nibh sed pulvinar.&lt;/p&gt;
+&lt;p&gt;Amet purus gravida quis blandit turpis cursus in hac. Natoque penatibus et magnis dis parturient montes nascetur. Tortor dignissim convallis aenean et tortor at. Eget est lorem ipsum dolor. Lectus nulla at volutpat diam ut venenatis tellus. Ultrices neque ornare aenean euismod elementum nisi quis eleifend. At tellus at urna condimentum mattis pellentesque id. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Etiam tempor orci eu lobortis elementum nibh tellus. Integer enim neque volutpat ac.&lt;/p&gt;
+&lt;h3 id=&quot;non-blandit-massa-enim-nec&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/customary-lorem-ipsum/#non-blandit-massa-enim-nec&quot;&gt;Non blandit massa enim nec&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Leo urna molestie at elementum eu facilisis. Vestibulum sed arcu non odio. Tortor aliquam nulla facilisi cras fermentum odio. Ante in nibh mauris cursus mattis molestie. Lacus sed viverra tellus in. Tortor pretium viverra suspendisse potenti nullam ac tortor vitae purus. Non consectetur a erat nam at lectus urna duis convallis. Tortor dignissim convallis aenean et tortor at risus viverra adipiscing. Tincidunt id aliquet risus feugiat in ante. Aliquam vestibulum morbi blandit cursus risus at ultrices mi tempus. Nec ultrices dui sapien eget. Ullamcorper a lacus vestibulum sed arcu. Et odio pellentesque diam volutpat commodo sed egestas. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Ipsum a arcu cursus vitae. Adipiscing elit duis tristique sollicitudin nibh sit. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Felis donec et odio pellentesque diam volutpat commodo. Eget nulla facilisi etiam dignissim diam quis.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Mauris a diam maecenas sed enim ut sem viverra. Suspendisse faucibus interdum posuere lorem ipsum dolor sit amet. Cursus eget nunc scelerisque viverra. Id velit ut tortor pretium viverra suspendisse. Ultrices eros in cursus turpis. Quis hendrerit dolor magna eget est lorem ipsum dolor. Diam in arcu cursus euismod quis. Vitae suscipit tellus mauris a diam maecenas sed. Purus non enim praesent elementum facilisis leo vel. Porttitor massa id neque aliquam. Lectus urna duis convallis convallis tellus. Nunc consequat interdum varius sit amet mattis vulputate enim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Orci nulla pellentesque dignissim enim sit. Tincidunt vitae semper quis lectus nulla at volutpat. Molestie at elementum eu facilisis. In aliquam sem fringilla ut morbi tincidunt augue interdum. Dui nunc mattis enim ut tellus elementum. Ultricies lacus sed turpis tincidunt id aliquet risus feugiat in. Enim diam vulputate ut pharetra sit amet aliquam id. Volutpat est velit egestas dui id ornare. Eu mi bibendum neque egestas congue. Cras sed felis eget velit. Integer quis auctor elit sed vulputate mi sit amet mauris. Gravida rutrum quisque non tellus orci. Rutrum quisque non tellus orci ac &lt;button&gt;auctor&lt;/button&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;tincidunt-arcu-non-sodales&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/customary-lorem-ipsum/#tincidunt-arcu-non-sodales&quot;&gt;Tincidunt arcu non sodales&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Neque sodales ut etiam sit. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Aliquet enim tortor at auctor urna nunc id. Turpis massa tincidunt dui ut ornare lectus sit amet. Id faucibus nisl tincidunt eget nullam non. Vitae ultricies leo integer malesuada nunc. Volutpat est velit egestas dui id ornare arcu odio ut. Cursus turpis massa tincidunt dui ut ornare. Neque aliquam vestibulum morbi blandit cursus risus at. Aenean vel elit scelerisque mauris. Quisque sagittis purus sit amet volutpat consequat mauris nunc congue. Nibh tortor id aliquet lectus proin. Sagittis nisl rhoncus mattis rhoncus urna neque.&lt;/p&gt;
+&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;loremFunction&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;boolean&lt;/span&gt; ipsum&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token constant&quot;&gt;LOG&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Lorem ipsum begins&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;Intent&lt;/span&gt; sendIntent &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Intent&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        sendIntent&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;putExtra&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;lorem ipsum dolor&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;sit amet&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Vel pharetra vel turpis nunc eget lorem dolor. Ut tellus elementum sagittis vitae et. Donec ultrices tincidunt arcu non sodales neque sodales. Dis parturient montes nascetur ridiculus &lt;kbd&gt;mus&lt;/kbd&gt; mauris vitae. Pulvinar etiam non quam lacus suspendisse. Senectus et netus et malesuada. Sed viverra tellus in hac habitasse. Est sit amet facilisis magna etiam tempor orci eu lobortis.&lt;/p&gt;
+&lt;section&gt;Ac turpis egestas integer eget. Euismod elementum nisi quis eleifend. Risus quis varius quam quisque id diam. Adipiscing elit ut aliquam purus sit amet. Tristique senectus et netus et malesuada fames ac. Fames ac turpis egestas sed tempus urna et pharetra. Vel pharetra vel turpis nunc eget lorem dolor. Augue eget arcu dictum varius duis at. Nibh tortor id aliquet lectus proin nibh.&lt;/section&gt;
+&lt;h2 id=&quot;bibendum-ut-tristique&quot; tabindex=&quot;-1&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;https://github.com/shealy2020.github.io/customary-lorem-ipsum/#bibendum-ut-tristique&quot;&gt;Bibendum ut tristique&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Et egestas quis ipsum suspendisse ultrices gravida. &lt;mark&gt;Est placerat in egestas&lt;/mark&gt; erat imperdiet. Imperdiet dui accumsan sit amet nulla facilisi. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci. Aliquet risus feugiat in ante metus dictum at tempor. Vel pharetra vel turpis nunc eget lorem. Suscipit tellus mauris a diam maecenas. Volutpat commodo sed egestas egestas fringilla phasellus faucibus. Justo eget magna fermentum iaculis. Sed euismod nisi porta lorem mollis aliquam ut porttitor leo. Gravida rutrum quisque non tellus orci. Cursus metus aliquam eleifend mi in. Vulputate mi sit amet mauris commodo.&lt;/p&gt;
+&lt;p&gt;Arcu odio ut sem nulla pharetra diam sit amet. Ipsum faucibus vitae aliquet nec ullamcorper sit. At imperdiet dui accumsan sit amet nulla facilisi. In nibh mauris cursus mattis molestie a iaculis at erat. Suspendisse in est ante in nibh. Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec. Elit duis tristique sollicitudin nibh. Sagittis nisl rhoncus mattis rhoncus urna neque. Sit amet volutpat consequat mauris nunc. Eget nullam non nisi est sit amet. Et leo duis ut diam quam. Tincidunt arcu non sodales neque sodales ut. Auctor elit sed vulputate mi sit amet. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Cras adipiscing enim eu turpis. Placerat in egestas erat imperdiet. Egestas tellus rutrum tellus pellentesque eu tincidunt tortor.&lt;/p&gt;
+&lt;div class=&quot;video&quot;&gt;
+&lt;iframe src=&quot;https://www.youtube.com/embed/fop5YIk5iek?controls=0&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</content>
+	</entry>
+</feed>
