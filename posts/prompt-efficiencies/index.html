@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prompt Efficiencies</title>
+        <meta name="description" content="Ways to increase LLM session times by making prompts more efficient">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+    <link rel="stylesheet" href="/dist/dmLgJGMyFL.css">
+    
+    <script src="../assets/js/nav.js"></script>
+</head>
+<body>
+    <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+    <header class="site-header">
+        <nav class="site-nav">
+            <ul class="nav"><li class="nav-item">
+                            <a href="/" class="nav-link" data-dropdown-toggle="">
+                                Home
+                            </a></li><li class="nav-item">
+                            <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                Posts
+                            </a></li><li class="nav-item">
+                            <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                Resources
+                            </a></li><li class="nav-item has-children">
+                            <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                About
+                            </a><ul class="dropdown"><li>
+                                            <a href="/resume/" class="dropdown-link">
+                                                Resume
+                                            </a>
+                                        </li><li>
+                                            <a href="/work/" class="dropdown-link">
+                                                Work
+                                            </a>
+                                        </li><li>
+                                            <a href="/contact/" class="dropdown-link">
+                                                Contact
+                                            </a>
+                                        </li></ul></li></ul>
+        </nav>
+        <h1 id="prompt-efficiencies">
+                Prompt Efficiencies
+        </h1>
+        <p>
+                Ways to increase LLM session times by making prompts more efficient
+        </p>
+    </header>
+    <main id="main">
+        <heading-anchors>
+            
+
+
+
+<p>Posted on: <time datetime="2025-10-01">01 October 2025</time></p>
+
+<h1 id="token-efficiency-cheat-sheet">Token Efficiency Cheat Sheet</h1>
+<blockquote>
+<p>Conserve tokens = longer sessions + faster responses + fewer cutoffs</p>
+</blockquote>
+<hr>
+<h2 id="1-prompt-design">1️⃣ Prompt Design</h2>
+<p>✅ <strong>Do</strong></p>
+<ul>
+<li>Keep prompts concise: use direct verbs (“summarize,” “revise,” “explain briefly”).</li>
+<li>Reference earlier text instead of re-pasting it.</li>
+<li>State the <em>output size</em>:
+<ul>
+<li>“In 3 bullet points.”</li>
+<li>“Under 100 words.”</li>
+<li>“Code only—no explanation.”</li>
+</ul>
+</li>
+</ul>
+<p>🚫 <strong>Don’t</strong></p>
+<ul>
+<li>Repeat long setup text (“As I mentioned earlier…”).</li>
+<li>Ask multiple tasks in one prompt if they can be done sequentially.</li>
+<li>Use filler (“Could you please kindly explain…”).</li>
+</ul>
+<hr>
+<h2 id="2-conversation-management">2️⃣ Conversation Management</h2>
+<ul>
+<li>Stay in the same chat thread so context persists.</li>
+<li>Split long projects:
+<ol>
+<li>Outline</li>
+<li>Draft one part</li>
+<li>Revise iteratively</li>
+</ol>
+</li>
+<li>Delete or summarize unneeded sections before continuing.</li>
+</ul>
+<hr>
+<h2 id="3-handling-large-text">3️⃣ Handling Large Text</h2>
+<ul>
+<li>Paste <strong>only relevant sections</strong> (“Here’s the last 30 lines”).</li>
+<li>Summarize before submission (“This 20-page doc covers X, Y, Z…”).</li>
+<li>Use <strong>compressed summaries</strong> or keywords when possible.</li>
+</ul>
+<hr>
+<h2 id="4-service-specific-tips">4️⃣ Service-Specific Tips</h2>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Efficiency Tactics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ChatGPT</strong></td>
+<td>GPT-4o’s tokenizer is efficient. Reuse previous messages and cap outputs.</td>
+</tr>
+<tr>
+<td><strong>Claude</strong></td>
+<td>Takes long input well — summarize documents instead of feeding full text.</td>
+</tr>
+<tr>
+<td><strong>Gemini</strong></td>
+<td>Large window; main limit is requests/day. Keep prompts precise and output short.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5-output-control">5️⃣ Output Control</h2>
+<ul>
+<li>Ask for <strong>structured formats</strong> (Markdown, table, JSON).</li>
+<li>Set maximums:
+<ul>
+<li>“Explain in ≤5 sentences.”</li>
+<li>“Show first 10 lines only.”</li>
+</ul>
+</li>
+<li>For code: “Return only the function definition.”</li>
+</ul>
+<hr>
+<h2 id="6-quick-math">6️⃣ Quick Math</h2>
+<table>
+<thead>
+<tr>
+<th>Word Count</th>
+<th>≈ Tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>75 words</td>
+<td>~100 tokens</td>
+</tr>
+<tr>
+<td>500 words</td>
+<td>~650 tokens</td>
+</tr>
+<tr>
+<td>1,000 words</td>
+<td>~1,300 tokens</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>Goal:</strong> Short, direct, scoped prompts → 3–5× token savings.</p>
+
+<hr>
+<p>More posts:</p>
+<ul><li>Next: <a href="/posts/llm-prompt-org/">LLM Prompt Organizer</a></li>
+</ul>
+
+
+        </heading-anchors>
+    </main>
+    <footer>
+        
+        <p>
+            <em>Built with
+                <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+            </em>
+        </p>
+    </footer>
+    <!-- This page `/posts/prompt-efficiencies/` was built on 2025-10-22T18:49:11.091Z -->
+    <script type="module" src="/dist/xbxy_EL6cU.js"></script>
+</body></html>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>TW x AI</title>
+  <subtitle>Navigating the intersections of technical writing and AI</subtitle>
+  <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
+  <link href="https://shealy2020.github.io/" />
+  <updated>2025-10-09T00:00:00Z</updated>
+  <id>https://shealy2020.github.io/</id>
+  <author>
+    <name>Sean Healy</name>
+  </author>
+  <entry>
+    <title>Surfacing Semantically Similar Content</title>
+    <link href="https://shealy2020.github.io/posts/refactoring-content/" />
+    <updated>2025-10-09T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/refactoring-content/</id>
+    <content type="html">&lt;h2 id=&quot;refactoring-content&quot;&gt;Refactoring Content&lt;/h2&gt;
+&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content that may be scattered across multiple departments and revised over an extended period of time. This is a recipe for content bloat and redundancy.&lt;/p&gt;
+&lt;p&gt;All content needs some degree of custodial refactoring. Often refactoring takes the form of &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_deduplication&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;deduplication&lt;/a&gt; processes or merging similar content into a single source of truth &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_source_of_truth&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;(SSOT)&lt;/a&gt;. [[extra need for SSOT in LLMs]]&lt;/p&gt;
+&lt;p&gt;Eventually, I&#39;d like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across txtai and put together a prototype that surfaces semantically same or similar chunks in the form of a report. using a simple Markdown file as input.&lt;/p&gt;
+&lt;p&gt;The processing is straightforward:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;preprocess_markdown.py&lt;/strong&gt; - Chunks MD by heading to populate a JSON file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;index_chunks.py&lt;/strong&gt; - txtai (sentence-transformers/all-MiniLM-L6-v2) indexes JSON file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;report_similarity.py&lt;/strong&gt; - txtai compares paragraph vectors. Reports similarity clusters and vector scores.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;GitHub repo here: &lt;a href=&quot;https://github.com/shealy2020/single-md-txtai-report&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/shealy2020/single-md-txtai-report&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I couldn&#39;t figure out how to do that. Instead, I fell back to just comparing paragraph content under headings, so I might as well have compared blocks of text in a *.txt file.&lt;/p&gt;
+&lt;p&gt;My goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly-structured authoring XML format with a lot of tagging and other metadata that could be helpful for vector searches.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>LLM Prompt Organizer</title>
+    <link href="https://shealy2020.github.io/posts/llm-prompt-org/" />
+    <updated>2025-10-07T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/llm-prompt-org/</id>
+    <content type="html">&lt;h1 id=&quot;llm-session-limits&quot;&gt;LLM Session Limits&lt;/h1&gt;
+&lt;p&gt;I use the freely available versions of ChatGPT, Claude, and Gemini. These LLMs impose limits on a per session basis, calculated by some combination of request counts and token usage. The table below contains the approximate limitation criteria for non-subscription users.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Service&lt;/th&gt;
+&lt;th&gt;Key Usage Limits&lt;/th&gt;
+&lt;th&gt;Approx. Token / Context Window&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;ChatGPT&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Limited GPT-4o usage per ~5-hour window.&lt;/td&gt;
+&lt;td&gt;~128k tokens (input + output).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Claude&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Message/session limit, resets ~every 5 hrs.&lt;/td&gt;
+&lt;td&gt;~200k tokens (input + output).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Gemini&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;~2 req/min, ~50 req/day (API); ~5 prompts/day (app).&lt;/td&gt;
+&lt;td&gt;Up to ~1M input / 65K output tokens.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&quot;llm-prompt-organizer&quot;&gt;LLM Prompt Organizer&lt;/h1&gt;
+&lt;p&gt;Given that I use the free LLM versions, I built tool to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt;, which provides as much bang as possible from my sessions. Also, this project gave me another chance to use [vibe coding] as an aid in building this prompt tool.&lt;/p&gt;
+&lt;p&gt;Clone or download &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LLM Prompt Organizer on Github&lt;/a&gt; here.&lt;/p&gt;
+&lt;h2 id=&quot;why-use-this-tool&quot;&gt;Why Use This Tool?&lt;/h2&gt;
+&lt;h3 id=&quot;the-problem-with-unstructured-prompts&quot;&gt;The Problem with Unstructured Prompts&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Important context gets buried in long text blocks.&lt;/li&gt;
+&lt;li&gt;Reusing successful prompt patterns requires copy-pasting and manual editing.&lt;/li&gt;
+&lt;li&gt;No clear separation between instructions, context, constraints, and data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;the-solution-semi-structured-prompts&quot;&gt;The Solution: Semi-structured Prompts&lt;/h3&gt;
+&lt;p&gt;The LLM Prompt Organizer helps you create reusable prompts by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Separating concerns&lt;/strong&gt; - Breaks your prompt into logical components (role, context, task, format, etc.)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ensuring completeness&lt;/strong&gt; - Visual interface reminds you of all the elements that make prompts effective&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Enabling reusability&lt;/strong&gt; - Saves JSON files as templates for similar tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Improving clarity&lt;/strong&gt; - JSON&#39;s semi-structured format helps the LLM understand the request.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supporting iteration&lt;/strong&gt; - Users can easily modify specific sections without rewriting everything.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Download the &lt;code&gt;prompt-form-output json-1.html&lt;/code&gt; file from &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Github&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Open it in a web browser.&lt;/li&gt;
+&lt;li&gt;Deactivate any fields irrelevant to your prompt.&lt;br&gt;
+or&lt;br&gt;
+Import an existing JSON prompt file.&lt;/li&gt;
+&lt;li&gt;Add custom fields (Optional).&lt;/li&gt;
+&lt;li&gt;Enter your content in the active fields.&lt;/li&gt;
+&lt;li&gt;Export your prompt by clicking &amp;quot;Download JSON&amp;quot; or &amp;quot;Copy JSON&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Upload the JSON file directly or paste the content into the chat interface.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;json-output-sample&quot;&gt;JSON Output Sample&lt;/h2&gt;
+&lt;p&gt;Your generated JSON will similar to this:&lt;/p&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;instructions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Process and respond to this prompt.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;role&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;You are an experienced data analyst specializing in retail performance.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;context&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;You are analyzing Q4 2024 sales data for a mid-sized retailer operating in North America. The dataset includes metrics such as total revenue, number of transactions, and product category breakdowns.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;task&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Identify the top three sales trends and provide insight into what factors may have contributed to these patterns.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;format&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Present your findings as three concise bullet points, each with one supporting sentence.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;examples&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;- Example Trend: Seasonal spike in apparel sales due to holiday promotions.&#92;n- Example Trend: Increased online sales driven by targeted email campaigns.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;constraints&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Focus only on quantitative insights supported by data. Avoid speculation not backed by sales metrics.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;data&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;region,sales,transactions North America,1200000,32000 Europe,900000,28000 Asia,1100000,30000&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;audience&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Retail operations managers looking for actionable insights to guide Q1 2025 planning.&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;instructions&lt;/code&gt; key/value is automatically included and tells the LLM how to process the JSON content.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Prompt Efficiencies</title>
+    <link href="https://shealy2020.github.io/posts/prompt-efficiencies/" />
+    <updated>2025-10-01T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/prompt-efficiencies/</id>
+    <content type="html">&lt;h1 id=&quot;token-efficiency-cheat-sheet&quot;&gt;Token Efficiency Cheat Sheet&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Conserve tokens = longer sessions + faster responses + fewer cutoffs&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;1-prompt-design&quot;&gt;1️⃣ Prompt Design&lt;/h2&gt;
+&lt;p&gt;✅ &lt;strong&gt;Do&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Keep prompts concise: use direct verbs (“summarize,” “revise,” “explain briefly”).&lt;/li&gt;
+&lt;li&gt;Reference earlier text instead of re-pasting it.&lt;/li&gt;
+&lt;li&gt;State the &lt;em&gt;output size&lt;/em&gt;:
+&lt;ul&gt;
+&lt;li&gt;“In 3 bullet points.”&lt;/li&gt;
+&lt;li&gt;“Under 100 words.”&lt;/li&gt;
+&lt;li&gt;“Code only—no explanation.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🚫 &lt;strong&gt;Don’t&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Repeat long setup text (“As I mentioned earlier…”).&lt;/li&gt;
+&lt;li&gt;Ask multiple tasks in one prompt if they can be done sequentially.&lt;/li&gt;
+&lt;li&gt;Use filler (“Could you please kindly explain…”).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;2-conversation-management&quot;&gt;2️⃣ Conversation Management&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Stay in the same chat thread so context persists.&lt;/li&gt;
+&lt;li&gt;Split long projects:
+&lt;ol&gt;
+&lt;li&gt;Outline&lt;/li&gt;
+&lt;li&gt;Draft one part&lt;/li&gt;
+&lt;li&gt;Revise iteratively&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;Delete or summarize unneeded sections before continuing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;3-handling-large-text&quot;&gt;3️⃣ Handling Large Text&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Paste &lt;strong&gt;only relevant sections&lt;/strong&gt; (“Here’s the last 30 lines”).&lt;/li&gt;
+&lt;li&gt;Summarize before submission (“This 20-page doc covers X, Y, Z…”).&lt;/li&gt;
+&lt;li&gt;Use &lt;strong&gt;compressed summaries&lt;/strong&gt; or keywords when possible.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;4-service-specific-tips&quot;&gt;4️⃣ Service-Specific Tips&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Service&lt;/th&gt;
+&lt;th&gt;Efficiency Tactics&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;ChatGPT&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;GPT-4o’s tokenizer is efficient. Reuse previous messages and cap outputs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Claude&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Takes long input well — summarize documents instead of feeding full text.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Gemini&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Large window; main limit is requests/day. Keep prompts precise and output short.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;5-output-control&quot;&gt;5️⃣ Output Control&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ask for &lt;strong&gt;structured formats&lt;/strong&gt; (Markdown, table, JSON).&lt;/li&gt;
+&lt;li&gt;Set maximums:
+&lt;ul&gt;
+&lt;li&gt;“Explain in ≤5 sentences.”&lt;/li&gt;
+&lt;li&gt;“Show first 10 lines only.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;For code: “Return only the function definition.”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;6-quick-math&quot;&gt;6️⃣ Quick Math&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Word Count&lt;/th&gt;
+&lt;th&gt;≈ Tokens&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;75 words&lt;/td&gt;
+&lt;td&gt;~100 tokens&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;500 words&lt;/td&gt;
+&lt;td&gt;~650 tokens&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;1,000 words&lt;/td&gt;
+&lt;td&gt;~1,300 tokens&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Goal:&lt;/strong&gt; Short, direct, scoped prompts → 3–5× token savings.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

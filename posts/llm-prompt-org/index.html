@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LLM Prompt Organizer</title>
+        <meta name="description" content="Tool for creating semi-structured JSON prompts for LLMs">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+    <link rel="stylesheet" href="/dist/dmLgJGMyFL.css">
+    
+    <script src="../assets/js/nav.js"></script>
+</head>
+<body>
+    <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+    <header class="site-header">
+        <nav class="site-nav">
+            <ul class="nav"><li class="nav-item">
+                            <a href="/" class="nav-link" data-dropdown-toggle="">
+                                Home
+                            </a></li><li class="nav-item">
+                            <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                Posts
+                            </a></li><li class="nav-item">
+                            <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                Resources
+                            </a></li><li class="nav-item has-children">
+                            <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                About
+                            </a><ul class="dropdown"><li>
+                                            <a href="/resume/" class="dropdown-link">
+                                                Resume
+                                            </a>
+                                        </li><li>
+                                            <a href="/work/" class="dropdown-link">
+                                                Work
+                                            </a>
+                                        </li><li>
+                                            <a href="/contact/" class="dropdown-link">
+                                                Contact
+                                            </a>
+                                        </li></ul></li></ul>
+        </nav>
+        <h1 id="llm-prompt-organizer">
+                LLM Prompt Organizer
+        </h1>
+        <p>
+                Tool for creating semi-structured JSON prompts for LLMs
+        </p>
+    </header>
+    <main id="main">
+        <heading-anchors>
+            
+
+
+
+<p>Posted on: <time datetime="2025-10-07">07 October 2025</time></p>
+
+<h1 id="llm-session-limits">LLM Session Limits</h1>
+<p>I use the freely available versions of ChatGPT, Claude, and Gemini. These LLMs impose limits on a per session basis, calculated by some combination of request counts and token usage. The table below contains the approximate limitation criteria for non-subscription users.</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Key Usage Limits</th>
+<th>Approx. Token / Context Window</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ChatGPT</strong></td>
+<td>Limited GPT-4o usage per ~5-hour window.</td>
+<td>~128k tokens (input + output).</td>
+</tr>
+<tr>
+<td><strong>Claude</strong></td>
+<td>Message/session limit, resets ~every 5 hrs.</td>
+<td>~200k tokens (input + output).</td>
+</tr>
+<tr>
+<td><strong>Gemini</strong></td>
+<td>~2 req/min, ~50 req/day (API); ~5 prompts/day (app).</td>
+<td>Up to ~1M input / 65K output tokens.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="llm-prompt-organizer-2">LLM Prompt Organizer</h1>
+<p>Given that I use the free LLM versions, I built tool to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a>, which provides as much bang as possible from my sessions. Also, this project gave me another chance to use [vibe coding] as an aid in building this prompt tool.</p>
+<p>Clone or download <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">LLM Prompt Organizer on Github</a> here.</p>
+<h2 id="why-use-this-tool">Why Use This Tool?</h2>
+<h3 id="the-problem-with-unstructured-prompts">The Problem with Unstructured Prompts</h3>
+<ul>
+<li>Important context gets buried in long text blocks.</li>
+<li>Reusing successful prompt patterns requires copy-pasting and manual editing.</li>
+<li>No clear separation between instructions, context, constraints, and data.</li>
+</ul>
+<h3 id="the-solution-semi-structured-prompts">The Solution: Semi-structured Prompts</h3>
+<p>The LLM Prompt Organizer helps you create reusable prompts by:</p>
+<ol>
+<li><strong>Separating concerns</strong> - Breaks your prompt into logical components (role, context, task, format, etc.)</li>
+<li><strong>Ensuring completeness</strong> - Visual interface reminds you of all the elements that make prompts effective</li>
+<li><strong>Enabling reusability</strong> - Saves JSON files as templates for similar tasks.</li>
+<li><strong>Improving clarity</strong> - JSON's semi-structured format helps the LLM understand the request.</li>
+<li><strong>Supporting iteration</strong> - Users can easily modify specific sections without rewriting everything.</li>
+</ol>
+<h2 id="quick-start">Quick Start</h2>
+<ol>
+<li>Download the <code>prompt-form-output json-1.html</code> file from <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">Github</a>.</li>
+<li>Open it in a web browser.</li>
+<li>Deactivate any fields irrelevant to your prompt.<br>
+or<br>
+Import an existing JSON prompt file.</li>
+<li>Add custom fields (Optional).</li>
+<li>Enter your content in the active fields.</li>
+<li>Export your prompt by clicking &quot;Download JSON&quot; or &quot;Copy JSON&quot;.</li>
+<li>Upload the JSON file directly or paste the content into the chat interface.</li>
+</ol>
+<h2 id="json-output-sample">JSON Output Sample</h2>
+<p>Your generated JSON will similar to this:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"instructions"</span><span class="token operator">:</span> <span class="token string">"Process and respond to this prompt."</span><span class="token punctuation">,</span>
+    <span class="token property">"role"</span><span class="token operator">:</span> <span class="token string">"You are an experienced data analyst specializing in retail performance."</span><span class="token punctuation">,</span>
+    <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"You are analyzing Q4 2024 sales data for a mid-sized retailer operating in North America. The dataset includes metrics such as total revenue, number of transactions, and product category breakdowns."</span><span class="token punctuation">,</span>
+    <span class="token property">"task"</span><span class="token operator">:</span> <span class="token string">"Identify the top three sales trends and provide insight into what factors may have contributed to these patterns."</span><span class="token punctuation">,</span>
+    <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"Present your findings as three concise bullet points, each with one supporting sentence."</span><span class="token punctuation">,</span>
+    <span class="token property">"examples"</span><span class="token operator">:</span> <span class="token string">"- Example Trend: Seasonal spike in apparel sales due to holiday promotions.\n- Example Trend: Increased online sales driven by targeted email campaigns."</span><span class="token punctuation">,</span>
+    <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token string">"Focus only on quantitative insights supported by data. Avoid speculation not backed by sales metrics."</span><span class="token punctuation">,</span>
+    <span class="token property">"data"</span><span class="token operator">:</span> <span class="token string">"region,sales,transactions North America,1200000,32000 Europe,900000,28000 Asia,1100000,30000"</span><span class="token punctuation">,</span>
+    <span class="token property">"audience"</span><span class="token operator">:</span> <span class="token string">"Retail operations managers looking for actionable insights to guide Q1 2025 planning."</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The <code>instructions</code> key/value is automatically included and tells the LLM how to process the JSON content.</p>
+
+<hr>
+<p>More posts:</p>
+<ul><li>Next: <a href="/posts/refactoring-content/">Surfacing Semantically Similar Content</a></li><li>Previous: <a href="/posts/prompt-efficiencies/">Prompt Efficiencies</a></li>
+</ul>
+
+
+        </heading-anchors>
+    </main>
+    <footer>
+        
+        <p>
+            <em>Built with
+                <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+            </em>
+        </p>
+    </footer>
+    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-22T18:49:11.089Z -->
+    <script type="module" src="/dist/xbxy_EL6cU.js"></script>
+</body></html>

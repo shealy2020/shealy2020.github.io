@@ -9,6 +9,8 @@
 	white-space: nowrap;
 	width: 1px;
 }
+
+/* Dark Theme   */
 :root {
   color-scheme: dark;
   --bg: #212121;
@@ -23,23 +25,27 @@
   --disabled: #111;
 }
 
-/* Hero Image Responsive CSS - Desktop/Mobile Image Swapping */
+
+  /***
+  flow text around an image
+  ***/
 .words-image {
-  background-image: url('words-desktop.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  float: right;
+  margin: 0 0 0.5rem 0.5rem;
+  max-width: 225px;
   width: 100%;
   height: auto;
-  min-height: 400px; /* Adjust as needed */
 }
 
 @media screen and (max-width: 768px) {
   .words-image {
-    background-image: url('words-mobile.svg');
-    min-height: 300px; /* Adjust for mobile */
+    float: none;
+    margin: 1rem auto;
+    display: block;
+    max-width: 200px;
   }
 }
+
 
 /* Format links & buttons */
 a,
@@ -107,171 +113,111 @@ input:enabled:focus-visible:where(
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
-/**
- * okaidia theme for JavaScript, CSS and HTML
- * Loosely based on Monokai textmate theme by http://www.monokai.nl/
- * @author ocodia
- */
 
-code[class*="language-"],
-pre[class*="language-"] {
-	color: #f8f8f2;
-	background: none;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
+body>header {
+  background-color: #000000; 
+    border-bottom: 0px solid #e0e0e0; 
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 0 .5rem 2rem;
 }
 
-/* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
-	overflow: auto;
-	border-radius: 0.3em;
+/********
+Added nav dropdown
+*********/
+
+/* Basic nav layout */
+.site-nav {
+  position: relative;
+ background: #000000;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  z-index: 100;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #272822;
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
 }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
-	white-space: normal;
+.nav-item {
+  position: relative;
 }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-	color: #8292a2;
+.nav-link {
+  text-decoration: none;
+  /*color: #333;*/
+  padding: 0.5rem;
+  display: block;
 }
 
-.token.punctuation {
-	color: #f8f8f2;
+/* Dropdown hidden by default */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+ background: #180d0d;
+  list-style: none;
+
+  margin: 0;
+  min-width: 10px;
+  z-index: 10;  
+  flex-direction: column;
 }
 
-.token.namespace {
-	opacity: .7;
+.dropdown li {
+  margin: 0;
 }
 
-.token.property,
-.token.tag,
-.token.constant,
-.token.symbol,
-.token.deleted {
-	color: #f92672;
+.dropdown-link {
+  display: block;
+  padding: 0.1rem 1rem;
+  text-decoration: none;
+  color: #333;
+  white-space: nowrap;
+  border: none;
 }
 
-.token.boolean,
-.token.number {
-	color: #ae81ff;
+
+
+/* Show dropdown when open */
+.nav-item.open > .dropdown {
+  display: flex;
 }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-	color: #a6e22e;
+/* SVG chevron for dropdown indicator */
+.has-children > .nav-link::after {
+  content: "";
+  display: inline-block;
+  margin-left: 0.4em;
+  width: 0.4em;
+  height: 0.4em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
 }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string,
-.token.variable {
-	color: #f8f8f2;
+.nav-item.open > .nav-link::after {
+  transform: rotate(225deg);
 }
 
-.token.atrule,
-.token.attr-value,
-.token.function,
-.token.class-name {
-	color: #e6db74;
+.nav-link {
+  border: none;
 }
+/** ****/
 
-.token.keyword {
-	color: #66d9ef;
-}
-
-.token.regex,
-.token.important {
-	color: #fd971f;
-}
-
-.token.important,
-.token.bold {
-	font-weight: bold;
-}
-.token.italic {
-	font-style: italic;
-}
-
-.token.entity {
-	cursor: help;
-}
-/*
- * New diff- syntax
- */
-
-pre[class*="language-diff-"] {
-	--eleventy-code-padding: 1.25em;
-	padding-left: var(--eleventy-code-padding);
-	padding-right: var(--eleventy-code-padding);
-}
-.token.deleted {
-	background-color: hsl(0, 51%, 37%);
-	color: inherit;
-}
-.token.inserted {
-	background-color: hsl(126, 31%, 39%);
-	color: inherit;
-}
-
-/* Make the + and - characters unselectable for copy/paste */
-.token.prefix.unchanged,
-.token.prefix.inserted,
-.token.prefix.deleted {
-	-webkit-user-select: none;
-	user-select: none;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
-.token.prefix.inserted,
-.token.prefix.deleted {
-	width: var(--eleventy-code-padding);
-	background-color: rgba(0,0,0,.2);
-}
-
-/* Optional: full-width background color */
-.token.inserted:not(.prefix),
-.token.deleted:not(.prefix) {
-	display: block;
-	margin-left: calc(-1 * var(--eleventy-code-padding));
-	margin-right: calc(-1 * var(--eleventy-code-padding));
-	text-decoration: none; /* override del, ins, mark defaults */
-	color: inherit; /* override del, ins, mark defaults */
+body {
+    color: var(--text);
+    background-color: black;
+    grid-template-columns: 1fr min(45rem, 90%) 1fr;
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    display: grid
+;
 }

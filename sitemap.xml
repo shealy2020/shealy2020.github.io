@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">	
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+	
+	<url>
+		<loc>https://shealy2020.github.io/archive/</loc>
+		<lastmod>2025-09-18</lastmod>
+	</url>
 	
 	<url>
 		<loc>https://shealy2020.github.io/contact/</loc>
@@ -12,14 +17,52 @@
 	</url>
 	
 	<url>
-		<loc>https://shealy2020.github.io/resume/</loc>
+		<loc>https://shealy2020.github.io/tags/</loc>
 		<lastmod>2025-09-18</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://shealy2020.github.io/work/</loc>
-		<lastmod>2025-09-21</lastmod>
+		<loc>https://shealy2020.github.io/posts/prompt-efficiencies/</loc>
+		<lastmod>2025-10-01</lastmod>
 	</url>
-
+	
+	<url>
+		<loc>https://shealy2020.github.io/posts/</loc>
+		<lastmod>2025-10-03</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/resources/</loc>
+		<lastmod>2025-10-03</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/work/</loc>
+		<lastmod>2025-10-03</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/posts/llm-prompt-org/</loc>
+		<lastmod>2025-10-07</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/posts/refactoring-content/</loc>
+		<lastmod>2025-10-09</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/about/</loc>
+		<lastmod>2025-10-09</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/resume/</loc>
+		<lastmod>2025-10-09</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/feed/feed.xml</loc>
+		<lastmod>2025-10-22</lastmod>
+	</url>
 </urlset>
-
