@@ -15,10 +15,12 @@
     <link href="https://shealy2020.github.io/posts/local-rag-in-docker/" />
     <updated>2025-10-27T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/local-rag-in-docker/</id>
-    <content type="html">&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+    <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It was a useful step befoe scaling or adapting it  to production environments, where proprientary information is behind a firewall. Everything runs entirely on a local pc, and requires no cloud services or external data transfers. I used open-source tools only — Python, Chroma, Sentence Transformers, and Ollama.&lt;/p&gt;
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
 &lt;li&gt;Docker Desktop installed with WSL enabled&lt;/li&gt;
+&lt;li&gt;Python installed&lt;/li&gt;
 &lt;li&gt;At least 4GB RAM available&lt;/li&gt;
 &lt;li&gt;At least 5GB disk space&lt;/li&gt;
 &lt;/ul&gt;
@@ -31,7 +33,7 @@
 &lt;li&gt;&lt;strong&gt;Supported Formats&lt;/strong&gt;: Markdown (.md), HTML (.html, .htm)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;privacy-and-security&quot;&gt;Privacy &amp;amp; Security&lt;/h2&gt;
-&lt;p&gt;This pipeline is a prototype for a larger implementation. It contains basic safeguards but is not production ready.&lt;/p&gt;
+&lt;p&gt;This pipeline is a prototype for a larger implementation. It provides basic safeguards but is not production ready.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;All data stays on your machine&lt;/li&gt;
 &lt;li&gt;No external API calls after setup&lt;/li&gt;
