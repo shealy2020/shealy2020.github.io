@@ -82,6 +82,86 @@
 <li>At least 4GB RAM available</li>
 <li>At least 5GB disk space</li>
 </ul>
+<h2 id="summary-of-python-scripts">Summary of Python Scripts</h2>
+<h3 id="1-config-py-configuration-management"><strong>1. config.py</strong> - Configuration Management</h3>
+<p>Central configuration file that defines all system settings:</p>
+<ul>
+<li><strong>Paths</strong>: Input documents, ChromaDB storage, model cache locations</li>
+<li><strong>Models</strong>: Uses <code>sentence-transformers/all-MiniLM-L6-v2</code> for embeddings and <code>gemma:2b</code> via Ollama for text generation</li>
+<li><strong>Chunking</strong>: Documents split into 512-character chunks with 50-character overlap</li>
+<li><strong>Retrieval</strong>: Retrieves top 5 most similar chunks with 0.7 similarity threshold</li>
+<li><strong>Server</strong>: Flask runs on port 5000</li>
+<li>Uses environment variables for flexibility in deployment</li>
+</ul>
+<hr>
+<h3 id="2-ingest-py-document-processing-and-indexing"><strong>2. ingest.py</strong> - Document Processing &amp; Indexing</h3>
+<p>Handles the ingestion pipeline that prepares documents for retrieval:</p>
+<p><strong>DocumentProcessor class:</strong></p>
+<ul>
+<li>Reads Markdown and HTML files</li>
+<li>Converts them to plain text (strips formatting, scripts, styles)</li>
+<li>Splits text into overlapping chunks for better context preservation</li>
+<li>Creates unique IDs for each chunk using MD5 hashing</li>
+</ul>
+<p><strong>VectorStore class:</strong></p>
+<ul>
+<li>Manages ChromaDB persistent storage</li>
+<li>Generates embeddings using SentenceTransformer</li>
+<li>Stores document chunks with their vector embeddings</li>
+<li>Provides collection statistics and reset functionality</li>
+</ul>
+<p><strong>Main workflow:</strong></p>
+<ul>
+<li>Scans input directory for <code>.md</code>, <code>.html</code>, <code>.htm</code> files</li>
+<li>Processes each file into chunks</li>
+<li>Generates embeddings in batches (100 at a time)</li>
+<li>Stores everything in ChromaDB for efficient similarity search</li>
+</ul>
+<hr>
+<h3 id="3-query-py-query-processing-engine"><strong>3. query.py</strong> - Query Processing Engine</h3>
+<p>The core RAG logic that answers user questions:</p>
+<p><strong>RAGEngine class:</strong></p>
+<ul>
+<li><strong>Retrieval</strong>: Converts user questions to embeddings and finds similar document chunks using vector search</li>
+<li><strong>Context Building</strong>: Assembles retrieved chunks with source attribution</li>
+<li><strong>Response Generation</strong>: Uses Ollama LLM with a structured prompt that instructs it to answer based only on provided context</li>
+<li><strong>Error Handling</strong>: Gracefully handles missing collections or empty databases</li>
+</ul>
+<p><strong>Query flow:</strong></p>
+<ol>
+<li>Embed the user's question</li>
+<li>Find top-K most similar document chunks</li>
+<li>Build context from retrieved chunks</li>
+<li>Send context + question to LLM</li>
+<li>Return answer with source citations</li>
+</ol>
+<hr>
+<h3 id="4-server-py-web-api-server"><strong>4. server.py</strong> - Web API Server</h3>
+<p>Flask-based web server that exposes the RAG system via HTTP:</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li><strong>API Key Authentication</strong>: Optional security via <code>X-API-Key</code> header (controlled by <code>RAG_API_KEY</code> environment variable)</li>
+<li><strong>Three endpoints:</strong>
+<ul>
+<li><code>GET /</code> - Serves the web interface</li>
+<li><code>GET /api/status</code> - Returns system health (document count, available files, readiness)</li>
+<li><code>POST /api/query</code> - Processes questions and returns AI-generated answers</li>
+</ul>
+</li>
+<li><strong>Lazy Loading</strong>: RAG engine initialized on first query for faster startup</li>
+<li><strong>Error Handling</strong>: Comprehensive error responses with appropriate HTTP status codes</li>
+</ul>
+<p><strong>Authentication decorator</strong> ensures protected endpoints require valid API keys when enabled.</p>
+<hr>
+<h3 id="system-architecture">System Architecture</h3>
+<pre><code>User Question → Flask Server → RAG Engine → ChromaDB (Vector Search)
+                                    ↓
+                            Retrieved Chunks
+                                    ↓
+                            Ollama LLM (gemma:2b)
+                                    ↓
+                            Answer + Sources → User
+</code></pre>
 <h2 id="installation-and-setup">Installation &amp; Setup</h2>
 <ol>
 <li>
@@ -224,6 +304,6 @@ SIMILARITY_THRESHOLD <span class="token operator">=</span> <span class="token nu
             </em>
         </p>
     </footer>
-    <!-- This page `/posts/local-rag-in-docker/` was built on 2025-10-27T16:47:02.258Z -->
+    <!-- This page `/posts/local-rag-in-docker/` was built on 2025-10-27T17:06:51.131Z -->
     <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 </body></html>

@@ -40,6 +40,86 @@
 &lt;li&gt;At least 4GB RAM available&lt;/li&gt;
 &lt;li&gt;At least 5GB disk space&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&quot;summary-of-python-scripts&quot;&gt;Summary of Python Scripts&lt;/h2&gt;
+&lt;h3 id=&quot;1-config-py-configuration-management&quot;&gt;&lt;strong&gt;1. config.py&lt;/strong&gt; - Configuration Management&lt;/h3&gt;
+&lt;p&gt;Central configuration file that defines all system settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Paths&lt;/strong&gt;: Input documents, ChromaDB storage, model cache locations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Models&lt;/strong&gt;: Uses &lt;code&gt;sentence-transformers/all-MiniLM-L6-v2&lt;/code&gt; for embeddings and &lt;code&gt;gemma:2b&lt;/code&gt; via Ollama for text generation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chunking&lt;/strong&gt;: Documents split into 512-character chunks with 50-character overlap&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval&lt;/strong&gt;: Retrieves top 5 most similar chunks with 0.7 similarity threshold&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Server&lt;/strong&gt;: Flask runs on port 5000&lt;/li&gt;
+&lt;li&gt;Uses environment variables for flexibility in deployment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;2-ingest-py-document-processing-and-indexing&quot;&gt;&lt;strong&gt;2. ingest.py&lt;/strong&gt; - Document Processing &amp;amp; Indexing&lt;/h3&gt;
+&lt;p&gt;Handles the ingestion pipeline that prepares documents for retrieval:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DocumentProcessor class:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reads Markdown and HTML files&lt;/li&gt;
+&lt;li&gt;Converts them to plain text (strips formatting, scripts, styles)&lt;/li&gt;
+&lt;li&gt;Splits text into overlapping chunks for better context preservation&lt;/li&gt;
+&lt;li&gt;Creates unique IDs for each chunk using MD5 hashing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;VectorStore class:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Manages ChromaDB persistent storage&lt;/li&gt;
+&lt;li&gt;Generates embeddings using SentenceTransformer&lt;/li&gt;
+&lt;li&gt;Stores document chunks with their vector embeddings&lt;/li&gt;
+&lt;li&gt;Provides collection statistics and reset functionality&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Main workflow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scans input directory for &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;, &lt;code&gt;.htm&lt;/code&gt; files&lt;/li&gt;
+&lt;li&gt;Processes each file into chunks&lt;/li&gt;
+&lt;li&gt;Generates embeddings in batches (100 at a time)&lt;/li&gt;
+&lt;li&gt;Stores everything in ChromaDB for efficient similarity search&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;3-query-py-query-processing-engine&quot;&gt;&lt;strong&gt;3. query.py&lt;/strong&gt; - Query Processing Engine&lt;/h3&gt;
+&lt;p&gt;The core RAG logic that answers user questions:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RAGEngine class:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval&lt;/strong&gt;: Converts user questions to embeddings and finds similar document chunks using vector search&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context Building&lt;/strong&gt;: Assembles retrieved chunks with source attribution&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Response Generation&lt;/strong&gt;: Uses Ollama LLM with a structured prompt that instructs it to answer based only on provided context&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error Handling&lt;/strong&gt;: Gracefully handles missing collections or empty databases&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Query flow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Embed the user&#39;s question&lt;/li&gt;
+&lt;li&gt;Find top-K most similar document chunks&lt;/li&gt;
+&lt;li&gt;Build context from retrieved chunks&lt;/li&gt;
+&lt;li&gt;Send context + question to LLM&lt;/li&gt;
+&lt;li&gt;Return answer with source citations&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;4-server-py-web-api-server&quot;&gt;&lt;strong&gt;4. server.py&lt;/strong&gt; - Web API Server&lt;/h3&gt;
+&lt;p&gt;Flask-based web server that exposes the RAG system via HTTP:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;API Key Authentication&lt;/strong&gt;: Optional security via &lt;code&gt;X-API-Key&lt;/code&gt; header (controlled by &lt;code&gt;RAG_API_KEY&lt;/code&gt; environment variable)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Three endpoints:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GET /&lt;/code&gt; - Serves the web interface&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GET /api/status&lt;/code&gt; - Returns system health (document count, available files, readiness)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;POST /api/query&lt;/code&gt; - Processes questions and returns AI-generated answers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lazy Loading&lt;/strong&gt;: RAG engine initialized on first query for faster startup&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error Handling&lt;/strong&gt;: Comprehensive error responses with appropriate HTTP status codes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Authentication decorator&lt;/strong&gt; ensures protected endpoints require valid API keys when enabled.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;system-architecture&quot;&gt;System Architecture&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;User Question → Flask Server → RAG Engine → ChromaDB (Vector Search)
+                                    ↓
+                            Retrieved Chunks
+                                    ↓
+                            Ollama LLM (gemma:2b)
+                                    ↓
+                            Answer + Sources → User
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&quot;installation-and-setup&quot;&gt;Installation &amp;amp; Setup&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -173,7 +253,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <updated>2025-10-09T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/refactoring-content/</id>
     <content type="html">&lt;h2 id=&quot;refactoring-content&quot;&gt;Refactoring Content&lt;/h2&gt;
-&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content that may be scattered across multiple departments and revised over an extended period of time. This is a recipe for content bloat and redundancy.&lt;/p&gt;
+&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period of time. This is a recipe for content bloat and redundancy.&lt;/p&gt;
 &lt;p&gt;All content needs some degree of custodial refactoring. Often refactoring takes the form of &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_deduplication&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;deduplication&lt;/a&gt; processes or merging similar content into a single source of truth &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_source_of_truth&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;(SSOT)&lt;/a&gt;. [[extra need for SSOT in LLMs]]&lt;/p&gt;
 &lt;p&gt;Eventually, I&#39;d like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across txtai and put together a prototype that surfaces semantically same or similar chunks in the form of a report. using a simple Markdown file as input.&lt;/p&gt;
 &lt;p&gt;The processing is straightforward:&lt;/p&gt;
