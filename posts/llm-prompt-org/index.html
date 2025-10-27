@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>LLM Prompt Organizer</title>
-        <meta name="description" content="Tool for creating semi-structured JSON prompts for LLMs">
+        <meta name="description" content="Tool for creating JSON prompts to conserve LLM tokens">
         <meta name="generator" content="Eleventy v3.1.2">
         
         
@@ -46,7 +46,7 @@
                 LLM Prompt Organizer
         </h1>
         <p>
-                Tool for creating semi-structured JSON prompts for LLMs
+                Tool for creating JSON prompts to conserve LLM tokens
         </p>
     </header>
     <main id="main">
@@ -58,11 +58,11 @@
 <p>Posted on: <time datetime="2025-09-20">20 September 2025</time></p>
 
 <p>I use the free versions of LLMs like ChatGPT, Claude, and Gemini that impose limits on a per session basis. LLMs calculate these limits through some combination of request counts and <a href="/posts/prompt-efficiencies/#tokens">token use</a>.</p>
-<p>In an earlier post, I provided some general guidelines on how to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a> by conserving tokens. For this project, I take &quot;token conservation&quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.</p>
+<p>In an earlier post, I provided some general guidelines on how to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a> with the goal of conserving tokens. For this project, I take &quot;token conservation&quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.</p>
 <p>Initially, I used highly structured XML as the output container but thought better of it. Instead, I went with semi-structured JSON because its syntax uses fewer characters, thus fewer tokens. Also, this project gave me another opportunity to use <a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">vibe coding</a> as an aid in building this prompt tool, which I'll write about in a future post.</p>
 <p>For your own use, you'll find the <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">LLM Prompt Organizer on GitHub</a>.</p>
 <h2 id="llm-session-limits">LLM Session Limits</h2>
-<p>I use the freely available versions of ChatGPT, Claude, and Gemini. The table below contains the approximate limitation criteria for non-subscription users.</p>
+<p>This table contains approximate limitation criteria for non-subscription users.</p>
 <table>
 <thead>
 <tr>
@@ -148,6 +148,6 @@ Import an existing JSON prompt file.</li>
             </em>
         </p>
     </footer>
-    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-27T20:10:10.735Z -->
+    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-27T20:16:11.037Z -->
     <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 </body></html>

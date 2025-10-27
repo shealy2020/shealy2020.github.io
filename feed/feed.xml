@@ -281,11 +281,11 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <updated>2025-09-20T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/llm-prompt-org/</id>
     <content type="html">&lt;p&gt;I use the free versions of LLMs like ChatGPT, Claude, and Gemini that impose limits on a per session basis. LLMs calculate these limits through some combination of request counts and &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/#tokens&quot;&gt;token use&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;In an earlier post, I provided some general guidelines on how to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt; by conserving tokens. For this project, I take &amp;quot;token conservation&amp;quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.&lt;/p&gt;
+&lt;p&gt;In an earlier post, I provided some general guidelines on how to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt; with the goal of conserving tokens. For this project, I take &amp;quot;token conservation&amp;quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.&lt;/p&gt;
 &lt;p&gt;Initially, I used highly structured XML as the output container but thought better of it. Instead, I went with semi-structured JSON because its syntax uses fewer characters, thus fewer tokens. Also, this project gave me another opportunity to use &lt;a href=&quot;https://en.wikipedia.org/wiki/Vibe_coding&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;vibe coding&lt;/a&gt; as an aid in building this prompt tool, which I&#39;ll write about in a future post.&lt;/p&gt;
 &lt;p&gt;For your own use, you&#39;ll find the &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LLM Prompt Organizer on GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;llm-session-limits&quot;&gt;LLM Session Limits&lt;/h2&gt;
-&lt;p&gt;I use the freely available versions of ChatGPT, Claude, and Gemini. The table below contains the approximate limitation criteria for non-subscription users.&lt;/p&gt;
+&lt;p&gt;This table contains approximate limitation criteria for non-subscription users.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
