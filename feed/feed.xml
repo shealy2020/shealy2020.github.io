@@ -15,7 +15,14 @@
     <link href="https://shealy2020.github.io/posts/local-rag-in-docker/" />
     <updated>2025-10-27T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/local-rag-in-docker/</id>
-    <content type="html">&lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
+    <content type="html">&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
+&lt;li&gt;Docker Desktop installed with WSL enabled&lt;/li&gt;
+&lt;li&gt;At least 4GB RAM available&lt;/li&gt;
+&lt;li&gt;At least 5GB disk space&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;LLM&lt;/strong&gt;: Gemma 2B (via Ollama)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Embeddings&lt;/strong&gt;: all-MiniLM-L6-v2&lt;/li&gt;
@@ -24,7 +31,7 @@
 &lt;li&gt;&lt;strong&gt;Supported Formats&lt;/strong&gt;: Markdown (.md), HTML (.html, .htm)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;privacy-and-security&quot;&gt;Privacy &amp;amp; Security&lt;/h2&gt;
-&lt;p&gt;This is a prototype for a larger implementation. This pipeline contains basic safeguards but is not production ready.&lt;/p&gt;
+&lt;p&gt;This pipeline is a prototype for a larger implementation. It contains basic safeguards but is not production ready.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;All data stays on your machine&lt;/li&gt;
 &lt;li&gt;No external API calls after setup&lt;/li&gt;
@@ -32,13 +39,6 @@
 &lt;li&gt;Can run with complete network isolation&lt;/li&gt;
 &lt;li&gt;Docker container isolation&lt;/li&gt;
 &lt;li&gt;API Key for extra layer of security&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
-&lt;li&gt;Docker Desktop installed with WSL enabled&lt;/li&gt;
-&lt;li&gt;At least 4GB RAM available&lt;/li&gt;
-&lt;li&gt;At least 5GB disk space&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;summary-of-python-scripts&quot;&gt;Summary of Python Scripts&lt;/h2&gt;
 &lt;h3 id=&quot;1-config-py-configuration-management&quot;&gt;&lt;strong&gt;1. config.py&lt;/strong&gt; - Configuration Management&lt;/h3&gt;
@@ -191,7 +191,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ol start=&quot;12&quot;&gt;
 &lt;li&gt;
-&lt;p&gt;At the prompt, enter the API key you retained earlier, then click &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;At the prompt, enter the API key you copied earlier, then click &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;The RAG interface opens (Flask + HTML) where you can query against the Markdown and HTML input files.&lt;/p&gt;
 &lt;p&gt;The interface also provides commands to add and update input files.&lt;/p&gt;
 &lt;/li&gt;
@@ -200,13 +200,13 @@
 &lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Start the container&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up
 
-&lt;span class=&quot;token comment&quot;&gt;# Start in background (detached mode)&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# Start in background (-d = detached mode)&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;# Stop the container&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; down
 
-&lt;span class=&quot;token comment&quot;&gt;# View logs&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# View logs (-f = follow)&lt;/span&gt;
 &lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; logs &lt;span class=&quot;token parameter variable&quot;&gt;-f&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;# Rebuild after code changes&lt;/span&gt;
@@ -235,7 +235,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&quot;slow-responses&quot;&gt;Slow responses&lt;/h3&gt;
 &lt;ul&gt;
-&lt;li&gt;This is normal for CPU-only inference&lt;/li&gt;
+&lt;li&gt;This is normal for CPU-only inference with limited pc resources&lt;/li&gt;
 &lt;li&gt;Gemma 2B on CPU typically takes 10-30 seconds per response&lt;/li&gt;
 &lt;li&gt;Consider reducing the amount of context retrieved (TOP_K)&lt;/li&gt;
 &lt;/ul&gt;
@@ -355,7 +355,7 @@ Import an existing JSON prompt file.&lt;/li&gt;
   <entry>
     <title>Prompt Efficiencies</title>
     <link href="https://shealy2020.github.io/posts/prompt-efficiencies/" />
-    <updated>2025-09-15T00:00:00Z</updated>
+    <updated>2025-08-15T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/prompt-efficiencies/</id>
     <content type="html">&lt;h2 id=&quot;tokens&quot;&gt;Tokens&lt;/h2&gt;
 &lt;p&gt;A token is a small chunk of text that the AI model uses to process your message and generate a reply. Both what you type and what the model sends back count toward your token limit. When you write short, focused prompts and ask for concise answers, you use fewer tokens overall. That means your sessions can last longer, responses come faster, and you’re less likely to hit token limits or get cut off mid-reply.&lt;/p&gt;
