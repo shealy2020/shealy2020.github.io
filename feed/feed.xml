@@ -15,7 +15,7 @@
     <link href="https://shealy2020.github.io/posts/local-rag-in-docker/" />
     <updated>2025-10-27T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/local-rag-in-docker/</id>
-    <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It was a useful step befoe scaling or adapting it  to production environments, where proprientary information is behind a firewall. Everything runs entirely on a local pc, and requires no cloud services or external data transfers. I used open-source tools only — Python, Chroma, Sentence Transformers, and Ollama.&lt;/p&gt;
+    <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It was a useful step before scaling or adapting it  to production environments, where proprietary information is behind a firewall. Everything runs entirely on a local pc and requires no cloud services or external data transfers. I used open-source tools only — Python, Chroma, Sentence Transformers, and Ollama.&lt;/p&gt;
 &lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
@@ -33,7 +33,7 @@
 &lt;li&gt;&lt;strong&gt;Supported Formats&lt;/strong&gt;: Markdown (.md), HTML (.html, .htm)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&quot;privacy-and-security&quot;&gt;Privacy &amp;amp; Security&lt;/h2&gt;
-&lt;p&gt;This pipeline is a prototype for a larger implementation. It provides basic safeguards but is not production ready.&lt;/p&gt;
+&lt;p&gt;This pipeline is a prototype. It provides basic safeguards but is not production ready.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;All data stays on your machine&lt;/li&gt;
 &lt;li&gt;No external API calls after setup&lt;/li&gt;
@@ -254,7 +254,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <link href="https://shealy2020.github.io/posts/refactoring-content/" />
     <updated>2025-10-09T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/refactoring-content/</id>
-    <content type="html">&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period of time. This is a recipe for content bloat and redundancy.&lt;/p&gt;
+    <content type="html">&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period. This is a recipe for content bloat and redundancy.&lt;/p&gt;
 &lt;p&gt;All content needs some degree of custodial refactoring. Often refactoring takes the form of &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_deduplication&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;deduplication&lt;/a&gt; processes or merging similar content into a single source of truth &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_source_of_truth&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;(SSOT)&lt;/a&gt;.&lt;/p&gt;
 &lt;!-- extra content needed about the importance of SSOT in LLMs --&gt;
 &lt;p&gt;Eventually, I&#39;d like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across txtai and put together a prototype that surfaces semantically same or similar chunks in the form of a report. using a simple Markdown file as input.&lt;/p&gt;
@@ -272,7 +272,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/ol&gt;
 &lt;p&gt;GitHub repo here: &lt;a href=&quot;https://github.com/shealy2020/single-md-txtai-report&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/shealy2020/single-md-txtai-report&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I couldn&#39;t figure out how to do that. Instead, I fell back to just comparing paragraph content under headings, so I might as well have compared blocks of text in a *.txt file.&lt;/p&gt;
-&lt;p&gt;My goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly-structured authoring XML format with a lot of tagging and other metadata that could be helpful for vector searches.&lt;/p&gt;
+&lt;p&gt;My goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be helpful for vector searches.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -280,7 +280,12 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <link href="https://shealy2020.github.io/posts/llm-prompt-org/" />
     <updated>2025-09-20T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/llm-prompt-org/</id>
-    <content type="html">&lt;p&gt;I use the freely available versions of ChatGPT, Claude, and Gemini. These LLMs impose limits on a per session basis, calculated by some combination of request counts and token usage. The table below contains the approximate limitation criteria for non-subscription users.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I use the free versions of LLMs like ChatGPT, Claude, and Gemini that impose limits on a per session basis. LLMs calculate these limits through some combination of request counts and &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/#tokens&quot;&gt;token use&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In an earlier post, I provided some general guidelines on how to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt; by conserving tokens. For this project, I take &amp;quot;token conservation&amp;quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.&lt;/p&gt;
+&lt;p&gt;Initially, I used highly structured XML as the output container but thought better of it. Instead, I went with semi-structured JSON because its syntax uses fewer characters, thus fewer tokens. Also, this project gave me another opportunity to use &lt;a href=&quot;https://en.wikipedia.org/wiki/Vibe_coding&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;vibe coding&lt;/a&gt; as an aid in building this prompt tool, which I&#39;ll write about in a future post.&lt;/p&gt;
+&lt;p&gt;For your own use, you&#39;ll find the &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LLM Prompt Organizer on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;llm-session-limits&quot;&gt;LLM Session Limits&lt;/h2&gt;
+&lt;p&gt;I use the freely available versions of ChatGPT, Claude, and Gemini. The table below contains the approximate limitation criteria for non-subscription users.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -307,9 +312,6 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h1 id=&quot;llm-prompt-organizer&quot;&gt;LLM Prompt Organizer&lt;/h1&gt;
-&lt;p&gt;Given that I use the free LLM versions, I built tool to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt;, which provides as much bang as possible from my sessions. Also, this project gave me another chance to use [vibe coding] as an aid in building this prompt tool.&lt;/p&gt;
-&lt;p&gt;Clone or download &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LLM Prompt Organizer on Github&lt;/a&gt; here.&lt;/p&gt;
 &lt;h2 id=&quot;why-use-this-tool&quot;&gt;Why Use This Tool?&lt;/h2&gt;
 &lt;h3 id=&quot;the-problem-with-unstructured-prompts&quot;&gt;The Problem with Unstructured Prompts&lt;/h3&gt;
 &lt;ul&gt;
@@ -328,7 +330,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;Download the &lt;code&gt;prompt-form-output json-1.html&lt;/code&gt; file from &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Github&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Download the &lt;code&gt;prompt-form-output json-1.html&lt;/code&gt; file from &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Open it in a web browser.&lt;/li&gt;
 &lt;li&gt;Deactivate any fields irrelevant to your prompt.&lt;br&gt;
 or&lt;br&gt;
@@ -339,7 +341,7 @@ Import an existing JSON prompt file.&lt;/li&gt;
 &lt;li&gt;Upload the JSON file directly or paste the content into the chat interface.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;json-output-sample&quot;&gt;JSON Output Sample&lt;/h2&gt;
-&lt;p&gt;Your generated JSON will similar to this:&lt;/p&gt;
+&lt;p&gt;Your generated JSON will be similar to this:&lt;/p&gt;
 &lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;instructions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Process and respond to this prompt.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;role&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;You are an experienced data analyst specializing in retail performance.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
@@ -380,7 +382,7 @@ Import an existing JSON prompt file.&lt;/li&gt;
 &lt;p&gt;🚫 &lt;strong&gt;Don’t&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Repeat long setup text (“As I mentioned earlier…”).&lt;/li&gt;
-&lt;li&gt;Ask multiple tasks in one prompt if they can be done sequentially.&lt;/li&gt;
+&lt;li&gt;Ask for multiple tasks in one prompt if they can be done sequentially.&lt;/li&gt;
 &lt;li&gt;Use filler (“Could you please kindly explain…”).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;

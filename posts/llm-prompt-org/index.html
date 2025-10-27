@@ -57,7 +57,12 @@
 
 <p>Posted on: <time datetime="2025-09-20">20 September 2025</time></p>
 
-<p>I use the freely available versions of ChatGPT, Claude, and Gemini. These LLMs impose limits on a per session basis, calculated by some combination of request counts and token usage. The table below contains the approximate limitation criteria for non-subscription users.</p>
+<p>I use the free versions of LLMs like ChatGPT, Claude, and Gemini that impose limits on a per session basis. LLMs calculate these limits through some combination of request counts and <a href="/posts/prompt-efficiencies/#tokens">token use</a>.</p>
+<p>In an earlier post, I provided some general guidelines on how to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a> by conserving tokens. For this project, I take &quot;token conservation&quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.</p>
+<p>Initially, I used highly structured XML as the output container but thought better of it. Instead, I went with semi-structured JSON because its syntax uses fewer characters, thus fewer tokens. Also, this project gave me another opportunity to use <a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">vibe coding</a> as an aid in building this prompt tool, which I'll write about in a future post.</p>
+<p>For your own use, you'll find the <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">LLM Prompt Organizer on GitHub</a>.</p>
+<h2 id="llm-session-limits">LLM Session Limits</h2>
+<p>I use the freely available versions of ChatGPT, Claude, and Gemini. The table below contains the approximate limitation criteria for non-subscription users.</p>
 <table>
 <thead>
 <tr>
@@ -84,9 +89,6 @@
 </tr>
 </tbody>
 </table>
-<h1 id="llm-prompt-organizer-2">LLM Prompt Organizer</h1>
-<p>Given that I use the free LLM versions, I built tool to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a>, which provides as much bang as possible from my sessions. Also, this project gave me another chance to use [vibe coding] as an aid in building this prompt tool.</p>
-<p>Clone or download <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">LLM Prompt Organizer on Github</a> here.</p>
 <h2 id="why-use-this-tool">Why Use This Tool?</h2>
 <h3 id="the-problem-with-unstructured-prompts">The Problem with Unstructured Prompts</h3>
 <ul>
@@ -105,7 +107,7 @@
 </ol>
 <h2 id="quick-start">Quick Start</h2>
 <ol>
-<li>Download the <code>prompt-form-output json-1.html</code> file from <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">Github</a>.</li>
+<li>Download the <code>prompt-form-output json-1.html</code> file from <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">GitHub</a>.</li>
 <li>Open it in a web browser.</li>
 <li>Deactivate any fields irrelevant to your prompt.<br>
 or<br>
@@ -116,7 +118,7 @@ Import an existing JSON prompt file.</li>
 <li>Upload the JSON file directly or paste the content into the chat interface.</li>
 </ol>
 <h2 id="json-output-sample">JSON Output Sample</h2>
-<p>Your generated JSON will similar to this:</p>
+<p>Your generated JSON will be similar to this:</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"instructions"</span><span class="token operator">:</span> <span class="token string">"Process and respond to this prompt."</span><span class="token punctuation">,</span>
     <span class="token property">"role"</span><span class="token operator">:</span> <span class="token string">"You are an experienced data analyst specializing in retail performance."</span><span class="token punctuation">,</span>
@@ -146,6 +148,6 @@ Import an existing JSON prompt file.</li>
             </em>
         </p>
     </footer>
-    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-27T18:49:27.774Z -->
+    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-27T20:10:10.735Z -->
     <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 </body></html>
