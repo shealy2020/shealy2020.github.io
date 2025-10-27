@@ -5,11 +5,168 @@
   <subtitle>Navigating the intersections of technical writing and AI</subtitle>
   <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
   <link href="https://shealy2020.github.io/" />
-  <updated>2025-10-09T00:00:00Z</updated>
+  <updated>2027-03-07T00:00:00Z</updated>
   <id>https://shealy2020.github.io/</id>
   <author>
     <name>Sean Healy</name>
   </author>
+  <entry>
+    <title>Setting up Local RAG pipeline in Docker</title>
+    <link href="https://shealy2020.github.io/posts/local-rag-in-docker/" />
+    <updated>2027-03-07T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/local-rag-in-docker/</id>
+    <content type="html">&lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LLM&lt;/strong&gt;: Gemma 2B (via Ollama)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Embeddings&lt;/strong&gt;: all-MiniLM-L6-v2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vector Store&lt;/strong&gt;: ChromaDB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interface&lt;/strong&gt;: Flask + HTML&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supported Formats&lt;/strong&gt;: Markdown (.md), HTML (.html, .htm)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;privacy-and-security&quot;&gt;Privacy &amp;amp; Security&lt;/h2&gt;
+&lt;p&gt;This is a prototype for a larger implementation. This pipeline contains basic safeguards but is not production ready.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;All data stays on your machine&lt;/li&gt;
+&lt;li&gt;No external API calls after setup&lt;/li&gt;
+&lt;li&gt;No telemetry or analytics&lt;/li&gt;
+&lt;li&gt;Can run with complete network isolation&lt;/li&gt;
+&lt;li&gt;Docker container isolation&lt;/li&gt;
+&lt;li&gt;API Key for extra layer of security&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
+&lt;li&gt;Docker Desktop installed with WSL enabled&lt;/li&gt;
+&lt;li&gt;At least 4GB RAM available&lt;/li&gt;
+&lt;li&gt;At least 5GB disk space&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;installation-and-setup&quot;&gt;Installation &amp;amp; Setup&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Start Docker Desktop in Windows.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Start WSL. A Bash terminal opens in your home directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Copy &lt;em&gt;rag-local&lt;/em&gt; directory to your home directory.&lt;/p&gt;
+&lt;p&gt;Project Structure:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rag-local/
+├── Dockerfile              # Container definition
+├── docker-compose.yml      # Docker Compose configuration
+├── requirements.txt        # Python dependencies
+├── README.md              # This file
+├── app/
+│   ├── config.py          # Configuration settings
+│   ├── ingest.py          # Document ingestion
+│   ├── query.py           # RAG query engine
+│   ├── server.py          # Flask web server
+│   ├── templates/
+│   │   └── index.html     # Web interface
+│   └── static/
+│       └── style.css      # CSS styling
+└── data/
+ ├── input/             # Your documents (add files here)
+ ├── chroma_db/         # Vector database (auto-created)
+ └── models/            # Cached ML models (auto-created)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The project contains a sample &lt;code&gt;.md&lt;/code&gt; and &lt;code&gt;.html&lt;/code&gt; file in the &lt;em&gt;data/input&lt;/em&gt; directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generate an API Key.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;openssl rand &lt;span class=&quot;token parameter variable&quot;&gt;-base64&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;32&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This key will add a minimal security layer.&lt;/p&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;Copy the API Key. You will need it for the steps that follow. (Also, retain it for later use.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open &lt;em&gt;docker-compose.yml&lt;/em&gt; and find the following line:
+&lt;em&gt;RAG_API_KEY=change-this-to-a-strong-random-key&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Replace &amp;quot;change-this-to-a-strong-random-key&amp;quot; with your API key.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Navigate to the project directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; ~/rag-local&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&quot;9&quot;&gt;
+&lt;li&gt;Build the Docker image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; build&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​	This may take 10-20 minutes as it downloads all required components.&lt;/p&gt;
+&lt;ol start=&quot;10&quot;&gt;
+&lt;li&gt;Start the container.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​	The first startup after a build may take 5-10 minutes as it downloads the Gemma 2B model (~1.7GB).&lt;/p&gt;
+&lt;ol start=&quot;11&quot;&gt;
+&lt;li&gt;Open a browser and enter:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;http://localhost:5000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&quot;12&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;At the prompt, enter the API key you retained earlier, then click &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The RAG interface opens (Flask + HTML) where you can query against the Markdown and HTML input files.&lt;/p&gt;
+&lt;p&gt;The interface also provides commands to add and update input files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;useful-docker-commands&quot;&gt;Useful Docker Commands&lt;/h2&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Start the container&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up
+
+&lt;span class=&quot;token comment&quot;&gt;# Start in background (detached mode)&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Stop the container&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; down
+
+&lt;span class=&quot;token comment&quot;&gt;# View logs&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; logs &lt;span class=&quot;token parameter variable&quot;&gt;-f&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Rebuild after code changes&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; build --no-cache
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h3 id=&quot;container-wont-start&quot;&gt;Container won&#39;t start&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Check to verify that Docker Desktop is running&lt;/li&gt;
+&lt;li&gt;In Docker Desktop, go to &lt;strong&gt;Settings&lt;/strong&gt; &amp;gt; &lt;strong&gt;General&lt;/strong&gt;. Verify that &lt;em&gt;Use the WSL 2 based engine&lt;/em&gt; is enabled&lt;/li&gt;
+&lt;li&gt;Check port 5000 is not in use: &lt;code&gt;netstat -an | grep 5000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;View logs: &lt;code&gt;docker-compose logs&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;ollama-errors&quot;&gt;Ollama errors&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Wait longer on first startup (model download takes time)&lt;/li&gt;
+&lt;li&gt;Check container logs: &lt;code&gt;docker-compose logs | grep ollama&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Restart container: &lt;code&gt;docker-compose restart&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;out-of-memory&quot;&gt;Out of memory&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Reduce &lt;code&gt;TOP_K&lt;/code&gt; in &lt;code&gt;app/config.py&lt;/code&gt; (default: 5)&lt;/li&gt;
+&lt;li&gt;Reduce &lt;code&gt;CHUNK_SIZE&lt;/code&gt; in &lt;code&gt;app/config.py&lt;/code&gt; (default: 512)&lt;/li&gt;
+&lt;li&gt;Close other applications&lt;/li&gt;
+&lt;li&gt;Restart Docker Desktop&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;slow-responses&quot;&gt;Slow responses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;This is normal for CPU-only inference&lt;/li&gt;
+&lt;li&gt;Gemma 2B on CPU typically takes 10-30 seconds per response&lt;/li&gt;
+&lt;li&gt;Consider reducing the amount of context retrieved (TOP_K)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Edit &lt;code&gt;app/config.py&lt;/code&gt; to customize:&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;CHUNK_SIZE &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;512&lt;/span&gt;          &lt;span class=&quot;token comment&quot;&gt;# Size of text chunks&lt;/span&gt;
+CHUNK_OVERLAP &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;50&lt;/span&gt;        &lt;span class=&quot;token comment&quot;&gt;# Overlap between chunks&lt;/span&gt;
+TOP_K &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;                 &lt;span class=&quot;token comment&quot;&gt;# Number of chunks to retrieve&lt;/span&gt;
+SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0.7&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;# Minimum similarity score&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
   <entry>
     <title>Surfacing Semantically Similar Content</title>
     <link href="https://shealy2020.github.io/posts/refactoring-content/" />
@@ -119,7 +276,7 @@ Import an existing JSON prompt file.&lt;/li&gt;
   <entry>
     <title>Prompt Efficiencies</title>
     <link href="https://shealy2020.github.io/posts/prompt-efficiencies/" />
-    <updated>2025-10-01T00:00:00Z</updated>
+    <updated>2025-09-15T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/prompt-efficiencies/</id>
     <content type="html">&lt;h1 id=&quot;token-efficiency-cheat-sheet&quot;&gt;Token Efficiency Cheat Sheet&lt;/h1&gt;
 &lt;blockquote&gt;
