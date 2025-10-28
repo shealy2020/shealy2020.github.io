@@ -107,30 +107,42 @@
 </ol>
 <h2 id="quick-start">Quick Start</h2>
 <ol>
-<li>Download the <code>prompt-form-output json-1.html</code> file from <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">GitHub</a>.</li>
-<li>Open it in a web browser.</li>
-<li>Deactivate any fields irrelevant to your prompt.<br>
-or<br>
-Import an existing JSON prompt file.</li>
-<li>Add custom fields (Optional).</li>
-<li>Enter your content in the active fields.</li>
-<li>Export your prompt by clicking &quot;Download JSON&quot; or &quot;Copy JSON&quot;.</li>
-<li>Upload the JSON file directly or paste the content into the chat interface.</li>
+<li>
+<p>Download the <code>prompt-form-output json-1.html</code> file from <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">GitHub</a>.</p>
+</li>
+<li>
+<p>Open the form in a browser.</p>
+<p><img src="..\..\images\prompt-organizer-form-1.png" alt="Prompt Organizer" title="Prompt Organizer"></p>
+</li>
+<li>
+<p>If you don't need customizations, add content to the default fields.</p>
+</li>
+<li>
+<p>Export your prompt by clicking <strong>Copy JSON</strong> or <strong>Download JSON</strong>.</p>
+</li>
+<li>
+<p>Enter your JSON data into the chatbot's query field by either pasting the text into the field or by dragging in the JSON file.</p>
+</li>
 </ol>
+<h2 id="customization-options">Customization Options</h2>
+<ul>
+<li>Once the form opens, click the <strong>Import JSON</strong> file if you have saved an existing JSON file from a previous query and want to reuse it as the starting point for a new query.</li>
+<li>In the <strong>Custom Fields</strong> area, deactivate any fields not relevant to your query. Active field buttons have a dark background; whereas, deactivated field buttons have a light background. Any deactivated field can be re-activated by clicking its associated button.</li>
+</ul>
 <h2 id="json-output-sample">JSON Output Sample</h2>
 <p>Your generated JSON will be similar to this:</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"instructions"</span><span class="token operator">:</span> <span class="token string">"Process and respond to this prompt."</span><span class="token punctuation">,</span>
     <span class="token property">"role"</span><span class="token operator">:</span> <span class="token string">"You are an experienced data analyst specializing in retail performance."</span><span class="token punctuation">,</span>
-    <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"You are analyzing Q4 2024 sales data for a mid-sized retailer operating in North America. The dataset includes metrics such as total revenue, number of transactions, and product category breakdowns."</span><span class="token punctuation">,</span>
+    <span class="token property">"context"</span><span class="token operator">:</span> <span class="token string">"You are analyzing Q4 2024 sales data for a mid-sized retailer operating in North America."</span><span class="token punctuation">,</span>
     <span class="token property">"task"</span><span class="token operator">:</span> <span class="token string">"Identify the top three sales trends and provide insight into what factors may have contributed to these patterns."</span><span class="token punctuation">,</span>
     <span class="token property">"format"</span><span class="token operator">:</span> <span class="token string">"Present your findings as three concise bullet points, each with one supporting sentence."</span><span class="token punctuation">,</span>
-    <span class="token property">"examples"</span><span class="token operator">:</span> <span class="token string">"- Example Trend: Seasonal spike in apparel sales due to holiday promotions.\n- Example Trend: Increased online sales driven by targeted email campaigns."</span><span class="token punctuation">,</span>
+    <span class="token property">"examples"</span><span class="token operator">:</span> <span class="token string">"- Example Trend: Seasonal spike in apparel sales due to holiday promotions."</span><span class="token punctuation">,</span>
     <span class="token property">"constraints"</span><span class="token operator">:</span> <span class="token string">"Focus only on quantitative insights supported by data. Avoid speculation not backed by sales metrics."</span><span class="token punctuation">,</span>
     <span class="token property">"data"</span><span class="token operator">:</span> <span class="token string">"region,sales,transactions North America,1200000,32000 Europe,900000,28000 Asia,1100000,30000"</span><span class="token punctuation">,</span>
     <span class="token property">"audience"</span><span class="token operator">:</span> <span class="token string">"Retail operations managers looking for actionable insights to guide Q1 2025 planning."</span>
 <span class="token punctuation">}</span></code></pre>
-<p>The <code>instructions</code> key/value is automatically included and tells the LLM how to process the JSON content.</p>
+<p>The <code>instructions</code> key/value tells the LLM what to do with the JSON content. It is included, automatically.</p>
 
 <hr>
 <p>More posts:</p>
@@ -148,6 +160,6 @@ Import an existing JSON prompt file.</li>
             </em>
         </p>
     </footer>
-    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-27T20:16:11.037Z -->
+    <!-- This page `/posts/llm-prompt-org/` was built on 2025-10-28T19:11:26.111Z -->
     <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 </body></html>
