@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="50mm"
+   height="50mm"
+   viewBox="0 0 50 50"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="merge-logo-1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.3087087"
+     inkscape:cx="95.156119"
+     inkscape:cy="83.203582"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#0000ff;stroke:#e1e000;stroke-width:0"
+       id="rect1"
+       width="3.8409722"
+       height="38.409725"
+       x="31.730881"
+       y="-1.5435601"
+       transform="rotate(42.423855)" />
+    <rect
+       style="fill:#ffff00;stroke:#e1e000;stroke-width:0"
+       id="rect1-4"
+       width="4.1409993"
+       height="53.26664"
+       x="23.094086"
+       y="-2.7252958"
+       transform="matrix(0.99999548,0.0030074,-0.00181756,0.99999835,0,0)" />
+    <rect
+       style="fill:#00ff00;stroke:#e1e000;stroke-width:0"
+       id="rect1-4-2"
+       width="4.0809822"
+       height="28.341446"
+       x="23.184"
+       y="-4.679791"
+       transform="matrix(0.99999868,0.00162366,-0.00336655,0.99999433,0,0)" />
+    <circle
+       style="fill:#ffffff;stroke:#e1e000;stroke-width:0"
+       id="path1"
+       cx="25.053909"
+       cy="23.825777"
+       r="4.1756516" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="background"
+     style="display:inline" />
+</svg>

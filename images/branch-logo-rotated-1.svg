@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="92pt"
+   height="92pt"
+   viewBox="0 0 92 92"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="branch-logo-rotated-1.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     inkscape:zoom="6.9701087"
+     inkscape:cx="61.333333"
+     inkscape:cy="61.333333"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g2" />
+  <defs
+     id="defs1">
+    <clipPath
+       id="a">
+      <path
+         d="M0 .113h91.887V92H0Zm0 0"
+         id="path1" />
+    </clipPath>
+  </defs>
+  <g
+     clip-path="url(#a)"
+     id="g2"
+     transform="rotate(45.316873,46.047162,47.37296)">
+    <path
+       style="fill:#100f0d;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="M 90.129396,41.687108 49.757962,1.8231462 a 5.913,5.913 0 0 0 -8.367835,0.052612 l -8.27945,8.3842208 10.632223,10.49936 a 7.03,7.03 0 0 1 7.240445,1.63851 7.043,7.043 0 0 1 1.718719,7.266337 l 10.246829,10.119775 a 7.026,7.026 0 0 1 7.288368,1.626209 7.04,7.04 0 0 1 0.0626,9.956803 7.045,7.045 0 0 1 -9.960803,0.06263 7.038,7.038 0 0 1 -1.580131,-7.650216 l -9.559522,-9.437083 0.157163,24.996506 a 7.04,7.04 0 0 1 1.930947,11.278082 7.04,7.04 0 0 1 -9.956804,0.0626 7.04,7.04 0 0 1 -0.06261,-9.957804 7.034,7.034 0 0 1 2.298278,-1.55348 L 43.407775,33.941706 A 7.001,7.001 0 0 1 41.090169,32.421248 7.049,7.049 0 0 1 39.525787,24.730932 L 29.042492,14.378638 1.7079612,42.055045 a 5.918,5.918 0 0 0 0.052631,8.370835 l 40.372465,39.868955 a 5.92,5.92 0 0 0 8.367835,-0.05261 L 90.182026,50.057942 a 5.925,5.925 0 0 0 -0.05263,-8.370834"
+       id="path2" />
+  </g>
+</svg>
