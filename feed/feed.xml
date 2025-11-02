@@ -16,6 +16,7 @@
     <updated>2025-10-27T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/local-rag-in-docker/</id>
     <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It was a useful step before scaling or adapting it  to production environments, where proprietary information is behind a firewall. Everything runs entirely on a local pc and requires no cloud services or external data transfers. I used open-source tools only — Python, Chroma, Sentence Transformers, and Ollama.&lt;/p&gt;
+&lt;p&gt;You&#39;ll find the package on &lt;a href=&quot;https://github.com/shealy2020/rag-local&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
