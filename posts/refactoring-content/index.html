@@ -83,9 +83,9 @@
 <p><strong>report_similarity.py</strong> - txtai compares paragraph vectors. Reports similarity clusters and vector scores.</p>
 </li>
 </ol>
-<p>GitHub repo here: <a href="https://github.com/shealy2020/single-md-txtai-report" target="_blank" rel="noopener">https://github.com/shealy2020/single-md-txtai-report</a></p>
-<p>I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I couldn't figure out how to do that. Instead, I fell back to just comparing paragraph content under headings, so I might as well have compared blocks of text in a *.txt file.</p>
-<p>My goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be helpful for vector searches.</p>
+<p>If you want to look under the hood, you'll find this package on <a href="https://github.com/shealy2020/single-md-txtai-report" target="_blank" rel="noopener">GitHub</a>.</p>
+<h3 id="postmortem">Postmortem</h3>
+<p>I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I haven't figured out how to do that yet. Instead, I fell back to just comparing paragraph content under the Markdown headings. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.</p>
 
 <hr>
 <p>More posts:</p>
@@ -103,7 +103,7 @@
                 </em>
             </p>
         </footer>
-        <!-- This page `/posts/refactoring-content/` was built on 2025-11-02T23:24:15.285Z -->
+        <!-- This page `/posts/refactoring-content/` was built on 2025-11-02T23:37:00.052Z -->
         <script type="module" src="/dist/xbxy_EL6cU.js"></script>
     </body>
 </html>
