@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  <title>TW x AI</title>
-  <subtitle>Navigating the intersections of technical writing and AI</subtitle>
+  <title>Merge</title>
+  <subtitle>Navigating the intersections of technical communication and AI</subtitle>
   <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
   <link href="https://shealy2020.github.io/" />
-  <updated>2025-10-27T00:00:00Z</updated>
+  <updated>2025-11-04T18:54:40Z</updated>
   <id>https://shealy2020.github.io/</id>
   <author>
     <name>Sean Healy</name>
   </author>
   <entry>
+    <title></title>
+    <link href="https://shealy2020.github.io/posts/drafts/structural-similarity/" />
+    <updated>2025-11-04T18:54:40Z</updated>
+    <id>https://shealy2020.github.io/posts/drafts/structural-similarity/</id>
+    <content type="html">&lt;p&gt;title: Structural Similarity
+description: Adding a structural dimension to semantic similarity scores
+date: 2025-10-04
+draft: true
+tags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;LLM&lt;/li&gt;
+&lt;li&gt;Vector&lt;/li&gt;
+&lt;li&gt;embed&lt;/li&gt;
+&lt;li&gt;structure&lt;/li&gt;
+&lt;li&gt;semantic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;score=α⋅semantic_sim+β⋅structural_sim&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Setting up Local RAG Pipeline in Docker</title>
     <link href="https://shealy2020.github.io/posts/local-rag-in-docker/" />
     <updated>2025-10-27T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/local-rag-in-docker/</id>
-    <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It was a useful step before scaling or adapting it  to production environments, where proprietary information is behind a firewall. Everything runs entirely on a local pc and requires no cloud services or external data transfers. I used open-source tools only — Python, Chroma, Sentence Transformers, and Ollama.&lt;/p&gt;
+    <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It was a useful step before scaling or adapting it to production environments, where proprietary information is behind a firewall. Everything runs entirely on a local pc and requires no cloud services or external data transfers. I used open-source tools only — Python, Chroma, Sentence Transformers, and Ollama.&lt;/p&gt;
 &lt;p&gt;You&#39;ll find the package on &lt;a href=&quot;https://github.com/shealy2020/rag-local&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
 &lt;ul&gt;
@@ -258,7 +279,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <content type="html">&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period. This is a recipe for content bloat and redundancy.&lt;/p&gt;
 &lt;p&gt;All content needs some degree of custodial refactoring. Often refactoring takes the form of &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_deduplication&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;deduplication&lt;/a&gt; processes or merging similar content into a single source of truth &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_source_of_truth&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;(SSOT)&lt;/a&gt;.&lt;/p&gt;
 &lt;!-- extra content needed about the importance of SSOT in LLMs --&gt;
-&lt;p&gt;Eventually, I&#39;d like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across &lt;a href=&quot;https://github.com/neuml/txtai&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;txtai&lt;/a&gt; and put together a prototype that surfaces semantically same or similar chunks in the form of a report. using a simple Markdown file as input.&lt;/p&gt;
+&lt;p&gt;Eventually, I&#39;d like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across &lt;a href=&quot;https://github.com/neuml/txtai&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;txtai&lt;/a&gt; and put together a prototype that surfaces semantically same or similar chunks in the form of a report, using a simple Markdown file as input.&lt;/p&gt;
 &lt;p&gt;The processing is straightforward:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -273,7 +294,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/ol&gt;
 &lt;p&gt;If you want to look under the hood, you&#39;ll find this package on &lt;a href=&quot;https://github.com/shealy2020/single-md-txtai-report&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&quot;postmortem&quot;&gt;Postmortem&lt;/h3&gt;
-&lt;p&gt;I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I haven&#39;t figured out how to do that yet. Instead, I fell back to just comparing paragraph content under the Markdown headings. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.&lt;/p&gt;
+&lt;p&gt;I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I haven&#39;t figured out how to do that yet. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -375,12 +396,12 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <updated>2025-08-15T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/prompt-efficiencies/</id>
     <content type="html">&lt;h2 id=&quot;tokens&quot;&gt;Tokens&lt;/h2&gt;
-&lt;p&gt;A token is a small chunk of text that the AI model uses to process your message and generate a reply. Both what you type and what the model sends back count toward your token limit. When you write short, focused prompts and ask for concise answers, you use fewer tokens overall. That means your sessions can last longer, responses come faster, and you’re less likely to hit token limits or get cut off mid-reply.&lt;/p&gt;
+&lt;p&gt;A token is a small chunk of text that the AI model uses to process your message and generate a reply. Both what you enter and what the model sends back count toward your token limit. When you write short, focused prompts and ask for concise answers, you use fewer tokens overall. That means your sessions can last longer, responses come faster, and you’re less likely to hit token limits or get cut off mid-reply.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Conserve tokens = longer sessions + faster responses + fewer cutoffs&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;1-prompt-design&quot;&gt;1️⃣ Prompt Design&lt;/h2&gt;
-&lt;p&gt;✅ &lt;strong&gt;Do&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-prompt-design&quot;&gt;1️. Prompt Design&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Do&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Keep prompts concise: use direct verbs (“summarize,” “revise,” “explain briefly”).&lt;/li&gt;
 &lt;li&gt;Reference earlier text instead of re-pasting it.&lt;/li&gt;
@@ -392,14 +413,14 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;🚫 &lt;strong&gt;Don’t&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Don’t&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Repeat long setup text (“As I mentioned earlier…”).&lt;/li&gt;
 &lt;li&gt;Ask for multiple tasks in one prompt if they can be done sequentially.&lt;/li&gt;
 &lt;li&gt;Use filler (“Could you please kindly explain…”).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;2-conversation-management&quot;&gt;2️⃣ Conversation Management&lt;/h2&gt;
+&lt;h2 id=&quot;2-conversation-management&quot;&gt;2. Conversation Management&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Stay in the same chat thread so context persists.&lt;/li&gt;
 &lt;li&gt;Split long projects:
@@ -412,14 +433,14 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;li&gt;Delete or summarize unneeded sections before continuing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;3-handling-large-text&quot;&gt;3️⃣ Handling Large Text&lt;/h2&gt;
+&lt;h2 id=&quot;3-handling-large-text&quot;&gt;3️. Handling Large Text&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Paste &lt;strong&gt;only relevant sections&lt;/strong&gt; (“Here’s the last 30 lines”).&lt;/li&gt;
 &lt;li&gt;Summarize before submission (“This 20-page doc covers X, Y, Z…”).&lt;/li&gt;
 &lt;li&gt;Use &lt;strong&gt;compressed summaries&lt;/strong&gt; or keywords when possible.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;4-service-specific-tips&quot;&gt;4️⃣ Service-Specific Tips&lt;/h2&gt;
+&lt;h2 id=&quot;4-service-specific-tips&quot;&gt;4. Service-Specific Tips&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -443,7 +464,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;5-output-control&quot;&gt;5️⃣ Output Control&lt;/h2&gt;
+&lt;h2 id=&quot;5-output-control&quot;&gt;5️. Output Control&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ask for &lt;strong&gt;structured formats&lt;/strong&gt; (Markdown, table, JSON).&lt;/li&gt;
 &lt;li&gt;Set maximums:
@@ -455,7 +476,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;li&gt;For code: “Return only the function definition.”&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;6-quick-math&quot;&gt;6️⃣ Quick Math&lt;/h2&gt;
+&lt;h2 id=&quot;approximate-token-use&quot;&gt;Approximate Token Use&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
