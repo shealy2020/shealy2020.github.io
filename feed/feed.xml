@@ -5,32 +5,11 @@
   <subtitle>Navigating the intersections of technical communication and AI</subtitle>
   <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
   <link href="https://shealy2020.github.io/" />
-  <updated>2025-11-04T18:54:40Z</updated>
+  <updated>2025-10-27T00:00:00Z</updated>
   <id>https://shealy2020.github.io/</id>
   <author>
     <name>Sean Healy</name>
   </author>
-  <entry>
-    <title></title>
-    <link href="https://shealy2020.github.io/posts/drafts/structural-similarity/" />
-    <updated>2025-11-04T18:54:40Z</updated>
-    <id>https://shealy2020.github.io/posts/drafts/structural-similarity/</id>
-    <content type="html">&lt;p&gt;title: Structural Similarity
-description: Adding a structural dimension to semantic similarity scores
-date: 2025-10-04
-draft: true
-tags:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;LLM&lt;/li&gt;
-&lt;li&gt;Vector&lt;/li&gt;
-&lt;li&gt;embed&lt;/li&gt;
-&lt;li&gt;structure&lt;/li&gt;
-&lt;li&gt;semantic&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;score=α⋅semantic_sim+β⋅structural_sim&lt;/p&gt;
-</content>
-  </entry>
   <entry>
     <title>Setting up Local RAG Pipeline in Docker</title>
     <link href="https://shealy2020.github.io/posts/local-rag-in-docker/" />
