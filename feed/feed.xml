@@ -486,8 +486,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     <link href="https://shealy2020.github.io/posts/doc-gen-rag-pipeline/" />
     <updated>2025-08-10T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/doc-gen-rag-pipeline/</id>
-    <content type="html">&lt;h1 id=&quot;generating-information-products-with-rag&quot;&gt;Generating Information Products with RAG&lt;/h1&gt;
-&lt;p&gt;This document explains how a Retrieval-Augmented Generation (RAG) pipeline processes local documents to generate new information products.&lt;/p&gt;
+    <content type="html">&lt;p&gt;This document explains how a Retrieval-Augmented Generation (RAG) pipeline processes local documents to generate new information products.&lt;/p&gt;
 &lt;p&gt;The RAG architecture operates as a set of coordinated components—each performing a specific function such as ingestion, embedding, retrieval, or generation. Some of these functions are handled by open-source tools or libraries, while others are implemented as in-house modules or scripts.&lt;/p&gt;
 &lt;h2 id=&quot;rag-pipeline-diagram&quot;&gt;RAG Pipeline Diagram&lt;/h2&gt;
 &lt;figure&gt;
