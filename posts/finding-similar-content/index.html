@@ -68,9 +68,8 @@
 <p>Posted on: <time datetime="2025-10-09">09 October 2025</time></p>
 
 <p>A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period. This is a recipe for content bloat and redundancy.</p>
-<p>All content needs some degree of custodial refactoring. Often refactoring takes the form of <a href="https://en.wikipedia.org/wiki/Data_deduplication" target="_blank" rel="noopener">deduplication</a> processes or merging similar content into a single source of truth <a href="https://en.wikipedia.org/wiki/Single_source_of_truth" target="_blank" rel="noopener">(SSOT)</a>.</p>
-<!-- extra content needed about the importance of SSOT in LLMs -->
-<p>Eventually, I'd like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across <a href="https://github.com/neuml/txtai" target="_blank" rel="noopener">txtai</a> and put together a prototype that surfaces semantically same or similar chunks in the form of a report, using a simple Markdown file as input.</p>
+<p>All content needs some degree of custodial refactoring through <a href="https://en.wikipedia.org/wiki/Data_deduplication" target="_blank" rel="noopener">deduplication</a>, merging similar content into a single source of truth <a href="https://en.wikipedia.org/wiki/Single_source_of_truth" target="_blank" rel="noopener">(SSOT)</a> or by eliminating all but one permutation. Even before the emergence of AI, maintaining clean, unambiguous documentation was essential to avoid the junk in/out scenario. In the foreseeable future, documentation will converted to vectors wholesale,</p>
+<p>Eventually, I'd like to contain a large set of documentation in a local LLM that can be searched for semantically similar content. A human would need to determine the best course of action on a case-by-case basis. In taking baby steps toward that goal, I came across <a href="https://github.com/neuml/txtai" target="_blank" rel="noopener">txtai</a> and put together a prototype that surfaces semantically same or similar chunks in the form of a report, using a simple Markdown file as input.</p>
 <p>The processing is straightforward:</p>
 <ol>
 <li>
@@ -85,9 +84,14 @@
 </ol>
 <p>If you want to look under the hood, you'll find this package on <a href="https://github.com/shealy2020/single-md-txtai-report" target="_blank" rel="noopener">GitHub</a>.</p>
 <h3 id="postmortem">Postmortem</h3>
-<p>I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I haven't figured out how to do that yet. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.</p>
+<p>I set out to use the hierarchical structure of the Markdown file as added context to vector scores, which was proved to be too ambitious for this first pass. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.</p>
 
 <hr>
+<p>Tagged with:</p>
+<ul>
+  <li><a href="/tags/txtai/">txtai</a></li>
+  <li><a href="/tags/semantic/">semantic</a></li>
+</ul>
 <p>More posts:</p>
 <ul><li>Next: <a href="/posts/local-rag-in-docker/">Setting up Local RAG Pipeline in Docker</a></li><li>Previous: <a href="/posts/llm-prompt-org/">LLM Prompt Organizer</a></li>
 </ul>
@@ -103,7 +107,7 @@
                 </em>
             </p>
         </footer>
-        <!-- This page `/posts/refactoring-content/` was built on 2025-11-05T17:09:34.460Z -->
+        <!-- This page `/posts/finding-similar-content/` was built on 2025-11-06T20:22:13.744Z -->
         <script type="module" src="/dist/xbxy_EL6cU.js"></script>
     </body>
 </html>

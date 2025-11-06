@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 400 801"
+   width="400"
+   height="801"
+   version="1.1"
+   id="svg9"
+   sodipodi:docname="rag-pipeline-diagram.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview9"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.95"
+     inkscape:cx="200"
+     inkscape:cy="450"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg9" />
+  <!-- Define styles -->
+  <defs
+     id="defs1">
+    <style
+       id="style1">
+      .box {
+        fill: white;
+        stroke: #2563eb;
+        stroke-width: 2;
+      }
+      .text {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        fill: #1e293b;
+        text-anchor: middle;
+      }
+      .arrow {
+        stroke: #2563eb;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+    </style>
+    <!-- Arrow marker -->
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,0 10,3 0,6 "
+         fill="#2563eb"
+         id="polygon1" />
+    </marker>
+  </defs>
+  <!-- Box 1: Source Documents -->
+  <rect
+     class="box"
+     x="50"
+     y="20"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect1" />
+  <text
+     class="text"
+     x="200"
+     y="55"
+     id="text1">Source Documents</text>
+  <!-- Arrow 1 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="80"
+     x2="200"
+     y2="120"
+     id="line1" />
+  <!-- Box 2: Ingestion & Cleaning -->
+  <rect
+     class="box"
+     x="50"
+     y="120"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect2" />
+  <text
+     class="text"
+     x="200"
+     y="155"
+     id="text2">Ingestion &amp; Cleaning</text>
+  <!-- Arrow 2 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="180"
+     x2="200"
+     y2="220"
+     id="line2" />
+  <!-- Box 3: Segmentation & Chunking -->
+  <rect
+     class="box"
+     x="50"
+     y="220"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect3" />
+  <text
+     class="text"
+     x="200"
+     y="245"
+     id="text3">Segmentation &amp;</text>
+  <text
+     class="text"
+     x="200"
+     y="265"
+     id="text4">Chunking</text>
+  <!-- Arrow 3 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="280"
+     x2="200"
+     y2="320"
+     id="line4" />
+  <!-- Box 4: Embedding & Vectorizing -->
+  <rect
+     class="box"
+     x="50"
+     y="320"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect4" />
+  <text
+     class="text"
+     x="200"
+     y="355"
+     id="text5">Embedding &amp; Vectorizing</text>
+  <!-- Arrow 4 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="380"
+     x2="200"
+     y2="420"
+     id="line5" />
+  <!-- Box 5: Indexing & Metadata -->
+  <rect
+     class="box"
+     x="50"
+     y="420"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect5" />
+  <text
+     class="text"
+     x="200"
+     y="455"
+     id="text6">Indexing &amp; Metadata</text>
+  <!-- Arrow 5 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="480"
+     x2="200"
+     y2="520"
+     id="line6" />
+  <!-- Box 6: Retrieval Engine -->
+  <rect
+     class="box"
+     x="50"
+     y="520"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect6" />
+  <text
+     class="text"
+     x="200"
+     y="555"
+     id="text7">Retrieval Engine</text>
+  <!-- Arrow 6 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="580"
+     x2="200"
+     y2="620"
+     id="line7" />
+  <!-- Box 7: Prompt Construction -->
+  <rect
+     class="box"
+     x="50"
+     y="620"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect7" />
+  <text
+     class="text"
+     x="200"
+     y="655"
+     id="text8">Prompt Construction</text>
+  <!-- Arrow 7 -->
+  <line
+     class="arrow"
+     x1="200"
+     y1="680"
+     x2="200"
+     y2="720"
+     id="line8" />
+  <!-- Box 8: LLM Generation & Output -->
+  <rect
+     class="box"
+     x="50"
+     y="720"
+     width="300"
+     height="60"
+     rx="8"
+     ry="8"
+     id="rect8" />
+  <text
+     class="text"
+     x="200"
+     y="755"
+     id="text9">LLM Generation &amp; Output</text>
+</svg>

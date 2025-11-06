@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Generating Information Products with RAG</title>
+        <meta name="description" content="Overview of toolchain and processing for documentation teams using RAG to generate information products.">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+        <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/dist/brS89VyqFR.css">
+        
+        <script src="../assets/js/nav.js"></script>
+    </head>
+    <body>
+        <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+        <header class="site-header">
+            <div class="header-nav-container">
+                <div class="logo-container">
+                    <a href="/">
+                        
+                            <img src="..\..\images\merge-logo-1.svg" alt="Site Logo" class="site-logo">
+                        
+                    </a>
+                </div>
+                <nav class="site-nav">
+                    <ul class="nav"><li class="nav-item">
+                                    <a href="/" class="nav-link" data-dropdown-toggle="">
+                                        Home
+                                    </a></li><li class="nav-item">
+                                    <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                        Posts
+                                    </a></li><li class="nav-item">
+                                    <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                        Resources
+                                    </a></li><li class="nav-item has-children">
+                                    <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                        About
+                                    </a><ul class="dropdown"><li>
+                                                    <a href="/resume/" class="dropdown-link">
+                                                        Resume
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/work/" class="dropdown-link">
+                                                        Work
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/contact/" class="dropdown-link">
+                                                        Contact
+                                                    </a>
+                                                </li></ul></li></ul>
+                </nav>
+            </div>
+            <h1 id="generating-information-products-with-rag">
+                    Generating Information Products with RAG
+            </h1>
+            <p>
+                    Overview of toolchain and processing for documentation teams using RAG to generate information products.
+            </p>
+        </header>
+        <main id="main">
+            <heading-anchors>
+                
+
+
+
+<p>Posted on: <time datetime="2025-08-10">10 August 2025</time></p>
+
+<h1 id="generating-information-products-with-rag-2">Generating Information Products with RAG</h1>
+<p>This document explains how a Retrieval-Augmented Generation (RAG) pipeline processes local documents to generate new information products.</p>
+<p>The RAG architecture operates as a set of coordinated components—each performing a specific function such as ingestion, embedding, retrieval, or generation. Some of these functions are handled by open-source tools or libraries, while others are implemented as in-house modules or scripts.</p>
+<h2 id="rag-pipeline-diagram">RAG Pipeline Diagram</h2>
+<figure>
+<img src="..\..\images\rag-pipeline-diagram.svg" alt="RAG Pipeline Diagram">
+  <figcaption>RAG Pipeline Diagram</figcaption>
+</figure>
+<h2 id="1-preparing-source-documents">1. Preparing Source Documents</h2>
+<p>The RAG pipeline begins by scanning a designated directory to identify source documents. This scanning typically starts with a file discovery script or scheduling system—such as Apache Airflow, Cron, or Haystack’s indexing API—that monitors a local or shared directory for new or updated files. The pipeline performs this initial scan to locate every file in the defined repository that should become part of the knowledge base. It uses file-matching patterns and metadata filters to include only relevant document types, such as manuals, technical notes, or reports. The system usually triggers this step on a schedule or when new files appear in the target directory, ensuring continuous synchronization between storage and the AI knowledge layer.</p>
+<p>These files can include manuals, technical notes, reports, or other text sources that the organization wants to make retrievable. The ingestion module (for example, Apache Tika or Haystack), which collects files, reads their contents, and extracts text from multiple formats, identifies and removes unnecessary markup, images, or formatting tags. It prepares a clean text stream that the rest of the RAG process can interpret efficiently.</p>
+<p>Next, the pipeline standardizes the text using a normalization process that applies text-cleaning and formatting operations with libraries such as spaCy, NLTK, or regex-based scripts. The normalization stage runs before semantic processing so that every document entering the embedding phase follows the same linguistic and formatting conventions. It converts text into a common encoding such as UTF-8 and removes extraneous spaces and symbols. This step ensures that later stages handle data predictably across operating systems and file types. The normalization typically occurs right after ingestion, before any chunking or semantic processing begins.</p>
+<p>After normalization, the ingestion module segments the document logically. Segmentation defines boundaries between sections based on headings, paragraph breaks, or structural cues such as Markdown or HTML tags. Segmentation and chunking differ in both purpose and scale: segmentation organizes long documents into logical sections for readability, while chunking later divides those sections into smaller semantic units that fit within the LLM’s context window. By identifying these boundaries early, the ingestion module helps preserve document meaning and prepares each section for chunking.</p>
+<p>The chunking engine—often implemented through frameworks such as LangChain or Haystack—divides documents into smaller, meaning-preserving units for semantic analysis. Although LangChain and Haystack are not dedicated chunking engines, both provide utilities for text splitting as part of their document-processing pipelines. These functions split text based on sentence structure, paragraph boundaries, or token counts to prepare data for embedding. Chunking exists to make large documents computationally manageable, ensuring that each chunk fits within the token limits of downstream models. The chunking engine ensures that each chunk contains enough context for accurate retrieval but still fits within the <a href="/posts/ai-terms-glossary/#context-window">context window</a> of the <a href="/posts/ai-terms-glossary/#llm">LLM</a>.</p>
+<p>The RAG architecture assigns a unique identifier to each chunk and logs its source document and location through an orchestration or metadata management component—often part of the ingestion pipeline itself or managed through tools like Elasticsearch or Haystack’s DocumentStore. This component tracks where each chunk originated and when it was last updated, ensuring traceability and version control. The processed chunks move to temporary storage, where the pipeline holds them before conversion into mathematical representations such as embeddings.</p>
+<p><strong>Summary:</strong> At the end of this phase, the RAG pipeline transforms unstructured files into clean, segmented text units that can be consistently processed by later components. These chunks provide the traceable foundation for semantic understanding.</p>
+<hr>
+<h2 id="2-creating-embeddings-and-vectors">2. Creating Embeddings and Vectors</h2>
+<p>The embedding model now converts each chunk into an <a href="/posts/ai-terms-glossary/#embeddings">embedding</a>. An embedding model (for example, SentenceTransformers or OpenAI’s text-embedding models) maps text into a numerical space where meaning corresponds to distance. These models are smaller, task-specific neural networks that have been fine-tuned for text similarity tasks and can run locally or as an API service. This process translates language into mathematical form, preserving semantic relationships among sentences and phrases. The closer two embeddings are in this space, the more similar their meanings.</p>
+<p>Each embedding becomes a <a href="/posts/ai-terms-glossary/#vector">vector</a>. The vector encodes the meaning of a chunk in high-dimensional space—an abstract mathematical representation in which each dimension corresponds to a latent linguistic feature such as context, topic, or tone. Instead of three familiar spatial axes, these vectors can have hundreds or thousands of dimensions, allowing the system to capture subtle semantic differences. The embedding model ensures that semantically similar text produces vectors that occupy nearby positions, while unrelated text produces distant vectors. This mathematical organization allows semantic search by meaning rather than by keyword.</p>
+<p>The ingestion module in this phase acts as a processing pipeline that manages data flow between embedding and storage components. In frameworks such as Haystack or LangChain, this module orchestrates embedding generation, batching, and submission to storage systems. Batching minimizes overhead by grouping multiple embeddings into a single write operation. The vector database (such as FAISS, Weaviate, or Chroma) stores these vectors, enabling high-speed comparison operations. The ingestion module links each stored vector with metadata that identifies its source and chunk ID.</p>
+<p>Once stored, the vectors become searchable entities. The retrieval engine (for example, Haystack’s Retriever or LangChain’s VectorStoreRetriever) can now measure similarity between vectors using distance metrics such as <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank" rel="noopener">cosine similarity</a>. This measurement quantifies how much two text passages share conceptual meaning, supporting accurate retrieval even when wording differs. The retrieval engine later uses these relationships to locate relevant chunks when users submit queries.</p>
+<p><strong>Summary:</strong> This stage translates human-readable text into machine-readable meaning. By encoding chunks into embeddings and vectors, the system builds the mathematical structure that enables semantic search and knowledge retrieval.</p>
+<hr>
+<h2 id="3-indexing-and-metadata">3. Indexing and Metadata</h2>
+<p>The vector database management component builds an <a href="/posts/ai-terms-glossary/#indexing">index</a> over the database to enable efficient similarity searches. The index organizes vectors according to proximity and dimension. Tools such as FAISS and Milvus implement these indices using approximate nearest neighbor algorithms. The indexing mechanism allows fast lookups without scanning every stored vector, making large-scale semantic search feasible. The indexing structure allows the retrieval engine to locate the most relevant vectors rapidly, even when datasets scale into millions of entries.</p>
+<p>During indexing, the ingestion process adds <a href="/posts/ai-terms-glossary/#vector-metadata">vector metadata</a>. Metadata stores key attributes such as file name, author, and timestamp, ensuring that the origin of every chunk remains known. This data supports filtering, relevance scoring, and regulatory compliance by preserving the document source. It also enables users to request only specific document types or time periods when generating outputs.</p>
+<p>The RAG architecture maintains and updates the index dynamically. Whenever a document changes, the pipeline reprocesses its affected chunks, regenerates embeddings, and replaces outdated vectors. These updates often run through scheduled batch jobs or file-system triggers that detect changes in source content, ensuring the knowledge base remains synchronized. This automatic updating prevents information drift, ensuring that every retrieved vector reflects the most current version of its source text.</p>
+<p><strong>Summary:</strong> Indexing and metadata management create a living, searchable map of organizational knowledge. The system continually refreshes this index to keep semantic retrieval accurate and up to date.</p>
+<hr>
+<h2 id="4-user-queries-and-retrieval">4. User Queries and Retrieval</h2>
+<p>When a user submits a question or request, the RAG pipeline processes it as input to the embedding model. In this context, “the model” refers to the same embedding model used earlier for document chunks—such as SentenceTransformers or MiniLM—so that both the query and stored chunks exist in the same semantic space. Using the same model for both documents and queries ensures that their numerical representations are directly comparable.</p>
+<p>The retrieval engine (for example, Haystack or LangChain retrievers), which searches the indexed vector space for the most semantically related chunks, compares the query embedding against all stored vectors. It computes similarity scores and ranks the results. The engine retrieves the top-matching chunks with their metadata, ensuring that only the most relevant information proceeds to generation.</p>
+<p>The retrieval engine packages these chunks into a response set. It adds provenance data—structured information that records the document ID, source location, author, and timestamp for each retrieved chunk, allowing reviewers to trace every output back to its origin and confirm its authenticity—which maintains transparency and allows auditing. This provenance information not only supports compliance but also allows iterative refinement, as teams can trace which documents most frequently influence AI outputs. The pipeline then passes this packaged context to the <a href="/posts/ai-terms-glossary/#llm">LLM</a>. The LLM depends entirely on these retrieved chunks to create an informed, fact-based response.</p>
+<p><strong>Summary:</strong> Query processing transforms user intent into a semantic search task. The retrieval engine uses vector similarity to identify and deliver the most relevant context for generation.</p>
+<hr>
+<h2 id="5-prompting-and-response-generation">5. Prompting and Response Generation</h2>
+<p>After retrieval, the prompt construction module builds a <a href="/posts/ai-terms-glossary/#prompt">prompt</a> that includes the user’s question, the retrieved chunks, and formatting instructions. The module arranges these elements so that the most relevant context appears first, maximizing the LLM’s attention on key details. Prompt construction is typically implemented with orchestration frameworks such as LangChain or LlamaIndex, which dynamically assemble retrieved text into templates that guide the model’s reasoning. This preparation step determines how effectively the model can answer complex or multi-part queries.</p>
+<p>The LLM reads the prompt within its <a href="/posts/ai-terms-glossary/#context-window">context window</a>. It analyzes the text, identifies linguistic and logical patterns, and synthesizes new language grounded in the provided content. The LLM cannot access external data because it operates in a self-contained inference environment without network connectivity or live database access; it can only use the context explicitly provided in the prompt. Prompt quality directly determines output accuracy and completeness.</p>
+<p>The generation process produces new text that answers the query or repackages knowledge into the requested format. The LLM may rewrite, summarize, or create structured documents based on its instructions. The RAG pipeline monitors this output using validation scripts or rule-based checks (for example, LangChain output parsers) to confirm that responses follow organizational standards and formatting policies.</p>
+<p>The quality of the generated output depends entirely on retrieval accuracy. If the retrieved information is incomplete, the LLM may generate incorrect conclusions. Human reviewers typically evaluate outputs for clarity and factual reliability before final publication, ensuring accountability. This human validation step closes the loop between automation and human editorial oversight.</p>
+<p><strong>Summary:</strong> The prompt and generation stages translate retrieved knowledge into coherent, formatted text. Validation ensures that automated writing remains accurate and consistent with verified sources.</p>
+<hr>
+<h2 id="6-putting-it-all-together">6. Putting It All Together</h2>
+<p>The entire workflow—retrieving semantically relevant chunks from a vector database and providing them to an LLM for output generation—defines the <a href="/posts/ai-terms-glossary/#rag">RAG</a> approach. RAG combines a search process that finds the right information with a writing process that converts that information into clear text. Retrieval anchors responses in verified data, meaning content that comes directly from authenticated and traceable internal documents rather than the model’s pretraining. Generation converts that data into readable, natural language.</p>
+<p>The RAG pipeline continuously evolves. When new documents are added, the system triggers ingestion, embedding, and indexing automatically, ensuring the knowledge base stays synchronized with the file system. This automation allows organizations to keep AI-generated content aligned with their latest internal documentation without reconfiguring the system or retraining the model.</p>
+<p>By maintaining separate retrieval and generation components, the RAG architecture enforces data governance. Retrieval provides control over the factual foundation, and generation handles expression and structure, allowing organizations to trace the origin of each generated statement through metadata links and provenance records stored with the source chunks. These traceable records help auditors and knowledge managers verify how outputs were created.</p>
+<p>When operating effectively, the RAG pipeline turns static document collections into searchable knowledge systems that produce accurate, contextually grounded, and auditable outputs. At this point, the workflow forms a complete feedback cycle: documents become data, data becomes knowledge, and knowledge becomes reusable assets for future AI-driven documentation.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Open-source Tools or Frameworks Referenced</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://tika.apache.org/" target="_blank" rel="noopener">Apache Tika</a>, <a href="https://haystack.deepset.ai/" target="_blank" rel="noopener">Haystack</a></td>
+<td>File ingestion &amp; parsing</td>
+</tr>
+<tr>
+<td><a href="https://airflow.apache.org/" target="_blank" rel="noopener">Apache Airflow</a>, <a href="https://en.wikipedia.org/wiki/Cron" target="_blank" rel="noopener">Cron</a></td>
+<td>Scheduling / automation</td>
+</tr>
+<tr>
+<td><a href="https://spacy.io/" target="_blank" rel="noopener">spaCy</a>, <a href="https://www.nltk.org/" target="_blank" rel="noopener">NLTK</a>, regex scripts</td>
+<td>Text normalization</td>
+</tr>
+<tr>
+<td><a href="https://www.langchain.com/" target="_blank" rel="noopener">LangChain</a>, <a href="https://haystack.deepset.ai/" target="_blank" rel="noopener">Haystack DocumentSplitter</a></td>
+<td>Chunking</td>
+</tr>
+<tr>
+<td><a href="https://www.sbert.net/" target="_blank" rel="noopener">SentenceTransformers</a>, <a href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2" target="_blank" rel="noopener">MiniLM</a>, <a href="https://platform.openai.com/" target="_blank" rel="noopener">OpenAI API</a></td>
+<td>Embedding generation</td>
+</tr>
+<tr>
+<td><a href="https://github.com/facebookresearch/faiss" target="_blank" rel="noopener">FAISS</a>, <a href="https://weaviate.io/" target="_blank" rel="noopener">Weaviate</a>, <a href="https://milvus.io/" target="_blank" rel="noopener">Milvus</a>, <a href="https://www.trychroma.com/" target="_blank" rel="noopener">Chroma</a></td>
+<td>Vector storage &amp; indexing</td>
+</tr>
+<tr>
+<td><a href="https://haystack.deepset.ai/" target="_blank" rel="noopener">Haystack Retriever</a>, <a href="https://www.langchain.com/" target="_blank" rel="noopener">LangChain VectorStore</a></td>
+<td>Retrieval engine</td>
+</tr>
+<tr>
+<td><a href="https://www.llamaindex.ai/" target="_blank" rel="noopener">LlamaIndex</a>, <a href="https://www.langchain.com/" target="_blank" rel="noopener">LangChain PromptTemplate</a></td>
+<td>Prompt orchestration</td>
+</tr>
+<tr>
+<td><a href="https://www.langchain.com/" target="_blank" rel="noopener">LangChain Output Parsers</a>, rule-based checks</td>
+<td>Validation &amp; parsing</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+<p>Tagged with:</p>
+<ul>
+  <li><a href="/tags/rag/">RAG</a></li>
+</ul>
+<p>More posts:</p>
+<ul><li>Next: <a href="/posts/prompt-efficiencies/">Prompt Efficiencies</a></li><li>Previous: <a href="/posts/ai-terms-glossary/">RAG Pipeline Terms</a></li>
+</ul>
+
+
+            </heading-anchors>
+        </main>
+        <footer>
+            
+            <p>
+                <em>Built with
+                    <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+                </em>
+            </p>
+        </footer>
+        <!-- This page `/posts/doc-gen-rag-pipeline/` was built on 2025-11-06T20:22:13.744Z -->
+        <script type="module" src="/dist/xbxy_EL6cU.js"></script>
+    </body>
+</html>

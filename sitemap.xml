@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
+		<loc>https://shealy2020.github.io/posts/ai-terms-glossary/</loc>
+		<lastmod>2025-08-10</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/posts/doc-gen-rag-pipeline/</loc>
+		<lastmod>2025-08-10</lastmod>
+	</url>
+	
+	<url>
 		<loc>https://shealy2020.github.io/posts/prompt-efficiencies/</loc>
 		<lastmod>2025-08-15</lastmod>
 	</url>
@@ -47,7 +57,7 @@
 	</url>
 	
 	<url>
-		<loc>https://shealy2020.github.io/posts/refactoring-content/</loc>
+		<loc>https://shealy2020.github.io/posts/finding-similar-content/</loc>
 		<lastmod>2025-10-09</lastmod>
 	</url>
 	
@@ -68,6 +78,6 @@
 	
 	<url>
 		<loc>https://shealy2020.github.io/feed/feed.xml</loc>
-		<lastmod>2025-11-05</lastmod>
+		<lastmod>2025-11-06</lastmod>
 	</url>
 </urlset>
