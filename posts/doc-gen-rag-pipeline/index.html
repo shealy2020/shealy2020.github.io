@@ -67,6 +67,7 @@
 
 <p>Posted on: <time datetime="2025-11-06">06 November 2025</time></p>
 
+<h2 id="objective">Objective</h2>
 <p>This document explains how a Retrieval-Augmented Generation (RAG) pipeline processes local documents to generate new information products.</p>
 <figure class="wrap-text-right">
 <img src="..\..\images\rag-pipeline-diagram.svg" alt="RAG Pipeline Diagram">
@@ -112,7 +113,7 @@
 <p>The quality of the generated output depends entirely on retrieval accuracy. If the retrieved information is incomplete, the LLM may generate incorrect conclusions. Human reviewers typically evaluate outputs for clarity and factual reliability before final publication.</p>
 <p><strong>Summary:</strong> The prompt and generation stages translate retrieved knowledge into coherent, formatted text. Validation ensures that automated writing remains accurate and consistent with verified sources.</p>
 <hr>
-<h2 id="6-sum-of-the-parts">6. Sum of the Parts</h2>
+<h2 id="sum-of-the-parts">Sum of the Parts</h2>
 <p>RAG merges two processes: retrieving factual information and generating natural language to produce reliable answers. Because the model bases its responses on retrieved content from trusted documents, RAG delivers more factual, verifiable results than generation alone.</p>
 <p>RAG pipelines can turn static document collections into searchable knowledge systems that produce accurate outputs. The RAG pipeline, such as this one described here, continuously evolves. When new documents are added, the system triggers ingestion, embedding, and indexing automatically, ensuring the knowledge base stays synchronized with the file system. This automation allows organizations to keep AI-generated content aligned with their latest internal documentation without reconfiguring the system or retraining the model.</p>
 <hr>
@@ -183,7 +184,7 @@
                 </em>
             </p>
         </footer>
-        <!-- This page `/posts/doc-gen-rag-pipeline/` was built on 2025-11-09T19:00:22.194Z -->
+        <!-- This page `/posts/doc-gen-rag-pipeline/` was built on 2025-11-13T18:22:35.546Z -->
         <script type="module" src="/dist/xbxy_EL6cU.js"></script>
     </body>
 </html>

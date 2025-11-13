@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gemini RAG Pipeline</title>
+        <meta name="description" content="Prototypes use of Colab notebook to run RAG pipeline on Google resources for free.">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+        <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/dist/tm_1tXeKDB.css">
+        
+        <script src="../assets/js/nav.js"></script>
+    </head>
+    <body>
+        <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+        <header class="site-header">
+            <div class="header-nav-container">
+                <div class="logo-container">
+                    <a href="/">
+                        
+                            <img src="..\..\images\merge-logo-1.svg" alt="Site Logo" class="site-logo">
+                        
+                    </a>
+                </div>
+                <nav class="site-nav">
+                    <ul class="nav"><li class="nav-item">
+                                    <a href="/" class="nav-link" data-dropdown-toggle="">
+                                        Home
+                                    </a></li><li class="nav-item">
+                                    <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                        Posts
+                                    </a></li><li class="nav-item">
+                                    <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                        Resources
+                                    </a></li><li class="nav-item has-children">
+                                    <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                        About
+                                    </a><ul class="dropdown"><li>
+                                                    <a href="/resume/" class="dropdown-link">
+                                                        Resume
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/work/" class="dropdown-link">
+                                                        Work
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/contact/" class="dropdown-link">
+                                                        Contact
+                                                    </a>
+                                                </li></ul></li></ul>
+                </nav>
+            </div>
+            <h1 id="gemini-rag-pipeline">
+                    Gemini RAG Pipeline
+            </h1>
+            <p>
+                    Prototypes use of Colab notebook to run RAG pipeline on Google resources for free.
+            </p>
+        </header>
+        <main id="main">
+            <heading-anchors>
+                
+
+
+
+<p>Posted on: <time datetime="2025-11-13">13 November 2025</time></p>
+
+<h1 id="gemini-rag-pipeline-2">Gemini RAG Pipeline</h1>
+<p>This repository contains a <em>simple</em>, five-cell <a href="https://research.google.com/colaboratory/faq.html" target="_blank" rel="noopener">Google Colab notebook</a> demonstrating a <strong>Retrieval-Augmented Generation (RAG)</strong> pipeline built from scratch (without frameworks like LangChain). This prototype uses free (no subscription) and open source tools and core Python libraries (<code>faiss</code>, <code>sentence-transformers</code>, <code>google-genai</code>).</p>
+<p>The pipeline processes documents stored in Google Drive and uses the <strong>Gemini 2.5 Flash</strong> model returning responses from queries.</p>
+<p>For your own use, you'll find my <a href="https://github.com/shealy2020/colab-gdrive-rag-1" target="_blank" rel="noopener">Colab Notebook cells on GitHub</a>.</p>
+<h2 id="rag-pipeline-components">RAG Pipeline Components</h2>
+<table>
+<thead>
+<tr>
+<th>Components</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>google-genai (SDK)</strong></td>
+<td>Google SDK used to call the Gemini 2.5 Flash model to generate a final answer based on retrieved context.</td>
+</tr>
+<tr>
+<td><strong>gemini-2.5-flash (Model)</strong></td>
+<td>Large Language Model (LLM) from Google that receives the user query and retrieved context to generate the final answer.</td>
+</tr>
+<tr>
+<td><strong>faiss-cpu (FAISS)</strong></td>
+<td>Vector database library used to store the vector embeddings and perform similarity search to retrieve relevant text chunks.</td>
+</tr>
+<tr>
+<td><strong>sentence-transformers</strong></td>
+<td>Python framework loads the embedding model and converts text chunks and queries into vector embeddings.</td>
+</tr>
+<tr>
+<td><strong>all-MiniLM-L6-v2 (Model)</strong></td>
+<td>Pre-trained Sentence Transformer Model chosen to generate the 384-dimensional vector embeddings.</td>
+</tr>
+<tr>
+<td><strong>numpy</strong></td>
+<td>Core library for numerical operations on the vector embeddings during index creation, storage, and retrieval.</td>
+</tr>
+<tr>
+<td><strong>pickle</strong></td>
+<td>Python's built-in module that serializes text chunks &amp; metadata so they can be saved to Google Drive and reloaded later.</td>
+</tr>
+<tr>
+<td><strong>os</strong></td>
+<td>Python library for environment tasks like setting the API key, defining and file paths, and reading docs.</td>
+</tr>
+<tr>
+<td><strong>re</strong></td>
+<td>Python library for regex for cleaning of source during the chunking process.</td>
+</tr>
+<tr>
+<td><strong>google.colab (Utilities)</strong></td>
+<td>Colab-specific utilities that handle mounting Google Drive to access source and retrieve the GEMINI_API_KEY from Secrets manager.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="getting-started">Getting Started</h2>
+<p>Follow these steps to set up and run the notebook.</p>
+<h3 id="1-create-your-google-colab-notebook">1. Create Your Google Colab Notebook</h3>
+<p>Go to <a href="https://colab.research.google.com/" target="_blank" rel="noopener">https://colab.research.google.com/</a>, then create a notebook via the <strong>File</strong> menu.</p>
+<h3 id="2-set-up-api-key">2. Set Up API Key</h3>
+<p>The code requires a <strong>Gemini API Key</strong> to communicate with the model. Store this key securely in Colab's <strong>Secrets</strong> tool.</p>
+<ol>
+<li>Get your key from Google AI Studio: <a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener">https://ai.google.dev/gemini-api/docs/api-key</a></li>
+<li>In the Colab Notebook, look for the <strong>Secrets</strong> tab in the left sidebar.</li>
+<li>Click the <strong><code>+</code></strong> icon to add a new secret.</li>
+<li>Set the <strong>Name</strong> exactly to: <code>GEMINI_API_KEY</code></li>
+<li>Set the <strong>Value</strong> to the key you copied in Step 1.</li>
+<li>Ensure the &quot;Notebook access&quot; toggle is <strong>ON</strong> for this secret.</li>
+</ol>
+<h3 id="3-prepare-source-folders-and-documents">3. Prepare Source Folders and Documents</h3>
+<ol>
+<li>
+<p>The notebook is configured to read from and write to a specific location in your Google Drive. Create the following folder structure in your Google Drive:</p>
+<p><code>My Drive/rag_docs_structured</code></p>
+<p>Upload DITA, Markdown, and HTML files ()<code>.md</code>, <code>.html</code>, <code>.dita</code>) in the <code>rag_docs_structured</code> folder.</p>
+<p><code>My Drive/rag_index_gemini_faiss</code></p>
+<p>This is where the FAISS vector index will be saved.</p>
+</li>
+<li>
+<p>Upload source documents (<code>.dita</code>, <code>.md</code>, <code>.html</code>) to <code>My Drive/rag_docs_structured</code>.</p>
+</li>
+</ol>
+<h3 id="4-run-cells">4.  Run Cells</h3>
+<p>Run each cell in notebook sequentially. Be sure to customize the query in Cell 5 to run against the subject matter of the uploaded source files.</p>
+<h2 id="python-cells-for-notebook-entries">Python Cells for Notebook Entries</h2>
+<ol>
+<li><strong>Setup</strong>: Installs dependencies and loads the Gemini API Key.</li>
+<li><strong>Environment</strong>: Mounts Google Drive and defines necessary file paths.</li>
+<li><strong>Chunking</strong>: Manually loads and splits text documents (<code>.dita</code>, <code>.md</code>, <code>.html</code>) from Google Drive into small chunks.</li>
+<li><strong>Indexing</strong>: Generates vector embeddings for each chunk and builds a persistent FAISS index in Drive.</li>
+<li><strong>Query</strong>: Loads the FAISS index, retrieves the top context chunks for a given query, and uses the Gemini API to generate an answer.</li>
+</ol>
+<h3 id="cell-1">Cell 1</h3>
+<p>The process begins by manually loading and chunking structured documents (.md, .dita, .html), preparing the text by separating it into small, context-preserving segments.</p>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 1: Setup and Dependencies (RAG from Scratch)</span>
+
+<span class="token comment"># Install core foundational libraries for RAG from Scratch</span>
+!pip install <span class="token operator">-</span>q faiss<span class="token operator">-</span>cpu sentence<span class="token operator">-</span>transformers google<span class="token operator">-</span>genai numpy
+
+<span class="token keyword">import</span> os
+<span class="token keyword">from</span> google<span class="token punctuation">.</span>colab <span class="token keyword">import</span> drive<span class="token punctuation">,</span> userdata
+
+<span class="token comment"># --- API Key Retrieval from Colab Secrets ---</span>
+<span class="token comment"># This ensures the official 'google-genai' SDK is authenticated</span>
+os<span class="token punctuation">.</span>environ<span class="token punctuation">[</span><span class="token string">"GEMINI_API_KEY"</span><span class="token punctuation">]</span> <span class="token operator">=</span> userdata<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'GEMINI_API_KEY'</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token string">"GEMINI_API_KEY"</span> <span class="token keyword">not</span> <span class="token keyword">in</span> os<span class="token punctuation">.</span>environ <span class="token keyword">or</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>environ<span class="token punctuation">[</span><span class="token string">"GEMINI_API_KEY"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">"GEMINI_API_KEY not found in Colab Secrets."</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Gemini API Key successfully loaded and dependencies installed."</span><span class="token punctuation">)</span></code></pre>
+<h3 id="cell-2">Cell 2</h3>
+<p>Next, the Sentence Transformer model (all-MiniLM-L6-v2) converts each of these text chunks into a vector embedding, which is a numerical representation of the text's meaning.</p>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 2: Google Drive and Environment Setup (RAG from Scratch)</span>
+
+<span class="token keyword">import</span> os
+<span class="token keyword">from</span> google<span class="token punctuation">.</span>colab <span class="token keyword">import</span> drive
+
+<span class="token comment"># Mount Google Drive to access documents and save the index</span>
+drive<span class="token punctuation">.</span>mount<span class="token punctuation">(</span><span class="token string">'/content/drive'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># --- Configuration (UPDATED PATHS) ---</span>
+<span class="token comment"># Define the path where your source documents are located on Google Drive</span>
+DOCS_DIR <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/rag_docs_structured'</span> 
+<span class="token comment"># Define the path where the FAISS index will be saved. We'll add a specific file name later.</span>
+FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/rag_index_gemini_faiss'</span>
+FAISS_INDEX_FILE <span class="token operator">=</span> <span class="token string">'my_faiss_index.bin'</span> <span class="token comment"># Filename for the raw FAISS binary index</span>
+
+<span class="token comment"># Check/Create the document directory</span>
+<span class="token keyword">if</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>DOCS_DIR<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    os<span class="token punctuation">.</span>makedirs<span class="token punctuation">(</span>DOCS_DIR<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Created document directory: </span><span class="token interpolation"><span class="token punctuation">{</span>DOCS_DIR<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Document directory confirmed: </span><span class="token interpolation"><span class="token punctuation">{</span>DOCS_DIR<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># Create the index parent directory if it doesn't exist </span>
+<span class="token keyword">if</span> <span class="token keyword">not</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>exists<span class="token punctuation">(</span>FAISS_INDEX_PATH<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    os<span class="token punctuation">.</span>makedirs<span class="token punctuation">(</span>FAISS_INDEX_PATH<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Created directory for index: </span><span class="token interpolation"><span class="token punctuation">{</span>FAISS_INDEX_PATH<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Index directory confirmed: </span><span class="token interpolation"><span class="token punctuation">{</span>FAISS_INDEX_PATH<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nGoogle Drive mounted and environment paths set."</span><span class="token punctuation">)</span></code></pre>
+<h3 id="cell-3">Cell 3</h3>
+<p>These embeddings are then stored in a FAISS index, which is a highly efficient structure for quickly searching through millions of vectors, and the original text is saved separately for persistence.</p>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 3: Manual Document Loading and Chunking (RAG from Scratch)</span>
+
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> re <span class="token comment"># For simple text cleaning and paragraph splitting</span>
+<span class="token keyword">from</span> typing <span class="token keyword">import</span> List<span class="token punctuation">,</span> Dict
+
+<span class="token comment"># DOCS_DIR is defined in Cell 2</span>
+documents<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># Stores the raw text content of all documents</span>
+chunks<span class="token punctuation">:</span> List<span class="token punctuation">[</span>Dict<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># Stores the final, processed chunks with metadata</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"--- 1. Preparing Source Documents (Manual Loading &amp; Splitting) ---"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">load_all_text_files</span><span class="token punctuation">(</span>doc_dir<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Manually reads text content from specified file types in the directory."""</span>
+    all_text <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token comment"># Only process files with these extensions to skip images/binaries</span>
+    target_extensions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'.md'</span><span class="token punctuation">,</span> <span class="token string">'.dita'</span><span class="token punctuation">,</span> <span class="token string">'.html'</span><span class="token punctuation">]</span> 
+    
+    <span class="token keyword">for</span> root<span class="token punctuation">,</span> _<span class="token punctuation">,</span> files <span class="token keyword">in</span> os<span class="token punctuation">.</span>walk<span class="token punctuation">(</span>doc_dir<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> <span class="token builtin">file</span> <span class="token keyword">in</span> files<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> <span class="token builtin">any</span><span class="token punctuation">(</span><span class="token builtin">file</span><span class="token punctuation">.</span>endswith<span class="token punctuation">(</span>ext<span class="token punctuation">)</span> <span class="token keyword">for</span> ext <span class="token keyword">in</span> target_extensions<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                file_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token builtin">file</span><span class="token punctuation">)</span>
+                <span class="token keyword">try</span><span class="token punctuation">:</span>
+                    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>file_path<span class="token punctuation">,</span> <span class="token string">'r'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                        <span class="token comment"># Store a tuple of (filename, content) for simplicity</span>
+                        all_text<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token builtin">file</span><span class="token punctuation">,</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Warning: Could not read file </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">file</span><span class="token punctuation">}</span></span><span class="token string">. Error: </span><span class="token interpolation"><span class="token punctuation">{</span>e<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> all_text
+
+<span class="token keyword">def</span> <span class="token function">chunk_text</span><span class="token punctuation">(</span>filename<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> text<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> max_chars<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">512</span><span class="token punctuation">,</span> overlap<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>Dict<span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Splits text content into chunks based on a simple paragraph/sentence separator."""</span>
+    
+    <span class="token comment"># 1. Clean up XML/HTML tags (very basic cleaning for our sample files)</span>
+    <span class="token comment"># This is a minimalist approach, for production, a dedicated HTML parser is better.</span>
+    text <span class="token operator">=</span> re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r'&lt;\/?(html|body|h1|p|topic|title|filepath|/topic|/body)?>'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> text<span class="token punctuation">)</span>
+    text <span class="token operator">=</span> re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r'&lt;\?xml[^>]*\?>'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> text<span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># 2. Split by paragraph breaks, then sentence/line breaks</span>
+    separators <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"\n\n"</span><span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">,</span> <span class="token string">" "</span><span class="token punctuation">]</span>
+    
+    <span class="token comment"># Start with all paragraphs/sentences</span>
+    elements <span class="token operator">=</span> <span class="token punctuation">[</span>t<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">for</span> t <span class="token keyword">in</span> re<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">r'(\n\n)'</span><span class="token punctuation">,</span> text<span class="token punctuation">)</span> <span class="token keyword">if</span> t<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    
+    final_chunks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    current_chunk <span class="token operator">=</span> <span class="token string">""</span>
+
+    <span class="token keyword">for</span> element <span class="token keyword">in</span> elements<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>current_chunk<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token builtin">len</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;=</span> max_chars<span class="token punctuation">:</span>
+            <span class="token comment"># If element fits, append it</span>
+            current_chunk <span class="token operator">+=</span> <span class="token punctuation">(</span><span class="token string">" "</span> <span class="token operator">+</span> element <span class="token keyword">if</span> current_chunk <span class="token keyword">else</span> element<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token comment"># If element doesn't fit, finalize the current chunk</span>
+            <span class="token keyword">if</span> current_chunk<span class="token punctuation">:</span>
+                final_chunks<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">{</span>
+                    <span class="token string">"text"</span><span class="token punctuation">:</span> current_chunk<span class="token punctuation">,</span>
+                    <span class="token string">"metadata"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"filename"</span><span class="token punctuation">:</span> filename<span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            
+            <span class="token comment"># Start a new chunk, ensuring overlap if possible</span>
+            <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>current_chunk<span class="token punctuation">)</span> <span class="token operator">>=</span> overlap<span class="token punctuation">:</span>
+                current_chunk <span class="token operator">=</span> current_chunk<span class="token punctuation">[</span><span class="token operator">-</span>overlap<span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> element
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                current_chunk <span class="token operator">=</span> element
+    
+    <span class="token comment"># Add the last chunk</span>
+    <span class="token keyword">if</span> current_chunk<span class="token punctuation">:</span>
+        final_chunks<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token string">"text"</span><span class="token punctuation">:</span> current_chunk<span class="token punctuation">,</span>
+            <span class="token string">"metadata"</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token string">"filename"</span><span class="token punctuation">:</span> filename<span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        
+    <span class="token keyword">return</span> final_chunks
+
+
+<span class="token comment"># --- Execution ---</span>
+raw_documents <span class="token operator">=</span> load_all_text_files<span class="token punctuation">(</span>DOCS_DIR<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Loaded </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">len</span><span class="token punctuation">(</span>raw_documents<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> source files."</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> filename<span class="token punctuation">,</span> content <span class="token keyword">in</span> raw_documents<span class="token punctuation">:</span>
+    new_chunks <span class="token operator">=</span> chunk_text<span class="token punctuation">(</span>filename<span class="token punctuation">,</span> content<span class="token punctuation">)</span>
+    chunks<span class="token punctuation">.</span>extend<span class="token punctuation">(</span>new_chunks<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"\nSuccessfully split content into </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">len</span><span class="token punctuation">(</span>chunks<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> final chunks."</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Example inspection</span>
+<span class="token keyword">if</span> chunks<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nExample Chunk 1:"</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"  Content: '</span><span class="token interpolation"><span class="token punctuation">{</span>chunks<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">100]</span><span class="token punctuation">}</span></span><span class="token string">...'"</span></span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"  Metadata: </span><span class="token interpolation"><span class="token punctuation">{</span>chunks<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'metadata'</span><span class="token punctuation">]</span><span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Warning: No chunks were created."</span><span class="token punctuation">)</span></code></pre>
+<h3 id="cell-4">Cell 4</h3>
+<p>User queries are converted into a vector and then used to search the FAISS index to retrieve the top 3 most relevant context chunks.</p>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 4: Embeddings and FAISS Indexing (FIXED Metadata Persistence)</span>
+
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> faiss
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> sentence_transformers <span class="token keyword">import</span> SentenceTransformer
+<span class="token keyword">import</span> pickle <span class="token comment"># Used to save complex Python objects like the list of chunk dictionaries</span>
+
+<span class="token comment"># Paths and variables defined in Cell 2 and 3</span>
+<span class="token comment"># chunks: list of dicts with 'text' and 'metadata'</span>
+<span class="token comment"># FAISS_INDEX_PATH and FAISS_INDEX_FILE are defined in Cell 2</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"--- 2. Creating Embeddings and Vectors ---"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 1. Load the Sentence Transformer Model</span>
+model_name <span class="token operator">=</span> <span class="token string">"all-MiniLM-L6-v2"</span>
+model <span class="token operator">=</span> SentenceTransformer<span class="token punctuation">(</span>model_name<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Embedding model loaded: </span><span class="token interpolation"><span class="token punctuation">{</span>model_name<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># 2. Prepare Chunk Text for Embedding</span>
+chunk_texts <span class="token operator">=</span> <span class="token punctuation">[</span>chunk<span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span> <span class="token keyword">for</span> chunk <span class="token keyword">in</span> chunks<span class="token punctuation">]</span>
+
+<span class="token keyword">if</span> <span class="token keyword">not</span> chunk_texts<span class="token punctuation">:</span>
+    <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">"No text chunks found. Please check Cell 3 output and document loading."</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 3. Generate Embeddings</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Generating embeddings for </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">len</span><span class="token punctuation">(</span>chunk_texts<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> chunks..."</span></span><span class="token punctuation">)</span>
+embeddings <span class="token operator">=</span> model<span class="token punctuation">.</span>encode<span class="token punctuation">(</span>chunk_texts<span class="token punctuation">,</span> convert_to_numpy<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">.</span>astype<span class="token punctuation">(</span><span class="token string">'float32'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 4. Build FAISS Index</span>
+dimension <span class="token operator">=</span> embeddings<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+index <span class="token operator">=</span> faiss<span class="token punctuation">.</span>IndexFlatL2<span class="token punctuation">(</span>dimension<span class="token punctuation">)</span>
+index<span class="token punctuation">.</span>add<span class="token punctuation">(</span>embeddings<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"FAISS index built successfully with dimension: </span><span class="token interpolation"><span class="token punctuation">{</span>dimension<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># --- 3. Indexing and Metadata (Persistence) ---</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n--- 3. Indexing and Metadata (Persistence) ---"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Save the raw FAISS index</span>
+full_index_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>FAISS_INDEX_PATH<span class="token punctuation">,</span> FAISS_INDEX_FILE<span class="token punctuation">)</span>
+faiss<span class="token punctuation">.</span>write_index<span class="token punctuation">(</span>index<span class="token punctuation">,</span> full_index_path<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"FAISS index (Vectors) saved to: </span><span class="token interpolation"><span class="token punctuation">{</span>full_index_path<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># FIX: Save the entire original 'chunks' list using pickle. </span>
+<span class="token comment"># This preserves the text content and the metadata dictionary together.</span>
+chunk_data_file <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>FAISS_INDEX_PATH<span class="token punctuation">,</span> <span class="token string">'chunk_data.pkl'</span><span class="token punctuation">)</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>chunk_data_file<span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    pickle<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>chunks<span class="token punctuation">,</span> f<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Full Chunk Data (Text and Metadata) saved to: </span><span class="token interpolation"><span class="token punctuation">{</span>chunk_data_file<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Indexing and Persistence steps completed."</span><span class="token punctuation">)</span></code></pre>
+<h3 id="cell-5">Cell 5</h3>
+<p>Finally, this retrieved context is combined with the original question into a prompt that is sent to the Gemini 2.5 Flash model, which generates an answer based only on the provided source information.</p>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 5: Retrieval and Response Generation (NEW QUERY)</span>
+
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> faiss
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> sentence_transformers <span class="token keyword">import</span> SentenceTransformer
+<span class="token keyword">from</span> google <span class="token keyword">import</span> genai
+<span class="token keyword">import</span> pickle 
+
+<span class="token comment"># --- Configuration and Initialization ---</span>
+<span class="token comment"># Paths and variables defined in Cell 2</span>
+FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/gemini-api-1/rag_index_gemini_faiss'</span>
+FAISS_INDEX_FILE <span class="token operator">=</span> <span class="token string">'my_faiss_index.bin'</span>
+full_index_path <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>FAISS_INDEX_PATH<span class="token punctuation">,</span> FAISS_INDEX_FILE<span class="token punctuation">)</span>
+chunk_data_file <span class="token operator">=</span> os<span class="token punctuation">.</span>path<span class="token punctuation">.</span>join<span class="token punctuation">(</span>FAISS_INDEX_PATH<span class="token punctuation">,</span> <span class="token string">'chunk_data.pkl'</span><span class="token punctuation">)</span> 
+model_name <span class="token operator">=</span> <span class="token string">"all-MiniLM-L6-v2"</span>
+
+<span class="token comment"># 1. Load Components</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"--- 4. User Queries &amp; Retrieval Setup (Loading Components) ---"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Load the FAISS Index</span>
+<span class="token keyword">try</span><span class="token punctuation">:</span>
+    index <span class="token operator">=</span> faiss<span class="token punctuation">.</span>read_index<span class="token punctuation">(</span>full_index_path<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"FAISS index loaded successfully from </span><span class="token interpolation"><span class="token punctuation">{</span>full_index_path<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+    <span class="token keyword">raise</span> FileNotFoundError<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Could not load FAISS index: </span><span class="token interpolation"><span class="token punctuation">{</span>e<span class="token punctuation">}</span></span><span class="token string">. Ensure Cell 4 ran correctly."</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Load the full chunk data (text and metadata) using pickle</span>
+<span class="token keyword">try</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>chunk_data_file<span class="token punctuation">,</span> <span class="token string">'rb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        full_chunk_data <span class="token operator">=</span> pickle<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Full chunk data loaded for </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">len</span><span class="token punctuation">(</span>full_chunk_data<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> chunks."</span></span><span class="token punctuation">)</span>
+<span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+    <span class="token keyword">raise</span> FileNotFoundError<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Could not load chunk data: </span><span class="token interpolation"><span class="token punctuation">{</span>e<span class="token punctuation">}</span></span><span class="token string">. Ensure Cell 4 ran correctly."</span></span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># Load the Sentence Transformer Model (must be the same one used for embedding)</span>
+model <span class="token operator">=</span> SentenceTransformer<span class="token punctuation">(</span>model_name<span class="token punctuation">)</span>
+
+<span class="token comment"># Initialize the Gemini Client (API key is pulled from environment variables)</span>
+client <span class="token operator">=</span> genai<span class="token punctuation">.</span>Client<span class="token punctuation">(</span><span class="token punctuation">)</span>
+GEMINI_MODEL <span class="token operator">=</span> <span class="token string">"gemini-2.5-flash"</span>
+
+
+<span class="token comment"># --- 2. Retrieval Function ---</span>
+<span class="token keyword">def</span> <span class="token function">retrieve_context</span><span class="token punctuation">(</span>query<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> k<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token builtin">list</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Embeds the query and searches the FAISS index for the top-k chunks."""</span>
+    
+    <span class="token comment"># 1. Embed the query</span>
+    query_vector <span class="token operator">=</span> model<span class="token punctuation">.</span>encode<span class="token punctuation">(</span>query<span class="token punctuation">)</span><span class="token punctuation">.</span>astype<span class="token punctuation">(</span><span class="token string">'float32'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># 2. Search the FAISS index</span>
+    D<span class="token punctuation">,</span> I <span class="token operator">=</span> index<span class="token punctuation">.</span>search<span class="token punctuation">(</span>query_vector<span class="token punctuation">,</span> k<span class="token punctuation">)</span>
+    
+    <span class="token comment"># 3. Extract the original chunk data using the indices</span>
+    retrieved_chunks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    
+    <span class="token keyword">for</span> idx <span class="token keyword">in</span> I<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        original_chunk <span class="token operator">=</span> full_chunk_data<span class="token punctuation">[</span>idx<span class="token punctuation">]</span>
+        
+        <span class="token comment"># Access 'text' and 'filename' correctly from the loaded dictionary</span>
+        context_text <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"Source File: </span><span class="token interpolation"><span class="token punctuation">{</span>original_chunk<span class="token punctuation">[</span><span class="token string">'metadata'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'filename'</span><span class="token punctuation">,</span> <span class="token string">'N/A'</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">\nContent: </span><span class="token interpolation"><span class="token punctuation">{</span>original_chunk<span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span><span class="token punctuation">}</span></span><span class="token string">\n---\n"</span></span>
+        
+        retrieved_chunks<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token string">"text"</span><span class="token punctuation">:</span> context_text<span class="token punctuation">,</span>
+            <span class="token string">"metadata"</span><span class="token punctuation">:</span> original_chunk<span class="token punctuation">[</span><span class="token string">'metadata'</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        
+    <span class="token comment"># Concatenate the text into a single context string for the LLM</span>
+    full_context <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">[</span>c<span class="token punctuation">[</span><span class="token string">"text"</span><span class="token punctuation">]</span> <span class="token keyword">for</span> c <span class="token keyword">in</span> retrieved_chunks<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> full_context<span class="token punctuation">,</span> retrieved_chunks
+
+
+<span class="token comment"># --- 3. Execute the Query and Generate Response ---</span>
+<span class="token comment"># NEW QUERY: Ask about the two classic Ford vehicles</span>
+query <span class="token operator">=</span> <span class="token string">"What are there similarities between a horse and a car?"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"\nUser Query: </span><span class="token interpolation"><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># Perform retrieval</span>
+context<span class="token punctuation">,</span> source_docs <span class="token operator">=</span> retrieve_context<span class="token punctuation">(</span>query<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 4. Construct the Final Prompt (critical for grounding)</span>
+system_prompt <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"""Use ONLY the following pieces of context to answer the user's question. 
+Your answer MUST be based ONLY on the provided context. Do not use external knowledge or make up facts.
+For every piece of information used, cite the source filename (from the 'Source File:' line in the context).
+
+Context:
+</span><span class="token interpolation"><span class="token punctuation">{</span>context<span class="token punctuation">}</span></span><span class="token string">
+
+Question: </span><span class="token interpolation"><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span><span class="token string">
+Helpful Answer:"""</span></span>
+
+<span class="token comment"># 5. Call the Gemini API</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Sending prompt to Gemini..."</span><span class="token punctuation">)</span>
+response <span class="token operator">=</span> client<span class="token punctuation">.</span>models<span class="token punctuation">.</span>generate_content<span class="token punctuation">(</span>
+    model<span class="token operator">=</span>GEMINI_MODEL<span class="token punctuation">,</span>
+    contents<span class="token operator">=</span>system_prompt
+<span class="token punctuation">)</span>
+
+<span class="token comment"># --- Print Results ---</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n=================================="</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"✅ Final Gemini RAG Response:"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>text<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n--- Provenance (Source Documents Used) ---"</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i<span class="token punctuation">,</span> doc <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>source_docs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"* Chunk </span><span class="token interpolation"><span class="token punctuation">{</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">}</span></span><span class="token string"> Source File: **</span><span class="token interpolation"><span class="token punctuation">{</span>doc<span class="token punctuation">[</span><span class="token string">'metadata'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'filename'</span><span class="token punctuation">,</span> <span class="token string">'N/A'</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">**"</span></span><span class="token punctuation">)</span>
+    <span class="token comment"># Display the first 70 characters of the text that was sent to the model</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"  Snippet: </span><span class="token interpolation"><span class="token punctuation">{</span>doc<span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span><span class="token punctuation">[</span>doc<span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'Content:'</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token builtin">len</span><span class="token punctuation">(</span><span class="token string">'Content:'</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">70]</span><span class="token punctuation">}</span></span><span class="token string">..."</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"=================================="</span><span class="token punctuation">)</span></code></pre>
+
+<hr>
+<p>Tagged with:</p>
+<ul>
+  <li><a href="/tags/rag/">RAG</a></li>
+  <li><a href="/tags/gemini/">Gemini</a></li>
+  <li><a href="/tags/colab/">Colab</a></li>
+</ul>
+<p>More posts:</p>
+<ul><li>Previous: <a href="/posts/rag-terms-glossary/">RAG Pipeline Terms</a></li>
+</ul>
+
+
+            </heading-anchors>
+        </main>
+        <footer>
+            
+            <p>
+                <em>Built with
+                    <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+                </em>
+            </p>
+        </footer>
+        <!-- This page `/posts/colab-drive-rag/` was built on 2025-11-13T18:22:35.546Z -->
+        <script type="module" src="/dist/xbxy_EL6cU.js"></script>
+    </body>
+</html>
