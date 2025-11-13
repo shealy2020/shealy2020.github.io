@@ -169,7 +169,7 @@
 <p>The process begins by manually loading and chunking structured documents (.md, .dita, .html), preparing the text by separating it into small, context-preserving segments.</p>
 <pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 1: Setup and Dependencies</span>
 
-<span class="token comment"># Install core foundational libraries for RAG from Scratch</span>
+<span class="token comment"># Install core foundational libraries for RAG</span>
 !pip install <span class="token operator">-</span>q faiss<span class="token operator">-</span>cpu sentence<span class="token operator">-</span>transformers google<span class="token operator">-</span>genai numpy
 
 <span class="token keyword">import</span> os
@@ -183,7 +183,7 @@ os<span class="token punctuation">.</span>environ<span class="token punctuation"
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Gemini API Key successfully loaded and dependencies installed."</span><span class="token punctuation">)</span></code></pre>
 <h3 id="cell-2">Cell 2</h3>
 <p>Next, the Sentence Transformer model (all-MiniLM-L6-v2) converts each of these text chunks into a vector embedding, which is a numerical representation of the text's meaning.</p>
-<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 2: Google Drive and Environment Setup (RAG from Scratch)</span>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 2: Google Drive and Environment Setup</span>
 
 <span class="token keyword">import</span> os
 <span class="token keyword">from</span> google<span class="token punctuation">.</span>colab <span class="token keyword">import</span> drive
@@ -191,7 +191,7 @@ os<span class="token punctuation">.</span>environ<span class="token punctuation"
 <span class="token comment"># Mount Google Drive to access documents and save the index</span>
 drive<span class="token punctuation">.</span>mount<span class="token punctuation">(</span><span class="token string">'/content/drive'</span><span class="token punctuation">)</span>
 
-<span class="token comment"># --- Configuration (UPDATED PATHS) ---</span>
+<span class="token comment"># --- Configuration ---</span>
 <span class="token comment"># Define the path where your source documents are located on Google Drive</span>
 DOCS_DIR <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/rag_docs_structured'</span> 
 <span class="token comment"># Define the path where the FAISS index will be saved. We'll add a specific file name later.</span>
@@ -216,7 +216,7 @@ FAISS_INDEX_FILE <span class="token operator">=</span> <span class="token string
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nGoogle Drive mounted and environment paths set."</span><span class="token punctuation">)</span></code></pre>
 <h3 id="cell-3">Cell 3</h3>
 <p>These embeddings are then stored in a FAISS index, which is a highly efficient structure for quickly searching through millions of vectors, and the original text is saved separately for persistence.</p>
-<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 3: Manual Document Loading and Chunking (RAG from Scratch)</span>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 3: Manual Document Loading and Chunking</span>
 
 <span class="token keyword">import</span> os
 <span class="token keyword">import</span> re <span class="token comment"># For simple text cleaning and paragraph splitting</span>
@@ -249,7 +249,7 @@ chunks<span class="token punctuation">:</span> List<span class="token punctuatio
 <span class="token keyword">def</span> <span class="token function">chunk_text</span><span class="token punctuation">(</span>filename<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> text<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> max_chars<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">512</span><span class="token punctuation">,</span> overlap<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>Dict<span class="token punctuation">]</span><span class="token punctuation">:</span>
     <span class="token triple-quoted-string string">"""Splits text content into chunks based on a simple paragraph/sentence separator."""</span>
     
-    <span class="token comment"># 1. Clean up XML/HTML tags (very basic cleaning for our sample files)</span>
+    <span class="token comment"># 1. Clean up XML/HTML tags</span>
     <span class="token comment"># This is a minimalist approach, for production, a dedicated HTML parser is better.</span>
     text <span class="token operator">=</span> re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r'&lt;\/?(html|body|h1|p|topic|title|filepath|/topic|/body)?>'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> text<span class="token punctuation">)</span>
     text <span class="token operator">=</span> re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r'&lt;\?xml[^>]*\?>'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> text<span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -310,7 +310,7 @@ raw_documents <span class="token operator">=</span> load_all_text_files<span cla
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Warning: No chunks were created."</span><span class="token punctuation">)</span></code></pre>
 <h3 id="cell-4">Cell 4</h3>
 <p>User queries are converted into a vector and then used to search the FAISS index to retrieve the top 3 most relevant context chunks.</p>
-<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 4: Embeddings and FAISS Indexing (FIXED Metadata Persistence)</span>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 4: Embeddings and FAISS Indexing</span>
 
 <span class="token keyword">import</span> os
 <span class="token keyword">import</span> faiss
@@ -423,7 +423,7 @@ GEMINI_MODEL <span class="token operator">=</span> <span class="token string">"g
     <span class="token keyword">for</span> idx <span class="token keyword">in</span> I<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
         original_chunk <span class="token operator">=</span> full_chunk_data<span class="token punctuation">[</span>idx<span class="token punctuation">]</span>
         
-        <span class="token comment"># Access 'text' and 'filename' correctly from the loaded dictionary</span>
+        <span class="token comment"># Access 'text' and 'filename' from the loaded dictionary</span>
         context_text <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"Source File: </span><span class="token interpolation"><span class="token punctuation">{</span>original_chunk<span class="token punctuation">[</span><span class="token string">'metadata'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'filename'</span><span class="token punctuation">,</span> <span class="token string">'N/A'</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">\nContent: </span><span class="token interpolation"><span class="token punctuation">{</span>original_chunk<span class="token punctuation">[</span><span class="token string">'text'</span><span class="token punctuation">]</span><span class="token punctuation">}</span></span><span class="token string">\n---\n"</span></span>
         
         retrieved_chunks<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">{</span>
@@ -438,14 +438,14 @@ GEMINI_MODEL <span class="token operator">=</span> <span class="token string">"g
 
 
 <span class="token comment"># --- 3. Execute the Query and Generate Response ---</span>
-<span class="token comment"># NEW QUERY: Ask about the two classic Ford vehicles</span>
+<span class="token comment"># NEW QUERY</span>
 query <span class="token operator">=</span> <span class="token string">"What are there similarities between a horse and a car?"</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"\nUser Query: </span><span class="token interpolation"><span class="token punctuation">{</span>query<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
 
 <span class="token comment"># Perform retrieval</span>
 context<span class="token punctuation">,</span> source_docs <span class="token operator">=</span> retrieve_context<span class="token punctuation">(</span>query<span class="token punctuation">,</span> k<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span>
 
-<span class="token comment"># 4. Construct the Final Prompt (critical for grounding)</span>
+<span class="token comment"># 4. Construct the Final Prompt for grounding</span>
 system_prompt <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"""Use ONLY the following pieces of context to answer the user's question. 
 Your answer MUST be based ONLY on the provided context. Do not use external knowledge or make up facts.
 For every piece of information used, cite the source filename (from the 'Source File:' line in the context).
@@ -497,7 +497,7 @@ response <span class="token operator">=</span> client<span class="token punctuat
                 </em>
             </p>
         </footer>
-        <!-- This page `/posts/colab-drive-rag/` was built on 2025-11-13T18:38:49.548Z -->
+        <!-- This page `/posts/colab-drive-rag/` was built on 2025-11-13T18:50:52.133Z -->
         <script type="module" src="/dist/xbxy_EL6cU.js"></script>
     </body>
 </html>

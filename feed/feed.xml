@@ -117,7 +117,7 @@
 &lt;p&gt;The process begins by manually loading and chunking structured documents (.md, .dita, .html), preparing the text by separating it into small, context-preserving segments.&lt;/p&gt;
 &lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 1: Setup and Dependencies&lt;/span&gt;
 
-&lt;span class=&quot;token comment&quot;&gt;# Install core foundational libraries for RAG from Scratch&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# Install core foundational libraries for RAG&lt;/span&gt;
 !pip install &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;q faiss&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;cpu sentence&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;transformers google&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;genai numpy
 
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
@@ -131,7 +131,7 @@ os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;environ&lt;span 
 &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Gemini API Key successfully loaded and dependencies installed.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;cell-2&quot;&gt;Cell 2&lt;/h3&gt;
 &lt;p&gt;Next, the Sentence Transformer model (all-MiniLM-L6-v2) converts each of these text chunks into a vector embedding, which is a numerical representation of the text&#39;s meaning.&lt;/p&gt;
-&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 2: Google Drive and Environment Setup (RAG from Scratch)&lt;/span&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 2: Google Drive and Environment Setup&lt;/span&gt;
 
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
 &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; google&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;colab &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; drive
@@ -139,7 +139,7 @@ os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;environ&lt;span 
 &lt;span class=&quot;token comment&quot;&gt;# Mount Google Drive to access documents and save the index&lt;/span&gt;
 drive&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;mount&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/content/drive&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;token comment&quot;&gt;# --- Configuration (UPDATED PATHS) ---&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# --- Configuration ---&lt;/span&gt;
 &lt;span class=&quot;token comment&quot;&gt;# Define the path where your source documents are located on Google Drive&lt;/span&gt;
 DOCS_DIR &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/content/drive/MyDrive/rag_docs_structured&#39;&lt;/span&gt; 
 &lt;span class=&quot;token comment&quot;&gt;# Define the path where the FAISS index will be saved. We&#39;ll add a specific file name later.&lt;/span&gt;
@@ -164,7 +164,7 @@ FAISS_INDEX_FILE &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt
 &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;nGoogle Drive mounted and environment paths set.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;cell-3&quot;&gt;Cell 3&lt;/h3&gt;
 &lt;p&gt;These embeddings are then stored in a FAISS index, which is a highly efficient structure for quickly searching through millions of vectors, and the original text is saved separately for persistence.&lt;/p&gt;
-&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 3: Manual Document Loading and Chunking (RAG from Scratch)&lt;/span&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 3: Manual Document Loading and Chunking&lt;/span&gt;
 
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; re &lt;span class=&quot;token comment&quot;&gt;# For simple text cleaning and paragraph splitting&lt;/span&gt;
@@ -197,7 +197,7 @@ chunks&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; List&lt;spa
 &lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;chunk_text&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;filename&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; max_chars&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;512&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; overlap&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; List&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Dict&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;token triple-quoted-string string&quot;&gt;&quot;&quot;&quot;Splits text content into chunks based on a simple paragraph/sentence separator.&quot;&quot;&quot;&lt;/span&gt;
     
-    &lt;span class=&quot;token comment&quot;&gt;# 1. Clean up XML/HTML tags (very basic cleaning for our sample files)&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;# 1. Clean up XML/HTML tags&lt;/span&gt;
     &lt;span class=&quot;token comment&quot;&gt;# This is a minimalist approach, for production, a dedicated HTML parser is better.&lt;/span&gt;
     text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; re&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sub&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;r&#39;&amp;lt;&#92;/?(html|body|h1|p|topic|title|filepath|/topic|/body)?&gt;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
     text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; re&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sub&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;r&#39;&amp;lt;&#92;?xml[^&gt;]*&#92;?&gt;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;strip&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
@@ -258,7 +258,7 @@ raw_documents &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; load_a
     &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Warning: No chunks were created.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&quot;cell-4&quot;&gt;Cell 4&lt;/h3&gt;
 &lt;p&gt;User queries are converted into a vector and then used to search the FAISS index to retrieve the top 3 most relevant context chunks.&lt;/p&gt;
-&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 4: Embeddings and FAISS Indexing (FIXED Metadata Persistence)&lt;/span&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 4: Embeddings and FAISS Indexing&lt;/span&gt;
 
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; faiss
@@ -371,7 +371,7 @@ GEMINI_MODEL &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
     &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; idx &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; I&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
         original_chunk &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; full_chunk_data&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;idx&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
         
-        &lt;span class=&quot;token comment&quot;&gt;# Access &#39;text&#39; and &#39;filename&#39; correctly from the loaded dictionary&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;# Access &#39;text&#39; and &#39;filename&#39; from the loaded dictionary&lt;/span&gt;
         context_text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Source File: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;original_chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;metadata&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;get&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;filename&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;N/A&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#92;nContent: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;original_chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#92;n---&#92;n&quot;&lt;/span&gt;&lt;/span&gt;
         
         retrieved_chunks&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;append&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -386,14 +386,14 @@ GEMINI_MODEL &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;spa
 
 
 &lt;span class=&quot;token comment&quot;&gt;# --- 3. Execute the Query and Generate Response ---&lt;/span&gt;
-&lt;span class=&quot;token comment&quot;&gt;# NEW QUERY: Ask about the two classic Ford vehicles&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# NEW QUERY&lt;/span&gt;
 query &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;What are there similarities between a horse and a car?&quot;&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;&#92;nUser Query: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;# Perform retrieval&lt;/span&gt;
 context&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; source_docs &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; retrieve_context&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; k&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;token comment&quot;&gt;# 4. Construct the Final Prompt (critical for grounding)&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# 4. Construct the Final Prompt for grounding&lt;/span&gt;
 system_prompt &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;&quot;&quot;Use ONLY the following pieces of context to answer the user&#39;s question. 
 Your answer MUST be based ONLY on the provided context. Do not use external knowledge or make up facts.
 For every piece of information used, cite the source filename (from the &#39;Source File:&#39; line in the context).
