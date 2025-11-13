@@ -123,7 +123,7 @@
 </tbody>
 </table>
 <h2 id="getting-started">Getting Started</h2>
-<p>Follow these steps to set up and run the notebook.</p>
+<p>Follow these steps to set up and run your notebook.</p>
 <h3 id="1-create-your-google-colab-notebook">1. Create Your Google Colab Notebook</h3>
 <p>Go to <a href="https://colab.research.google.com/" target="_blank" rel="noopener">https://colab.research.google.com/</a>, then create a notebook via the <strong>File</strong> menu.</p>
 <h3 id="2-set-up-api-key">2. Set Up API Key</h3>
@@ -139,11 +139,17 @@
 <h3 id="3-prepare-source-folders-and-documents">3. Prepare Source Folders and Documents</h3>
 <ol>
 <li>
-<p>The notebook is configured to read from and write to a specific location in your Google Drive. Create the following folder structure in your Google Drive:</p>
+<p>Cell 2 configures the pipeline to read from and write to a specific location in your Google Drive. Create the following folder structure in your Google Drive:</p>
+<ul>
+<li>
 <p><code>My Drive/rag_docs_structured</code></p>
-<p>Upload DITA, Markdown, and HTML files ()<code>.md</code>, <code>.html</code>, <code>.dita</code>) in the <code>rag_docs_structured</code> folder.</p>
+<p>This is where you will upload DITA, Markdown, and HTML files.</p>
+</li>
+<li>
 <p><code>My Drive/rag_index_gemini_faiss</code></p>
 <p>This is where the FAISS vector index will be saved.</p>
+</li>
+</ul>
 </li>
 <li>
 <p>Upload source documents (<code>.dita</code>, <code>.md</code>, <code>.html</code>) to <code>My Drive/rag_docs_structured</code>.</p>
@@ -153,15 +159,15 @@
 <p>Run each cell in notebook sequentially. Be sure to customize the query in Cell 5 to run against the subject matter of the uploaded source files.</p>
 <h2 id="python-cells-for-notebook-entries">Python Cells for Notebook Entries</h2>
 <ol>
-<li><strong>Setup</strong>: Installs dependencies and loads the Gemini API Key.</li>
-<li><strong>Environment</strong>: Mounts Google Drive and defines necessary file paths.</li>
-<li><strong>Chunking</strong>: Manually loads and splits text documents (<code>.dita</code>, <code>.md</code>, <code>.html</code>) from Google Drive into small chunks.</li>
-<li><strong>Indexing</strong>: Generates vector embeddings for each chunk and builds a persistent FAISS index in Drive.</li>
-<li><strong>Query</strong>: Loads the FAISS index, retrieves the top context chunks for a given query, and uses the Gemini API to generate an answer.</li>
+<li><a href="../../../posts/colab-drive-rag/#cell-1">Setup</a>: Installs dependencies and loads the Gemini API Key.</li>
+<li><a href="../../../posts/colab-drive-rag/#cell-2">Environment</a>: Mounts Google Drive and defines necessary file paths.</li>
+<li><a href="../../../posts/colab-drive-rag/#cell-3">Chunking</a>: Manually loads and splits text documents (<code>.dita</code>, <code>.md</code>, <code>.html</code>) from Google Drive into small chunks.</li>
+<li><a href="../../../posts/colab-drive-rag/#cell-4">Indexing</a>: Generates vector embeddings for each chunk and builds a persistent FAISS index in Drive.</li>
+<li><a href="../../../posts/colab-drive-rag/#cell-5">Query</a>: Loads the FAISS index, retrieves the top context chunks for a given query, and uses the Gemini API to generate an answer.</li>
 </ol>
 <h3 id="cell-1">Cell 1</h3>
 <p>The process begins by manually loading and chunking structured documents (.md, .dita, .html), preparing the text by separating it into small, context-preserving segments.</p>
-<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 1: Setup and Dependencies (RAG from Scratch)</span>
+<pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 1: Setup and Dependencies</span>
 
 <span class="token comment"># Install core foundational libraries for RAG from Scratch</span>
 !pip install <span class="token operator">-</span>q faiss<span class="token operator">-</span>cpu sentence<span class="token operator">-</span>transformers google<span class="token operator">-</span>genai numpy
@@ -491,7 +497,7 @@ response <span class="token operator">=</span> client<span class="token punctuat
                 </em>
             </p>
         </footer>
-        <!-- This page `/posts/colab-drive-rag/` was built on 2025-11-13T18:22:35.546Z -->
+        <!-- This page `/posts/colab-drive-rag/` was built on 2025-11-13T18:38:49.548Z -->
         <script type="module" src="/dist/xbxy_EL6cU.js"></script>
     </body>
 </html>

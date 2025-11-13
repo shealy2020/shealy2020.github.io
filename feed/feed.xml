@@ -71,7 +71,7 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
-&lt;p&gt;Follow these steps to set up and run the notebook.&lt;/p&gt;
+&lt;p&gt;Follow these steps to set up and run your notebook.&lt;/p&gt;
 &lt;h3 id=&quot;1-create-your-google-colab-notebook&quot;&gt;1. Create Your Google Colab Notebook&lt;/h3&gt;
 &lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://colab.research.google.com/&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
 &lt;h3 id=&quot;2-set-up-api-key&quot;&gt;2. Set Up API Key&lt;/h3&gt;
@@ -87,11 +87,17 @@
 &lt;h3 id=&quot;3-prepare-source-folders-and-documents&quot;&gt;3. Prepare Source Folders and Documents&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;
-&lt;p&gt;The notebook is configured to read from and write to a specific location in your Google Drive. Create the following folder structure in your Google Drive:&lt;/p&gt;
+&lt;p&gt;Cell 2 configures the pipeline to read from and write to a specific location in your Google Drive. Create the following folder structure in your Google Drive:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
 &lt;p&gt;&lt;code&gt;My Drive/rag_docs_structured&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Upload DITA, Markdown, and HTML files ()&lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;, &lt;code&gt;.dita&lt;/code&gt;) in the &lt;code&gt;rag_docs_structured&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;This is where you will upload DITA, Markdown, and HTML files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;&lt;code&gt;My Drive/rag_index_gemini_faiss&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;This is where the FAISS vector index will be saved.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Upload source documents (&lt;code&gt;.dita&lt;/code&gt;, &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;) to &lt;code&gt;My Drive/rag_docs_structured&lt;/code&gt;.&lt;/p&gt;
@@ -101,15 +107,15 @@
 &lt;p&gt;Run each cell in notebook sequentially. Be sure to customize the query in Cell 5 to run against the subject matter of the uploaded source files.&lt;/p&gt;
 &lt;h2 id=&quot;python-cells-for-notebook-entries&quot;&gt;Python Cells for Notebook Entries&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Setup&lt;/strong&gt;: Installs dependencies and loads the Gemini API Key.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Environment&lt;/strong&gt;: Mounts Google Drive and defines necessary file paths.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Chunking&lt;/strong&gt;: Manually loads and splits text documents (&lt;code&gt;.dita&lt;/code&gt;, &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;) from Google Drive into small chunks.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Indexing&lt;/strong&gt;: Generates vector embeddings for each chunk and builds a persistent FAISS index in Drive.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Query&lt;/strong&gt;: Loads the FAISS index, retrieves the top context chunks for a given query, and uses the Gemini API to generate an answer.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-1&quot;&gt;Setup&lt;/a&gt;: Installs dependencies and loads the Gemini API Key.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-2&quot;&gt;Environment&lt;/a&gt;: Mounts Google Drive and defines necessary file paths.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-3&quot;&gt;Chunking&lt;/a&gt;: Manually loads and splits text documents (&lt;code&gt;.dita&lt;/code&gt;, &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;) from Google Drive into small chunks.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-4&quot;&gt;Indexing&lt;/a&gt;: Generates vector embeddings for each chunk and builds a persistent FAISS index in Drive.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-5&quot;&gt;Query&lt;/a&gt;: Loads the FAISS index, retrieves the top context chunks for a given query, and uses the Gemini API to generate an answer.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;cell-1&quot;&gt;Cell 1&lt;/h3&gt;
 &lt;p&gt;The process begins by manually loading and chunking structured documents (.md, .dita, .html), preparing the text by separating it into small, context-preserving segments.&lt;/p&gt;
-&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 1: Setup and Dependencies (RAG from Scratch)&lt;/span&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 1: Setup and Dependencies&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;# Install core foundational libraries for RAG from Scratch&lt;/span&gt;
 !pip install &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;q faiss&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;cpu sentence&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;transformers google&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;genai numpy
