@@ -104,8 +104,7 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;4-run-cells&quot;&gt;4.  Run Cells&lt;/h3&gt;
-&lt;p&gt;Run each &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1/tree/main/notebook-cells&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;cell&lt;/a&gt; in your notebook sequentially. Alternately, concatenate the Python code into a single notebook cell, then run it. (I prefer to run each functional block of code separately for troubleshooting purposes.)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: Be sure to modify the query in &lt;em&gt;Cell 5&lt;/em&gt; to run against the content in the uploaded source.&lt;/p&gt;
+&lt;p&gt;Run each cell in notebook sequentially. Be sure to customize the query in Cell 5 to run against the subject matter of the uploaded source files.&lt;/p&gt;
 &lt;h2 id=&quot;python-cells-for-notebook-entries&quot;&gt;Python Cells for Notebook Entries&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-1&quot;&gt;Setup&lt;/a&gt;: Installs dependencies and loads the Gemini API Key.&lt;/li&gt;
