@@ -1,24 +1,858 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  <title>TW x AI</title>
-  <subtitle>Navigating the intersections of technical writing and AI</subtitle>
+  <title>Merge</title>
+  <subtitle>Navigating the intersections of technical communication and AI</subtitle>
   <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
   <link href="https://shealy2020.github.io/" />
-  <updated>2025-10-09T00:00:00Z</updated>
+  <updated>2025-11-13T00:00:00Z</updated>
   <id>https://shealy2020.github.io/</id>
   <author>
     <name>Sean Healy</name>
   </author>
   <entry>
-    <title>Surfacing Semantically Similar Content</title>
-    <link href="https://shealy2020.github.io/posts/refactoring-content/" />
+    <title>Gemini RAG Pipeline</title>
+    <link href="https://shealy2020.github.io/posts/colab-drive-rag/" />
+    <updated>2025-11-13T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/colab-drive-rag/</id>
+    <content type="html">&lt;h1 id=&quot;gemini-rag-pipeline&quot;&gt;Gemini RAG Pipeline&lt;/h1&gt;
+&lt;p&gt;This repository contains a &lt;em&gt;simple&lt;/em&gt;, five-cell &lt;a href=&quot;https://research.google.com/colaboratory/faq.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab notebook&lt;/a&gt; demonstrating a &lt;strong&gt;Retrieval-Augmented Generation (RAG)&lt;/strong&gt; pipeline built from scratch (without frameworks like LangChain). This prototype uses free (no subscription) and open source tools and core Python libraries (&lt;code&gt;faiss&lt;/code&gt;, &lt;code&gt;sentence-transformers&lt;/code&gt;, &lt;code&gt;google-genai&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;The pipeline processes documents stored in Google Drive and uses the &lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt; model returning responses from queries.&lt;/p&gt;
+&lt;p&gt;For your own use, you&#39;ll find my &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Colab Notebook cells on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Components&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;google-genai (SDK)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Google SDK used to call the Gemini 2.5 Flash model to generate a final answer based on retrieved context.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;gemini-2.5-flash (Model)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Large Language Model (LLM) from Google that receives the user query and retrieved context to generate the final answer.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;faiss-cpu (FAISS)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Vector database library used to store the vector embeddings and perform similarity search to retrieve relevant text chunks.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;sentence-transformers&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Python framework loads the embedding model and converts text chunks and queries into vector embeddings.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;all-MiniLM-L6-v2 (Model)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Pre-trained Sentence Transformer Model chosen to generate the 384-dimensional vector embeddings.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;numpy&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Core library for numerical operations on the vector embeddings during index creation, storage, and retrieval.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;pickle&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Python&#39;s built-in module that serializes text chunks &amp;amp; metadata so they can be saved to Google Drive and reloaded later.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;os&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Python library for environment tasks like setting the API key, defining and file paths, and reading docs.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;re&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Python library for regex for cleaning of source during the chunking process.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;google.colab (Utilities)&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Colab-specific utilities that handle mounting Google Drive to access source and retrieve the GEMINI_API_KEY from Secrets manager.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
+&lt;p&gt;Follow these steps to set up and run your notebook.&lt;/p&gt;
+&lt;h3 id=&quot;1-create-your-google-colab-notebook&quot;&gt;1. Create Your Google Colab Notebook&lt;/h3&gt;
+&lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://colab.research.google.com/&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
+&lt;h3 id=&quot;2-set-up-api-key&quot;&gt;2. Set Up API Key&lt;/h3&gt;
+&lt;p&gt;The code requires a &lt;strong&gt;Gemini API Key&lt;/strong&gt; to communicate with the model. Store this key securely in Colab&#39;s &lt;strong&gt;Secrets&lt;/strong&gt; tool.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Get your key from Google AI Studio: &lt;a href=&quot;https://ai.google.dev/gemini-api/docs/api-key&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://ai.google.dev/gemini-api/docs/api-key&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;In the Colab Notebook, look for the &lt;strong&gt;Secrets&lt;/strong&gt; tab in the left sidebar.&lt;/li&gt;
+&lt;li&gt;Click the &lt;strong&gt;&lt;code&gt;+&lt;/code&gt;&lt;/strong&gt; icon to add a new secret.&lt;/li&gt;
+&lt;li&gt;Set the &lt;strong&gt;Name&lt;/strong&gt; exactly to: &lt;code&gt;GEMINI_API_KEY&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Set the &lt;strong&gt;Value&lt;/strong&gt; to the key you copied in Step 1.&lt;/li&gt;
+&lt;li&gt;Ensure the &amp;quot;Notebook access&amp;quot; toggle is &lt;strong&gt;ON&lt;/strong&gt; for this secret.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;3-prepare-source-folders-and-documents&quot;&gt;3. Prepare Source Folders and Documents&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Cell 2 configures the pipeline to read from and write to a specific location in your Google Drive. Create the following folder structure in your Google Drive:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;My Drive/rag_docs_structured&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This is where you will upload DITA, Markdown, and HTML files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;My Drive/rag_index_gemini_faiss&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;This is where the FAISS vector index will be saved.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Upload source documents (&lt;code&gt;.dita&lt;/code&gt;, &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;) to &lt;code&gt;My Drive/rag_docs_structured&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;4-run-cells&quot;&gt;4.  Run Cells&lt;/h3&gt;
+&lt;p&gt;Run each &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1/tree/main/notebook-cells&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;cell&lt;/a&gt; in your notebook sequentially. Alternately, concatenate the Python code into a single notebook cell, then run it. (I prefer to run each functional block of code separately for troubleshooting purposes.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: Be sure to modify the query in &lt;em&gt;Cell 5&lt;/em&gt; to run against the content in the uploaded source.&lt;/p&gt;
+&lt;h2 id=&quot;python-cells-for-notebook-entries&quot;&gt;Python Cells for Notebook Entries&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-1&quot;&gt;Setup&lt;/a&gt;: Installs dependencies and loads the Gemini API Key.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-2&quot;&gt;Environment&lt;/a&gt;: Mounts Google Drive and defines necessary file paths.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-3&quot;&gt;Chunking&lt;/a&gt;: Manually loads and splits text documents (&lt;code&gt;.dita&lt;/code&gt;, &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;) from Google Drive into small chunks.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-4&quot;&gt;Indexing&lt;/a&gt;: Generates vector embeddings for each chunk and builds a persistent FAISS index in Drive.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-5&quot;&gt;Query&lt;/a&gt;: Loads the FAISS index, retrieves the top context chunks for a given query, and uses the Gemini API to generate an answer.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;cell-1&quot;&gt;Cell 1&lt;/h3&gt;
+&lt;p&gt;The process begins by manually loading and chunking structured documents (.md, .dita, .html), preparing the text by separating it into small, context-preserving segments.&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 1: Setup and Dependencies&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Install core foundational libraries for RAG&lt;/span&gt;
+!pip install &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;q faiss&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;cpu sentence&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;transformers google&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;genai numpy
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
+&lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; google&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;colab &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; drive&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; userdata
+
+&lt;span class=&quot;token comment&quot;&gt;# --- API Key Retrieval from Colab Secrets ---&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# This ensures the official &#39;google-genai&#39; SDK is authenticated&lt;/span&gt;
+os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;environ&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;GEMINI_API_KEY&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; userdata&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;get&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;GEMINI_API_KEY&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;GEMINI_API_KEY&quot;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;environ &lt;span class=&quot;token keyword&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;not&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;environ&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;GEMINI_API_KEY&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;raise&lt;/span&gt; ValueError&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;GEMINI_API_KEY not found in Colab Secrets.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Gemini API Key successfully loaded and dependencies installed.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;cell-2&quot;&gt;Cell 2&lt;/h3&gt;
+&lt;p&gt;Next, the Sentence Transformer model (all-MiniLM-L6-v2) converts each of these text chunks into a vector embedding, which is a numerical representation of the text&#39;s meaning.&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 2: Google Drive and Environment Setup&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
+&lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; google&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;colab &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; drive
+
+&lt;span class=&quot;token comment&quot;&gt;# Mount Google Drive to access documents and save the index&lt;/span&gt;
+drive&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;mount&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/content/drive&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# --- Configuration ---&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# Define the path where your source documents are located on Google Drive&lt;/span&gt;
+DOCS_DIR &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/content/drive/MyDrive/rag_docs_structured&#39;&lt;/span&gt; 
+&lt;span class=&quot;token comment&quot;&gt;# Define the path where the FAISS index will be saved. We&#39;ll add a specific file name later.&lt;/span&gt;
+FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/content/drive/MyDrive/rag_index_gemini_faiss&#39;&lt;/span&gt;
+FAISS_INDEX_FILE &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;my_faiss_index.bin&#39;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# Filename for the raw FAISS binary index&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Check/Create the document directory&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;not&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;exists&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;DOCS_DIR&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;makedirs&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;DOCS_DIR&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Created document directory: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;DOCS_DIR&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Document directory confirmed: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;DOCS_DIR&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;token comment&quot;&gt;# Create the index parent directory if it doesn&#39;t exist &lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;not&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;exists&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;makedirs&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Created directory for index: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Index directory confirmed: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;nGoogle Drive mounted and environment paths set.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;cell-3&quot;&gt;Cell 3&lt;/h3&gt;
+&lt;p&gt;These embeddings are then stored in a FAISS index, which is a highly efficient structure for quickly searching through millions of vectors, and the original text is saved separately for persistence.&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 3: Manual Document Loading and Chunking&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; re &lt;span class=&quot;token comment&quot;&gt;# For simple text cleaning and paragraph splitting&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; typing &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; List&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; Dict
+
+&lt;span class=&quot;token comment&quot;&gt;# DOCS_DIR is defined in Cell 2&lt;/span&gt;
+documents&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; List&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# Stores the raw text content of all documents&lt;/span&gt;
+chunks&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; List&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Dict&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# Stores the final, processed chunks with metadata&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;--- 1. Preparing Source Documents (Manual Loading &amp;amp; Splitting) ---&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;load_all_text_files&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;doc_dir&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; List&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token triple-quoted-string string&quot;&gt;&quot;&quot;&quot;Manually reads text content from specified file types in the directory.&quot;&quot;&quot;&lt;/span&gt;
+    all_text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;# Only process files with these extensions to skip images/binaries&lt;/span&gt;
+    target_extensions &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;.md&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;.dita&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;.html&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; 
+    
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; root&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; files &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;walk&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;doc_dir&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; files&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;endswith&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ext&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; ext &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; target_extensions&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                file_path &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;root&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;file_path&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;r&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; encoding&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;utf-8&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; f&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                        &lt;span class=&quot;token comment&quot;&gt;# Store a tuple of (filename, content) for simplicity&lt;/span&gt;
+                        all_text&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;append&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; f&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;read&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;token keyword&quot;&gt;except&lt;/span&gt; Exception &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Warning: Could not read file &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;. Error: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;e&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; all_text
+
+&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;chunk_text&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;filename&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; max_chars&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;512&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; overlap&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; List&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Dict&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token triple-quoted-string string&quot;&gt;&quot;&quot;&quot;Splits text content into chunks based on a simple paragraph/sentence separator.&quot;&quot;&quot;&lt;/span&gt;
+    
+    &lt;span class=&quot;token comment&quot;&gt;# 1. Clean up XML/HTML tags&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;# This is a minimalist approach, for production, a dedicated HTML parser is better.&lt;/span&gt;
+    text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; re&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sub&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;r&#39;&amp;lt;&#92;/?(html|body|h1|p|topic|title|filepath|/topic|/body)?&gt;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; re&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;sub&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;r&#39;&amp;lt;&#92;?xml[^&gt;]*&#92;?&gt;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;strip&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    
+    &lt;span class=&quot;token comment&quot;&gt;# 2. Split by paragraph breaks, then sentence/line breaks&lt;/span&gt;
+    separators &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;n&#92;n&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&#92;n&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    
+    &lt;span class=&quot;token comment&quot;&gt;# Start with all paragraphs/sentences&lt;/span&gt;
+    elements &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;strip&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; t &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; re&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;split&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;r&#39;(&#92;n&#92;n)&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; text&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; t&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;strip&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    
+    final_chunks &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    current_chunk &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; element &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; elements&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;current_chunk&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;element&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;=&lt;/span&gt; max_chars&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token comment&quot;&gt;# If element fits, append it&lt;/span&gt;
+            current_chunk &lt;span class=&quot;token operator&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; element &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; current_chunk &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; element&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token comment&quot;&gt;# If element doesn&#39;t fit, finalize the current chunk&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; current_chunk&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                final_chunks&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;append&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;token string&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; current_chunk&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                    &lt;span class=&quot;token string&quot;&gt;&quot;metadata&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;filename&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; filename&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+            
+            &lt;span class=&quot;token comment&quot;&gt;# Start a new chunk, ensuring overlap if possible&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;current_chunk&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&gt;=&lt;/span&gt; overlap&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                current_chunk &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; current_chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;overlap&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; element
+            &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+                current_chunk &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; element
+    
+    &lt;span class=&quot;token comment&quot;&gt;# Add the last chunk&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; current_chunk&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        final_chunks&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;append&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token string&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; current_chunk&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token string&quot;&gt;&quot;metadata&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;filename&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; filename&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; final_chunks
+
+
+&lt;span class=&quot;token comment&quot;&gt;# --- Execution ---&lt;/span&gt;
+raw_documents &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; load_all_text_files&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;DOCS_DIR&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Loaded &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;raw_documents&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt; source files.&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; filename&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; content &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; raw_documents&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    new_chunks &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; chunk_text&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;filename&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; content&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    chunks&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;extend&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;new_chunks&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;&#92;nSuccessfully split content into &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;chunks&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt; final chunks.&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Example inspection&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; chunks&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;nExample Chunk 1:&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;  Content: &#39;&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;chunks&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token format-spec&quot;&gt;100]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;...&#39;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;  Metadata: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;chunks&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;metadata&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Warning: No chunks were created.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;cell-4&quot;&gt;Cell 4&lt;/h3&gt;
+&lt;p&gt;User queries are converted into a vector and then used to search the FAISS index to retrieve the top 3 most relevant context chunks.&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 4: Embeddings and FAISS Indexing&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; faiss
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; np
+&lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; sentence_transformers &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; SentenceTransformer
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; pickle &lt;span class=&quot;token comment&quot;&gt;# Used to save complex Python objects like the list of chunk dictionaries&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Paths and variables defined in Cell 2 and 3&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# chunks: list of dicts with &#39;text&#39; and &#39;metadata&#39;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# FAISS_INDEX_PATH and FAISS_INDEX_FILE are defined in Cell 2&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;--- 2. Creating Embeddings and Vectors ---&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 1. Load the Sentence Transformer Model&lt;/span&gt;
+model_name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;all-MiniLM-L6-v2&quot;&lt;/span&gt;
+model &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; SentenceTransformer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;model_name&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Embedding model loaded: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;model_name&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 2. Prepare Chunk Text for Embedding&lt;/span&gt;
+chunk_texts &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; chunk &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; chunks&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;not&lt;/span&gt; chunk_texts&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;raise&lt;/span&gt; ValueError&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;No text chunks found. Please check Cell 3 output and document loading.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 3. Generate Embeddings&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Generating embeddings for &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;chunk_texts&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt; chunks...&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+embeddings &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;encode&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;chunk_texts&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; convert_to_numpy&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;astype&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;float32&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 4. Build FAISS Index&lt;/span&gt;
+dimension &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; embeddings&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;shape&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+index &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; faiss&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;IndexFlatL2&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+index&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;add&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;embeddings&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;FAISS index built successfully with dimension: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;dimension&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# --- 3. Indexing and Metadata (Persistence) ---&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;n--- 3. Indexing and Metadata (Persistence) ---&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Save the raw FAISS index&lt;/span&gt;
+full_index_path &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; FAISS_INDEX_FILE&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+faiss&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;write_index&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;index&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; full_index_path&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;FAISS index (Vectors) saved to: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;full_index_path&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# FIX: Save the entire original &#39;chunks&#39; list using pickle. &lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# This preserves the text content and the metadata dictionary together.&lt;/span&gt;
+chunk_data_file &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;chunk_data.pkl&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;chunk_data_file&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;wb&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; f&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    pickle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dump&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;chunks&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; f&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Full Chunk Data (Text and Metadata) saved to: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;chunk_data_file&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Indexing and Persistence steps completed.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;cell-5&quot;&gt;Cell 5&lt;/h3&gt;
+&lt;p&gt;Finally, this retrieved context is combined with the original question into a prompt that is sent to the Gemini 2.5 Flash model, which generates an answer based only on the provided source information.&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Cell 5: Retrieval and Response Generation (NEW QUERY)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; os
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; faiss
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; numpy &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; np
+&lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; sentence_transformers &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; SentenceTransformer
+&lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; google &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; genai
+&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; pickle 
+
+&lt;span class=&quot;token comment&quot;&gt;# --- Configuration and Initialization ---&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# Paths and variables defined in Cell 2&lt;/span&gt;
+FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/content/drive/MyDrive/gemini-api-1/rag_index_gemini_faiss&#39;&lt;/span&gt;
+FAISS_INDEX_FILE &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;my_faiss_index.bin&#39;&lt;/span&gt;
+full_index_path &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; FAISS_INDEX_FILE&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+chunk_data_file &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; os&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;path&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;FAISS_INDEX_PATH&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;chunk_data.pkl&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+model_name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;all-MiniLM-L6-v2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 1. Load Components&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;--- 4. User Queries &amp;amp; Retrieval Setup (Loading Components) ---&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Load the FAISS Index&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    index &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; faiss&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;read_index&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;full_index_path&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;FAISS index loaded successfully from &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;full_index_path&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;except&lt;/span&gt; Exception &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;raise&lt;/span&gt; FileNotFoundError&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Could not load FAISS index: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;e&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;. Ensure Cell 4 ran correctly.&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Load the full chunk data (text and metadata) using pickle&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;chunk_data_file&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;rb&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; f&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        full_chunk_data &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; pickle&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;load&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;f&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Full chunk data loaded for &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;full_chunk_data&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt; chunks.&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;except&lt;/span&gt; Exception &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; e&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;raise&lt;/span&gt; FileNotFoundError&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Could not load chunk data: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;e&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;. Ensure Cell 4 ran correctly.&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;token comment&quot;&gt;# Load the Sentence Transformer Model (must be the same one used for embedding)&lt;/span&gt;
+model &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; SentenceTransformer&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;model_name&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Initialize the Gemini Client (API key is pulled from environment variables)&lt;/span&gt;
+client &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; genai&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Client&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+GEMINI_MODEL &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;gemini-2.5-flash&quot;&lt;/span&gt;
+
+
+&lt;span class=&quot;token comment&quot;&gt;# --- 2. Retrieval Function ---&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;retrieve_context&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; k&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token triple-quoted-string string&quot;&gt;&quot;&quot;&quot;Embeds the query and searches the FAISS index for the top-k chunks.&quot;&quot;&quot;&lt;/span&gt;
+    
+    &lt;span class=&quot;token comment&quot;&gt;# 1. Embed the query&lt;/span&gt;
+    query_vector &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; model&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;encode&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;astype&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;float32&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;reshape&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    
+    &lt;span class=&quot;token comment&quot;&gt;# 2. Search the FAISS index&lt;/span&gt;
+    D&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; I &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; index&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;search&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;query_vector&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; k&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    
+    &lt;span class=&quot;token comment&quot;&gt;# 3. Extract the original chunk data using the indices&lt;/span&gt;
+    retrieved_chunks &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    
+    &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; idx &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; I&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        original_chunk &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; full_chunk_data&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;idx&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        
+        &lt;span class=&quot;token comment&quot;&gt;# Access &#39;text&#39; and &#39;filename&#39; from the loaded dictionary&lt;/span&gt;
+        context_text &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;Source File: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;original_chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;metadata&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;get&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;filename&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;N/A&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#92;nContent: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;original_chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#92;n---&#92;n&quot;&lt;/span&gt;&lt;/span&gt;
+        
+        retrieved_chunks&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;append&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token string&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; context_text&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token string&quot;&gt;&quot;metadata&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; original_chunk&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;metadata&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+        
+    &lt;span class=&quot;token comment&quot;&gt;# Concatenate the text into a single context string for the LLM&lt;/span&gt;
+    full_context &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;c&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;text&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; c &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; retrieved_chunks&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; full_context&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; retrieved_chunks
+
+
+&lt;span class=&quot;token comment&quot;&gt;# --- 3. Execute the Query and Generate Response ---&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# NEW QUERY&lt;/span&gt;
+query &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;What are there similarities between a horse and a car?&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;&#92;nUser Query: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Perform retrieval&lt;/span&gt;
+context&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; source_docs &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; retrieve_context&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; k&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 4. Construct the Final Prompt for grounding&lt;/span&gt;
+system_prompt &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;&quot;&quot;Use ONLY the following pieces of context to answer the user&#39;s question. 
+Your answer MUST be based ONLY on the provided context. Do not use external knowledge or make up facts.
+For every piece of information used, cite the source filename (from the &#39;Source File:&#39; line in the context).
+
+Context:
+&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;context&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;
+
+Question: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;
+Helpful Answer:&quot;&quot;&quot;&lt;/span&gt;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# 5. Call the Gemini API&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Sending prompt to Gemini...&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+response &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; client&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;models&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;generate_content&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    model&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;GEMINI_MODEL&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    contents&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;system_prompt
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# --- Print Results ---&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;n==================================&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;✅ Final Gemini RAG Response:&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;response&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;text&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;strip&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&#92;n--- Provenance (Source Documents Used) ---&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;for&lt;/span&gt; i&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; doc &lt;span class=&quot;token keyword&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;source_docs&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;* Chunk &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;i&lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt; Source File: **&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;doc&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;metadata&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;get&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;filename&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;N/A&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;**&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;# Display the first 70 characters of the text that was sent to the model&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string-interpolation&quot;&gt;&lt;span class=&quot;token string&quot;&gt;f&quot;  Snippet: &lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;doc&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;doc&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;text&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;find&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Content:&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Content:&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;strip&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token format-spec&quot;&gt;70]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;...&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;==================================&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>RAG Pipeline Terms</title>
+    <link href="https://shealy2020.github.io/posts/rag-terms-glossary/" />
+    <updated>2025-11-08T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/rag-terms-glossary/</id>
+    <content type="html">&lt;h2 id=&quot;approximate-nearest-neighbor&quot;&gt;Approximate Nearest Neighbor&lt;/h2&gt;
+&lt;p&gt;Approximate Nearest Neighbor (ANN) algorithms are used to search large collections of &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector&quot;&gt;vectors&lt;/a&gt; efficiently. Instead of finding the exact closest match, they quickly identify items that are close enough in meaning for practical use. ANN algorithms trade a small amount of precision for much faster search performance. These techniques make large-scale &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-search&quot;&gt;vector search&lt;/a&gt; fast and scalable.&lt;/p&gt;
+&lt;h2 id=&quot;chunks&quot;&gt;Chunks&lt;/h2&gt;
+&lt;p&gt;Chunks are small, meaningful segments of text derived from larger documents. Each chunk represents a coherent piece of information suitable for analysis by the AI system. Chunks are converted into &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embeddings&lt;/a&gt;, allowing semantic comparison between pieces of text. Chunk size affects how well the system captures meaning. Chunking ensures that even large documents can be represented and retrieved efficiently.&lt;/p&gt;
+&lt;h2 id=&quot;chunking&quot;&gt;Chunking&lt;/h2&gt;
+&lt;p&gt;Chunking is the process of dividing large documents into smaller, coherent segments called &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#chunks&quot;&gt;chunks&lt;/a&gt;. Each chunk preserves enough context to be meaningful on its own but remains short enough for processing by an &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt;. Chunking helps the system manage long documents efficiently and improves the precision of retrieval.&lt;/p&gt;
+&lt;h2 id=&quot;context-window&quot;&gt;Context Window&lt;/h2&gt;
+&lt;p&gt;The context window is the limit on how much text an &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; can read at one time. Every word or symbol the model processes counts toward this limit as &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#tokens&quot;&gt;tokens&lt;/a&gt;. If too much text is included, the system must choose which chunks to include in the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#prompt&quot;&gt;prompt&lt;/a&gt;. This choice affects output accuracy. Understanding context windows ensures that relevant material is prioritized for generation.&lt;/p&gt;
+&lt;h2 id=&quot;cosine-similarity&quot;&gt;Cosine Similarity&lt;/h2&gt;
+&lt;p&gt;Cosine similarity is a metric used to measure how similar two vectors are by calculating the cosine of the angle between them in a multi-dimensional space. It ranges from -1 to 1, where 1 indicates the vectors point in exactly the same direction (most similar), 0 indicates they are orthogonal (unrelated), and -1 indicates they point in opposite directions (most dissimilar). In practice, particularly for text embeddings and natural language processing, cosine similarity is widely used because it focuses on the orientation of vectors rather than their magnitude, making it effective for comparing documents or word embeddings regardless of their length. This property makes it especially valuable in information retrieval systems and recommendation engines, where the goal is to find content that is semantically similar to a query or reference item.&lt;/p&gt;
+&lt;h2 id=&quot;embedding-model&quot;&gt;Embedding Model&lt;/h2&gt;
+&lt;p&gt;An embedding model is a smaller neural network trained to convert text into numerical &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embeddings&lt;/a&gt;. It captures relationships between words and concepts in a way that reflects meaning. These models specialize in understanding relationships between texts, not generating new text like an &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt;. Embedding models are used to measure &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#semantic-similarity&quot;&gt;semantic similarity&lt;/a&gt; between text passages and are often separate from the larger LLM used for generation.&lt;/p&gt;
+&lt;h2 id=&quot;embeddings&quot;&gt;Embeddings&lt;/h2&gt;
+&lt;p&gt;Embeddings are numerical representations of text. Each &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#chunks&quot;&gt;chunk&lt;/a&gt; becomes an embedding that captures its semantic meaning as a &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector&quot;&gt;vector&lt;/a&gt;. By comparing embeddings, the system can determine &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#semantic-similarity&quot;&gt;semantic similarity&lt;/a&gt; between different pieces of text. This enables retrieval of conceptually related information even if exact wording differs. Embeddings are central to connecting text meaning with mathematical structure.&lt;/p&gt;
+&lt;h2 id=&quot;fine-tuning&quot;&gt;Fine-Tuning&lt;/h2&gt;
+&lt;p&gt;Fine-tuning is the process of retraining a preexisting &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; on domain-specific examples to improve its performance for a particular task. Unlike &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#retrieval-augmented-generation-rag&quot;&gt;retrieval-augmented generation (RAG)&lt;/a&gt;, fine-tuning modifies the model’s parameters. Fine-tuning requires retraining on curated datasets, which is slower and more costly than updating a RAG system’s source content. RAG avoids retraining by retrieving relevant data dynamically, making updates faster and easier to maintain.&lt;/p&gt;
+&lt;h2 id=&quot;generator&quot;&gt;Generator&lt;/h2&gt;
+&lt;p&gt;The generator is the stage where the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; produces new text from the retrieved context. It synthesizes content from the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#prompt&quot;&gt;prompt&lt;/a&gt; and organizes it into a coherent response. The generator applies its learned patterns of language to express retrieved facts accurately and clearly. This process completes the transformation of static data into new information products.&lt;/p&gt;
+&lt;h2 id=&quot;grounding&quot;&gt;Grounding&lt;/h2&gt;
+&lt;p&gt;Grounding means anchoring an AI model’s responses in real, verifiable data. In &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#retrieval-augmented-generation-rag&quot;&gt;RAG&lt;/a&gt; systems, grounding occurs when the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; uses retrieved &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#chunks&quot;&gt;chunks&lt;/a&gt; from trusted sources as the factual basis for its output. Grounded responses are less likely to contain &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#hallucination&quot;&gt;hallucinations&lt;/a&gt;. Grounding improves trust in AI systems by ensuring outputs can be traced back to real sources.&lt;/p&gt;
+&lt;h2 id=&quot;hallucination&quot;&gt;Hallucination&lt;/h2&gt;
+&lt;p&gt;Hallucination occurs when an &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; generates information not supported by retrieved context. It may result from irrelevant or incomplete data retrieval. While retrieval-based systems reduce this risk, human review remains essential for quality assurance. Hallucination highlights the importance of grounding generative output in verified data.&lt;/p&gt;
+&lt;p&gt;While each chunk includes provenance data, the LLM may sometimes blend retrieved facts with its learned linguistic patterns, producing statements that seem factual but lack an exact source match. These mismatches occur because the model generates plausible language rather than verifying data against the index. Continuous validation, feedback tuning, and human review are essential to reduce, but not eliminate, this risk of hallucinations.&lt;/p&gt;
+&lt;h2 id=&quot;index&quot;&gt;Index&lt;/h2&gt;
+&lt;p&gt;An index is the data structure built by the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-database&quot;&gt;vector database&lt;/a&gt; that allows quick similarity searches among stored &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector&quot;&gt;vectors&lt;/a&gt;. It organizes vectors in a way that enables efficient lookup using mathematical proximity rather than text matching. This structure powers the retrieval stage of a RAG system. Indexes are typically updated automatically when new content is added or existing files are modified.&lt;/p&gt;
+&lt;h2 id=&quot;indexing&quot;&gt;Indexing&lt;/h2&gt;
+&lt;p&gt;Indexing is the process of scanning files in the knowledge base and preparing them for processing. Each document is analyzed for text content, structure, and context. The result of indexing is a set of &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#chunks&quot;&gt;chunks&lt;/a&gt; that are later converted into &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embeddings&lt;/a&gt;. Metadata such as document name or modification date is also stored for future filtering. Indexing enables the AI system to organize data for efficient retrieval and reuse. The indexing process is often automated to ensure new or updated content is always reflected in the database.&lt;/p&gt;
+&lt;h2 id=&quot;inference&quot;&gt;Inference&lt;/h2&gt;
+&lt;p&gt;Inference is the process of producing output from a trained &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; based on a &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#prompt&quot;&gt;prompt&lt;/a&gt;. It represents the execution phase where the model interprets embeddings and context to form a final text output. Inference turns the retrieved knowledge into language that users can read and use.&lt;/p&gt;
+&lt;h2 id=&quot;knowledge-base&quot;&gt;Knowledge Base&lt;/h2&gt;
+&lt;p&gt;The knowledge base is the collection of documents available for AI processing. It can include structured files such as spreadsheets or unstructured files such as text documents or PDFs. During indexing, these files are scanned and analyzed so that their content can be represented as &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#chunks&quot;&gt;chunks&lt;/a&gt;. Each chunk carries contextual information through &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-metadata&quot;&gt;metadata&lt;/a&gt;, which helps track its source and meaning. The knowledge base provides the foundation for document retrieval and generation within a RAG system.&lt;/p&gt;
+&lt;h2 id=&quot;large-language-model&quot;&gt;Large Language Model&lt;/h2&gt;
+&lt;p&gt;A Large Language Model (LLM) is an AI system trained on vast amounts of text from the internet and other sources. It learns patterns in language that allow it to generate human-like text, answer questions, and assist with various writing tasks. The &amp;quot;large&amp;quot; refers to both the enormous dataset it learns from and the billions of parameters (adjustable settings) that make up its internal structure. These models predict what words should come next in a sequence, which enables them to have conversations and complete complex language tasks.&lt;/p&gt;
+&lt;p&gt;It&#39;s crucial to understand what the LLM does and doesn&#39;t do. The LLM is not a database. It doesn&#39;t store your company&#39;s documentation or &amp;quot;memorize&amp;quot; facts. Instead, it&#39;s like a highly skilled editor who can read source material you provide and rewrite it into different formats while maintaining accuracy.&lt;/p&gt;
+&lt;p&gt;When the LLM generates documentation, it&#39;s reading the chunks you retrieved and transforming them—similar to how you might read several related sections and synthesize them into a single document. The LLM has learned patterns of language from its training, so it knows how to structure sentences and organize sections. But every fact in its output should come from the context you provided.&lt;/p&gt;
+&lt;p&gt;This is why retrieval is so important. If the system retrieves the wrong chunks, the LLM will generate based on incorrect data. The LLM can also experience &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#hallucination&quot;&gt;hallucination&lt;/a&gt;, where it confidently states information not present in the provided context.&lt;/p&gt;
+&lt;h2 id=&quot;metadata-filtering&quot;&gt;Metadata Filtering&lt;/h2&gt;
+&lt;p&gt;Metadata filtering uses attributes such as author, date, or document type to narrow retrieval results in a &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-database&quot;&gt;vector database&lt;/a&gt;. This ensures that only relevant or current information is used during &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#generator&quot;&gt;generation&lt;/a&gt;, improving accuracy and control. For example, metadata filters can limit retrievals to documents authored in the last six months.&lt;/p&gt;
+&lt;h2 id=&quot;normalization&quot;&gt;Normalization&lt;/h2&gt;
+&lt;p&gt;Normalization standardizes text before it is analyzed. It removes extra spaces, converts special characters, and ensures consistent encoding, such as UTF-8. This cleaning step makes data uniform across different file types and systems, improving downstream processes such as &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embedding&lt;/a&gt; and &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#indexing&quot;&gt;indexing&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;prompt&quot;&gt;Prompt&lt;/h2&gt;
+&lt;p&gt;A prompt is the input given to the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt;. It includes the user&#39;s request and the most relevant chunks retrieved from the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-database&quot;&gt;vector database&lt;/a&gt;. The quality of the prompt determines the accuracy and clarity of the generated result. A well-constructed prompt keeps context within the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#context-window&quot;&gt;context window&lt;/a&gt;. Prompt construction is key to aligning retrieval output with generative performance.&lt;/p&gt;
+&lt;h2 id=&quot;prompt-template&quot;&gt;Prompt Template&lt;/h2&gt;
+&lt;p&gt;A prompt template is a predefined text pattern that arranges the user’s request and retrieved &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#chunks&quot;&gt;chunks&lt;/a&gt; into a complete &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#prompt&quot;&gt;prompt&lt;/a&gt;. Templates help maintain consistency in how information is presented to the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt;, improving both reliability and style of generated outputs.&lt;/p&gt;
+&lt;h2 id=&quot;query-embedding&quot;&gt;Query Embedding&lt;/h2&gt;
+&lt;p&gt;A query embedding is the vector form of a user&#39;s request. It is created in the same way as document &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embeddings&lt;/a&gt;, allowing direct comparison in the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-database&quot;&gt;vector database&lt;/a&gt;. The &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#retriever&quot;&gt;retriever&lt;/a&gt; uses this embedding to find document chunks most similar in meaning to the query. This mechanism ensures that the LLM receives contextually relevant information for generation.&lt;/p&gt;
+&lt;h2 id=&quot;retrieval-augmented-generation-rag&quot;&gt;Retrieval-Augmented Generation (RAG)&lt;/h2&gt;
+&lt;p&gt;Retrieval-Augmented Generation (RAG) combines retrieval of stored knowledge with generative modeling. It ensures that the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; bases its responses on relevant, factual data. The &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#retriever&quot;&gt;retriever&lt;/a&gt; finds matching chunks, and the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#generator&quot;&gt;generator&lt;/a&gt; creates new text using that context. This integration reduces &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#hallucination&quot;&gt;hallucination&lt;/a&gt; and improves factual reliability. RAG connects storage, retrieval, and generation into a unified process.&lt;/p&gt;
+&lt;h2 id=&quot;retriever&quot;&gt;Retriever&lt;/h2&gt;
+&lt;p&gt;The retriever searches the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-database&quot;&gt;vector database&lt;/a&gt; for document chunks most semantically similar to the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#query-embedding&quot;&gt;query embedding&lt;/a&gt;. It selects the top-&lt;em&gt;k&lt;/em&gt; chunks that best match the user’s request, based on &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#semantic-similarity&quot;&gt;semantic similarity&lt;/a&gt;. The retriever forms the bridge between stored knowledge and generative processing.&lt;/p&gt;
+&lt;h2 id=&quot;segmentation&quot;&gt;Segmentation&lt;/h2&gt;
+&lt;p&gt;Segmentation is the step that divides documents into logical sections before chunking. It identifies structural boundaries such as headings, lists, or paragraphs to keep related content together. Segmentation often uses document structure (like Markdown headings or HTML tags) to determine section boundaries. While segmentation organizes a document for readability, chunking later divides those sections into smaller units suitable for embedding.&lt;/p&gt;
+&lt;h2 id=&quot;semantic-similarity&quot;&gt;Semantic Similarity&lt;/h2&gt;
+&lt;p&gt;Semantic similarity measures how closely two &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embeddings&lt;/a&gt; represent the same meaning. It is often computed using &lt;a href=&quot;https://en.wikipedia.org/wiki/Cosine_similarity&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;cosine similarity&lt;/a&gt;. By comparing embeddings numerically, the system can retrieve information related in meaning rather than identical in wording. Semantic similarity enables the retrieval step in the RAG process.&lt;/p&gt;
+&lt;h2 id=&quot;temperature&quot;&gt;Temperature&lt;/h2&gt;
+&lt;p&gt;Temperature is a model parameter that controls randomness in text generation. Lower temperatures (for example, 0.2) make responses more predictable and factual, while higher temperatures (for example, 0.8) encourage creativity and variation. Adjusting temperature helps balance precision and expressiveness in the generated output.&lt;/p&gt;
+&lt;h2 id=&quot;tokens&quot;&gt;Tokens&lt;/h2&gt;
+&lt;p&gt;Tokens are the smallest text units an &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#llm&quot;&gt;LLM&lt;/a&gt; processes, roughly corresponding to words or word fragments. The number of tokens determines how much content fits within the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#context-window&quot;&gt;context window&lt;/a&gt;. Managing tokens helps control both response length and computational cost. Tokens are the measurement unit for how the model reads and generates text.&lt;/p&gt;
+&lt;h2 id=&quot;top-k&quot;&gt;Top-k&lt;/h2&gt;
+&lt;p&gt;Top-k refers to a sampling parameter used during text generation that limits the model’s next-word choices to the k most probable tokens. The model then selects one token from this reduced set according to their relative probabilities. A smaller k value (for example, 20) makes outputs more focused and deterministic, while a larger k value allows greater diversity and creativity.&lt;/p&gt;
+&lt;h2 id=&quot;top-p&quot;&gt;Top-p&lt;/h2&gt;
+&lt;p&gt;Top-p, also known as nucleus sampling, is a probabilistic text generation method that selects from the smallest possible set of tokens whose cumulative probability adds up to p (for example, 0.9). The model samples only from this dynamic subset, allowing a balance between predictability and variation. Lower p values produce more precise responses, while higher p values yield more creative or varied text.&lt;/p&gt;
+&lt;h2 id=&quot;vector&quot;&gt;Vector&lt;/h2&gt;
+&lt;p&gt;A vector is a list of numbers representing the meaning of text in mathematical form. Each &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#embeddings&quot;&gt;embedding&lt;/a&gt; is stored as a vector in a high-dimensional space. The distance between two vectors indicates how similar their meanings are, often measured by &lt;a href=&quot;https://en.wikipedia.org/wiki/Cosine_similarity&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;cosine similarity&lt;/a&gt;. Vectors make it possible for computers to perform semantic comparisons across large document sets.&lt;/p&gt;
+&lt;h2 id=&quot;vector-database&quot;&gt;Vector Database&lt;/h2&gt;
+&lt;p&gt;A vector database stores &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector&quot;&gt;vectors&lt;/a&gt; and their associated &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector-metadata&quot;&gt;metadata&lt;/a&gt;. It enables rapid search based on &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#semantic-similarity&quot;&gt;semantic similarity&lt;/a&gt; rather than keyword matching. When a user query is received, the database is searched for vectors most similar to the &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#query-embedding&quot;&gt;query embedding&lt;/a&gt;. The retrieved chunks are then passed to the LLM for generation. Vector databases are optimized for large-scale similarity searches.&lt;/p&gt;
+&lt;h2 id=&quot;vector-metadata&quot;&gt;Vector Metadata&lt;/h2&gt;
+&lt;p&gt;Vector metadata refers to information stored alongside each &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector&quot;&gt;vector&lt;/a&gt;, such as the original file name, section title, or timestamp. Metadata allows filtering or ranking retrieved results to ensure the system selects the most relevant and current content. This layer maintains traceability from generated text back to its original source.&lt;/p&gt;
+&lt;h2 id=&quot;vector-search&quot;&gt;Vector Search&lt;/h2&gt;
+&lt;p&gt;Vector search is a method of finding related content by comparing &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#vector&quot;&gt;vectors&lt;/a&gt; rather than text keywords. It identifies documents or chunks with similar meanings, even when the wording differs. Vector search compares numerical distances between vectors using measures such as &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#cosine-similarity&quot;&gt;cosine similarity&lt;/a&gt;. This process is central to &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#retrieval-augmented-generation-rag&quot;&gt;retrieval-augmented generation&lt;/a&gt;, allowing the system to locate contextually relevant information efficiently.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Generating Information Products with RAG</title>
+    <link href="https://shealy2020.github.io/posts/doc-gen-rag-pipeline/" />
+    <updated>2025-11-06T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/doc-gen-rag-pipeline/</id>
+    <content type="html">&lt;h2 id=&quot;objective&quot;&gt;Objective&lt;/h2&gt;
+&lt;p&gt;This document explains how a Retrieval-Augmented Generation (RAG) pipeline processes local documents to generate new information products.&lt;/p&gt;
+&lt;figure class=&quot;wrap-text-right&quot;&gt;
+&lt;img src=&quot;https://shealy2020.github.io/images/rag-pipeline-diagram.svg&quot; alt=&quot;RAG Pipeline Diagram&quot;&gt;
+  &lt;figcaption&gt;RAG Pipeline Diagram&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;RAG architecture defines how multiple components (e.g., ingestion, embedding, retrieval, and generation) work together to produce accurate, verifiable results. RAG is both a framework and an architectural pattern that integrates search and generation into a unified workflow.&lt;/p&gt;
+&lt;h2 id=&quot;1-preparing-source-documents&quot;&gt;1. Preparing Source Documents&lt;/h2&gt;
+&lt;p&gt;The RAG pipeline begins by scanning a designated directory to identify source documents. This scanning typically starts with a file discovery script or scheduling system, such as Apache Airflow, Cron, or Haystack’s indexing API. These tools monitor a local or shared directory for new or updated files. The pipeline performs this initial scan to locate every file in the defined repository that should become part of the knowledge base. It uses file-matching patterns and metadata filters to include only relevant document types, such as user manuals, support tickets, or marketing artifacts.&lt;/p&gt;
+&lt;p&gt;The ingestion module (e.g., Apache Tika or Haystack), which collects files, reads their contents, and extracts text from multiple formats, identifies and removes unnecessary markup, images, or formatting tags. It prepares a clean text stream that the rest of the RAG process can interpret efficiently.&lt;/p&gt;
+&lt;p&gt;Next, the pipeline standardizes the text using a normalization process that applies text-cleaning and formatting operations with libraries such as spaCy, NLTK, or regex-based scripts. The normalization stage runs before semantic processing so that every document entering the embedding phase follows the same linguistic and formatting conventions. It converts text into a common encoding such as UTF-8 and removes extraneous spaces and symbols. This step ensures that later stages handle data predictably across operating systems and file types. The normalization typically occurs right after ingestion, before any chunking or semantic processing begins.&lt;/p&gt;
+&lt;p&gt;After normalization, the ingestion module segments the document logically. By identifying these boundaries early, the ingestion module helps preserve document meaning and prepares each section for chunking.&lt;/p&gt;
+&lt;p&gt;The chunking engine—often implemented through frameworks such as LangChain or Haystack—divides documents into smaller, meaning-preserving units for semantic analysis. (Segmentation defines boundaries between sections based on headings, paragraph breaks, or structural cues such as Markdown or HTML tags. Segmentation and chunking differ in both purpose and scale: segmentation organizes long documents into logical sections for readability, while chunking later divides those sections into smaller semantic units that fit within the LLM’s context window.)&lt;/p&gt;
+&lt;p&gt;Although LangChain and Haystack are not dedicated chunking engines, both provide utilities for text splitting as part of their document-processing pipelines. These functions split text based on sentence structure, paragraph boundaries, or token counts to prepare data for embedding. Chunking exists to make large documents computationally manageable, ensuring that each chunk fits within the token limits of downstream models. The chunking engine ensures that each chunk contains enough context for accurate retrieval but still fits within the &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#context-window&quot;&gt;context window&lt;/a&gt; of the &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#llm&quot;&gt;LLM&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The document store or vector database interface assigns a unique identifier to each chunk and logs its source document and location through a metadata management component—often integrated with tools like Haystack’s DocumentStore, Elasticsearch, or LangChain’s VectorStore. These systems automatically generate IDs (typically as UUIDs) when chunks are stored, allowing every text unit to be individually referenced and traced. This metadata layer records where each chunk originated, when it was last updated, and how it relates to its parent document. The processed chunks then move to temporary storage, where the pipeline holds them before conversion into mathematical representations such as embeddings.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; At the end of this phase, the RAG pipeline transforms unstructured files into clean, segmented text units that can be consistently processed by later components. These chunks provide the traceable foundation for semantic understanding.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;2-creating-embeddings-and-vectors&quot;&gt;2. Creating Embeddings &amp;amp; Vectors&lt;/h2&gt;
+&lt;p&gt;The embedding model now converts each chunk into an &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#embeddings&quot;&gt;embedding&lt;/a&gt;. An embedding model (for example, SentenceTransformers or OpenAI’s text-embedding models) maps text into a numerical space where meaning corresponds to distance. These models are smaller, task-specific neural networks that have been fine-tuned for text similarity tasks and can run locally or as an API service. This process translates language into mathematical form, preserving semantic relationships among sentences and phrases. The closer two embeddings are in this space, the more similar their meanings.&lt;/p&gt;
+&lt;p&gt;Each embedding becomes a &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#vector&quot;&gt;vector&lt;/a&gt;, which represents the text as a set of numerical values. These values exist in high-dimensional space, meaning the vector has hundreds or thousands of numerical dimensions that together capture subtle relationships between words and ideas. Each dimension reflects a latent linguistic feature—a pattern the model has learned during training, such as topic, syntax, or sentiment—that isn’t directly visible in the original text but helps describe how different pieces of text relate by meaning. These vectors can have hundreds or thousands of dimensions, allowing the system to capture subtle semantic differences. The embedding model ensures that semantically similar text produces vectors that occupy nearby positions, while unrelated text produces distant vectors. This mathematical organization allows semantic search by meaning rather than by keyword.&lt;/p&gt;
+&lt;p&gt;The ingestion module in this phase acts as a processing pipeline that manages data flow between embedding and storage components. In frameworks such as Haystack or LangChain, this module orchestrates embedding generation, batching, and submission to storage systems. Batching minimizes overhead by grouping multiple embeddings into a single write operation. The vector database (such as FAISS, Weaviate, or Chroma) stores these vectors, enabling high-speed comparison operations. The ingestion module links each stored vector with metadata that identifies its source and chunk ID.&lt;/p&gt;
+&lt;p&gt;Once stored, the vectors become searchable entities. The retrieval engine (e.g., Haystack’s Retriever or LangChain’s VectorStoreRetriever) can now measure similarity between vectors using distance metrics such as [cosine similarity](./ai-terms-glossary.md/#cosine similarity). This measurement quantifies how much two text passages share conceptual meaning, supporting accurate retrieval even when wording differs. The retrieval engine later uses these relationships to locate relevant chunks when users submit queries.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; This stage translates human-readable text into machine-readable meaning. By encoding chunks into embeddings and vectors, the system builds the mathematical structure that enables semantic search and knowledge retrieval.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;3-indexing-and-metadata&quot;&gt;3. Indexing and Metadata&lt;/h2&gt;
+&lt;p&gt;The vector database management component builds an &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#indexing&quot;&gt;index&lt;/a&gt; over the database to enable efficient similarity searches. The index organizes vectors according to proximity and dimension. Tools like FAISS and Milvus implement these indices using approximate nearest neighbor algorithms. The indexing mechanism allows fast lookups without scanning every stored vector, making large-scale semantic search feasible. The indexing structure allows the retrieval engine to locate the most relevant vectors rapidly.&lt;/p&gt;
+&lt;p&gt;During indexing, the ingestion process adds &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#vector-metadata&quot;&gt;vector metadata&lt;/a&gt;. Metadata stores key attributes such as file name, author, timestamp, and document structure information—for example, section titles or heading hierarchy—to ensure that the origin and position of every chunk remain known. This data supports filtering, relevance scoring, and regulatory compliance by preserving the document source and layout context. Including document structure as metadata improves retrieval accuracy because the retrieval engine can match queries to the most relevant sections, distinguish between similar terms that appear in different contexts, and retrieve related parent sections to provide more complete answers. It also enables users to request only specific document types, sections, or time periods when generating outputs.&lt;/p&gt;
+&lt;p&gt;The RAG architecture maintains and updates the index dynamically. Whenever a document changes, the pipeline reprocesses its affected chunks, regenerates embeddings, and replaces outdated vectors. These updates often run through scheduled batch jobs or file-system triggers that detect changes in source content, ensuring the knowledge base remains synchronized. This automatic updating prevents information drift, ensuring that every retrieved vector reflects the most current version of its source text.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Indexing and metadata management create a living, searchable map of organizational knowledge. The system continually refreshes this index to keep semantic retrieval accurate and up to date.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;4-user-queries-and-retrieval&quot;&gt;4. User Queries &amp;amp; Retrieval&lt;/h2&gt;
+&lt;p&gt;When a user submits a question or request, the RAG pipeline processes it as input to the embedding model, which is the same embedding model used earlier for document chunks such as SentenceTransformers or MiniLM, so that both the query and stored chunks exist in the same semantic space. Using the same model for both documents and queries ensures that their numerical representations are directly comparable.&lt;/p&gt;
+&lt;p&gt;The retrieval engine (for example, Haystack or LangChain retrievers), which searches the indexed vector space for the most semantically related chunks, compares the query embedding generated from the user’s question or request against all stored vectors. It computes similarity scores and ranks the results. The engine retrieves the top-matching chunks with their metadata, ensuring that only the most relevant information proceeds to generation.&lt;/p&gt;
+&lt;p&gt;The retrieval engine ranks the top-&lt;em&gt;k&lt;/em&gt; most similar chunks, where &lt;em&gt;k&lt;/em&gt; is a configurable parameter that determines how many context passages are passed to the generator. Selecting an appropriate &lt;em&gt;k&lt;/em&gt; balances completeness against prompt length.&lt;/p&gt;
+&lt;p&gt;The retrieval engine packages these chunks into a response set. It adds provenance data—structured information that records the document ID, source location, author, and timestamp for each retrieved chunk, allowing human reviewers to trace every output back to its origin and confirm its authenticity, which maintains transparency and allows auditing. The pipeline then passes this packaged context to the &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#llm&quot;&gt;LLM&lt;/a&gt;. The LLM depends entirely on these retrieved chunks to create an informed, fact-based response.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Query processing transforms user intent into a semantic search task. The retrieval engine uses vector similarity to identify and deliver the most relevant context for generation.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;5-prompting-and-response-generation&quot;&gt;5. Prompting &amp;amp; Response Generation&lt;/h2&gt;
+&lt;p&gt;After retrieval, the prompt construction module builds a &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#prompt&quot;&gt;prompt&lt;/a&gt; that includes the user’s question, the retrieved chunks, and formatting instructions. The module arranges these elements so that the most relevant context appears first, maximizing the LLM’s attention on key details. Prompt construction is typically implemented with orchestration frameworks such as LangChain or LlamaIndex, which dynamically assemble retrieved text into templates that guide the model’s reasoning. This preparation step determines how effectively the model can answer complex or multi-part queries.&lt;/p&gt;
+&lt;p&gt;The LLM reads the prompt within its &lt;a href=&quot;https://shealy2020.github.io/posts/doc-gen-rag-pipeline/ai-terms-glossary.md/#context-window&quot;&gt;context window&lt;/a&gt;. It analyzes the text, identifies linguistic and logical patterns, and synthesizes new language grounded in the provided content. The LLM cannot access external data because it operates in a self-contained inference environment without network connectivity or live database access; it can only use the context explicitly provided in the prompt. Prompt quality directly determines output accuracy and completeness.&lt;/p&gt;
+&lt;p&gt;Generation quality is also influenced by model parameters such as &lt;em&gt;temperature&lt;/em&gt;, &lt;em&gt;top-p&lt;/em&gt;, and &lt;em&gt;max tokens&lt;/em&gt;. For example, a lower temperature produces more focused, deterministic answers suitable for technical documentation, while a higher temperature encourages creative variation useful in exploratory writing.&lt;/p&gt;
+&lt;p&gt;Because RAG responses are grounded in retrieved context rather than model memory, this approach reduces hallucinations—statements that sound plausible but are not supported by source data.&lt;/p&gt;
+&lt;p&gt;The generation process produces new text that answers the query or repackages knowledge into the requested format. The LLM may rewrite, summarize, or create structured documents based on its instructions. The RAG pipeline monitors this output using validation scripts or rule-based checks (for example, LangChain output parsers) to confirm that responses follow organizational standards and formatting policies.&lt;/p&gt;
+&lt;p&gt;The quality of the generated output depends entirely on retrieval accuracy. If the retrieved information is incomplete, the LLM may generate incorrect conclusions. Human reviewers typically evaluate outputs for clarity and factual reliability before final publication.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; The prompt and generation stages translate retrieved knowledge into coherent, formatted text. Validation ensures that automated writing remains accurate and consistent with verified sources.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;sum-of-the-parts&quot;&gt;Sum of the Parts&lt;/h2&gt;
+&lt;p&gt;RAG merges two processes: retrieving factual information and generating natural language to produce reliable answers. Because the model bases its responses on retrieved content from trusted documents, RAG delivers more factual, verifiable results than generation alone.&lt;/p&gt;
+&lt;p&gt;RAG pipelines can turn static document collections into searchable knowledge systems that produce accurate outputs. The RAG pipeline, such as this one described here, continuously evolves. When new documents are added, the system triggers ingestion, embedding, and indexing automatically, ensuring the knowledge base stays synchronized with the file system. This automation allows organizations to keep AI-generated content aligned with their latest internal documentation without reconfiguring the system or retraining the model.&lt;/p&gt;
+&lt;hr&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Open-source Tools or Frameworks Referenced&lt;/th&gt;
+&lt;th&gt;Function&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://tika.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Apache Tika&lt;/a&gt;, &lt;a href=&quot;https://haystack.deepset.ai/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Haystack&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;File ingestion &amp;amp; parsing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://airflow.apache.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Apache Airflow&lt;/a&gt;, &lt;a href=&quot;https://en.wikipedia.org/wiki/Cron&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Cron&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Scheduling / automation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://spacy.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;spaCy&lt;/a&gt;, &lt;a href=&quot;https://www.nltk.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;NLTK&lt;/a&gt;, regex scripts&lt;/td&gt;
+&lt;td&gt;Text normalization&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://www.langchain.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LangChain&lt;/a&gt;, &lt;a href=&quot;https://haystack.deepset.ai/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Haystack DocumentSplitter&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Chunking&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://www.sbert.net/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SentenceTransformers&lt;/a&gt;, &lt;a href=&quot;https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MiniLM&lt;/a&gt;, &lt;a href=&quot;https://platform.openai.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;OpenAI API&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Embedding generation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/facebookresearch/faiss&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;FAISS&lt;/a&gt;, &lt;a href=&quot;https://weaviate.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Weaviate&lt;/a&gt;, &lt;a href=&quot;https://milvus.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Milvus&lt;/a&gt;, &lt;a href=&quot;https://www.trychroma.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Chroma&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Vector storage &amp;amp; indexing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://haystack.deepset.ai/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Haystack Retriever&lt;/a&gt;, &lt;a href=&quot;https://www.langchain.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LangChain VectorStore&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Retrieval engine&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://www.llamaindex.ai/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LlamaIndex&lt;/a&gt;, &lt;a href=&quot;https://www.langchain.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LangChain PromptTemplate&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;Prompt orchestration&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://www.langchain.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LangChain Output Parsers&lt;/a&gt;, rule-based checks&lt;/td&gt;
+&lt;td&gt;Validation &amp;amp; parsing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Setting up Local RAG Pipeline in Docker</title>
+    <link href="https://shealy2020.github.io/posts/lrag-in-docker/" />
+    <updated>2025-10-27T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/lrag-in-docker/</id>
+    <content type="html">&lt;p&gt;This project is a prototype of a local Retrieval-Augmented Generation (RAG) system, exploring how RAG pipelines work. It&#39;s a useful step before scaling or adapting it to production environments, where proprietary information is behind a firewall. Everything runs entirely on a local pc and requires no cloud services or external data transfers. I used open-source tools only (Chroma, Sentence Transformers, and Ollama) with Python scripting.&lt;/p&gt;
+&lt;p&gt;You&#39;ll find the package on &lt;a href=&quot;https://github.com/shealy2020/rag-local&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 11 with WSL 2&lt;/li&gt;
+&lt;li&gt;Docker Desktop installed with WSL enabled&lt;/li&gt;
+&lt;li&gt;Python installed&lt;/li&gt;
+&lt;li&gt;At least 4GB RAM available&lt;/li&gt;
+&lt;li&gt;At least 5GB disk space&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LLM&lt;/strong&gt;: Gemma 2B (via Ollama)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Embeddings&lt;/strong&gt;: all-MiniLM-L6-v2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vector Store&lt;/strong&gt;: ChromaDB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interface&lt;/strong&gt;: Flask + HTML&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supported Formats&lt;/strong&gt;: Markdown (.md), HTML (.html, .htm)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;privacy-and-security&quot;&gt;Privacy &amp;amp; Security&lt;/h2&gt;
+&lt;p&gt;This pipeline is a prototype. It provides basic safeguards but is not production ready.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;All data stays on your machine&lt;/li&gt;
+&lt;li&gt;No external API calls after setup&lt;/li&gt;
+&lt;li&gt;No telemetry or analytics&lt;/li&gt;
+&lt;li&gt;Can run with complete network isolation&lt;/li&gt;
+&lt;li&gt;Docker container isolation&lt;/li&gt;
+&lt;li&gt;API Key for extra layer of security&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;summary-of-python-scripts&quot;&gt;Summary of Python Scripts&lt;/h2&gt;
+&lt;h3 id=&quot;1-config-py-configuration-management&quot;&gt;&lt;strong&gt;1. config.py&lt;/strong&gt; - Configuration Management&lt;/h3&gt;
+&lt;p&gt;Central configuration file that defines all system settings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Paths&lt;/strong&gt;: Input documents, ChromaDB storage, model cache locations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Models&lt;/strong&gt;: Uses &lt;code&gt;sentence-transformers/all-MiniLM-L6-v2&lt;/code&gt; for embeddings and &lt;code&gt;gemma:2b&lt;/code&gt; via Ollama for text generation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chunking&lt;/strong&gt;: Documents split into 512-character chunks with 50-character overlap&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval&lt;/strong&gt;: Retrieves top 5 most similar chunks with 0.7 similarity threshold&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Server&lt;/strong&gt;: Flask runs on port 5000&lt;/li&gt;
+&lt;li&gt;Uses environment variables for flexibility in deployment&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;2-ingest-py-document-processing-and-indexing&quot;&gt;&lt;strong&gt;2. ingest.py&lt;/strong&gt; - Document Processing &amp;amp; Indexing&lt;/h3&gt;
+&lt;p&gt;Handles the ingestion pipeline that prepares documents for retrieval:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DocumentProcessor class:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Reads Markdown and HTML files&lt;/li&gt;
+&lt;li&gt;Converts them to plain text (strips formatting, scripts, styles)&lt;/li&gt;
+&lt;li&gt;Splits text into overlapping chunks for better context preservation&lt;/li&gt;
+&lt;li&gt;Creates unique IDs for each chunk using MD5 hashing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;VectorStore class:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Manages ChromaDB persistent storage&lt;/li&gt;
+&lt;li&gt;Generates embeddings using SentenceTransformer&lt;/li&gt;
+&lt;li&gt;Stores document chunks with their vector embeddings&lt;/li&gt;
+&lt;li&gt;Provides collection statistics and reset functionality&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Main workflow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scans input directory for &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.html&lt;/code&gt;, &lt;code&gt;.htm&lt;/code&gt; files&lt;/li&gt;
+&lt;li&gt;Processes each file into chunks&lt;/li&gt;
+&lt;li&gt;Generates embeddings in batches (100 at a time)&lt;/li&gt;
+&lt;li&gt;Stores everything in ChromaDB for efficient similarity search&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;3-query-py-query-processing-engine&quot;&gt;&lt;strong&gt;3. query.py&lt;/strong&gt; - Query Processing Engine&lt;/h3&gt;
+&lt;p&gt;The core RAG logic that answers user questions:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;RAGEngine class:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Retrieval&lt;/strong&gt;: Converts user questions to embeddings and finds similar document chunks using vector search&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Context Building&lt;/strong&gt;: Assembles retrieved chunks with source attribution&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Response Generation&lt;/strong&gt;: Uses Ollama LLM with a structured prompt that instructs it to answer based only on provided context&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error Handling&lt;/strong&gt;: Gracefully handles missing collections or empty databases&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Query flow:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Embed the user&#39;s question&lt;/li&gt;
+&lt;li&gt;Find top-K most similar document chunks&lt;/li&gt;
+&lt;li&gt;Build context from retrieved chunks&lt;/li&gt;
+&lt;li&gt;Send context + question to LLM&lt;/li&gt;
+&lt;li&gt;Return answer with source citations&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;4-server-py-web-api-server&quot;&gt;&lt;strong&gt;4. server.py&lt;/strong&gt; - Web API Server&lt;/h3&gt;
+&lt;p&gt;Flask-based web server that exposes the RAG system via HTTP:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;API Key Authentication&lt;/strong&gt;: Optional security via &lt;code&gt;X-API-Key&lt;/code&gt; header (controlled by &lt;code&gt;RAG_API_KEY&lt;/code&gt; environment variable)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Three endpoints:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;GET /&lt;/code&gt; - Serves the web interface&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GET /api/status&lt;/code&gt; - Returns system health (document count, available files, readiness)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;POST /api/query&lt;/code&gt; - Processes questions and returns AI-generated answers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lazy Loading&lt;/strong&gt;: RAG engine initialized on first query for faster startup&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Error Handling&lt;/strong&gt;: Comprehensive error responses with appropriate HTTP status codes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Authentication decorator&lt;/strong&gt; ensures protected endpoints require valid API keys when enabled.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;system-architecture&quot;&gt;System Architecture&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;User Question → Flask Server → RAG Engine → ChromaDB (Vector Search)
+                                    ↓
+                            Retrieved Chunks
+                                    ↓
+                            Ollama LLM (gemma:2b)
+                                    ↓
+                            Answer + Sources → User
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;installation-and-setup&quot;&gt;Installation &amp;amp; Setup&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Start Docker Desktop in Windows.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Start WSL. A Bash terminal opens in your home directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Copy &lt;em&gt;rag-local&lt;/em&gt; directory to your home directory.&lt;/p&gt;
+&lt;p&gt;Project Structure:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rag-local/
+├── Dockerfile              # Container definition
+├── docker-compose.yml      # Docker Compose configuration
+├── requirements.txt        # Python dependencies
+├── README.md              # This file
+├── app/
+│   ├── config.py          # Configuration settings
+│   ├── ingest.py          # Document ingestion
+│   ├── query.py           # RAG query engine
+│   ├── server.py          # Flask web server
+│   ├── templates/
+│   │   └── index.html     # Web interface
+│   └── static/
+│       └── style.css      # CSS styling
+└── data/
+ ├── input/             # Your documents (add files here)
+ ├── chroma_db/         # Vector database (auto-created)
+ └── models/            # Cached ML models (auto-created)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The project contains a sample &lt;code&gt;.md&lt;/code&gt; and &lt;code&gt;.html&lt;/code&gt; file in the &lt;em&gt;data/input&lt;/em&gt; directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Generate an API Key.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;openssl rand &lt;span class=&quot;token parameter variable&quot;&gt;-base64&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;32&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This key will add a minimal security layer.&lt;/p&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;Copy the API Key. You will need it for the steps that follow. (Also, retain it for later use.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open &lt;em&gt;docker-compose.yml&lt;/em&gt; and find the following line:
+&lt;em&gt;RAG_API_KEY=change-this-to-a-strong-random-key&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Replace &amp;quot;change-this-to-a-strong-random-key&amp;quot; with your API key.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Navigate to the project directory.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;cd&lt;/span&gt; ~/rag-local&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&quot;9&quot;&gt;
+&lt;li&gt;Build the Docker image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; build&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​	This may take 10-20 minutes as it downloads all required components.&lt;/p&gt;
+&lt;ol start=&quot;10&quot;&gt;
+&lt;li&gt;Start the container.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;​	The first startup after a build may take 5-10 minutes as it downloads the Gemma 2B model (~1.7GB).&lt;/p&gt;
+&lt;ol start=&quot;11&quot;&gt;
+&lt;li&gt;Open a browser and enter:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;http://localhost:5000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&quot;12&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;At the prompt, enter the API key you copied earlier, then click &lt;strong&gt;OK&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The RAG interface opens (Flask + HTML) where you can query against the Markdown and HTML input files.&lt;/p&gt;
+&lt;p&gt;The interface also provides commands to add and update input files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;useful-docker-commands&quot;&gt;Useful Docker Commands&lt;/h2&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# Start the container&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up
+
+&lt;span class=&quot;token comment&quot;&gt;# Start in background (-d = detached mode)&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; up &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Stop the container&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; down
+
+&lt;span class=&quot;token comment&quot;&gt;# View logs (-f = follow)&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; logs &lt;span class=&quot;token parameter variable&quot;&gt;-f&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# Rebuild after code changes&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;docker-compose&lt;/span&gt; build --no-cache
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h3 id=&quot;container-wont-start&quot;&gt;Container won&#39;t start&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Check to verify that Docker Desktop is running&lt;/li&gt;
+&lt;li&gt;In Docker Desktop, go to &lt;strong&gt;Settings&lt;/strong&gt; &amp;gt; &lt;strong&gt;General&lt;/strong&gt;. Verify that &lt;em&gt;Use the WSL 2 based engine&lt;/em&gt; is enabled&lt;/li&gt;
+&lt;li&gt;Check port 5000 is not in use: &lt;code&gt;netstat -an | grep 5000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;View logs: &lt;code&gt;docker-compose logs&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;ollama-errors&quot;&gt;Ollama errors&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Wait longer on first startup (model download takes time)&lt;/li&gt;
+&lt;li&gt;Check container logs: &lt;code&gt;docker-compose logs | grep ollama&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Restart container: &lt;code&gt;docker-compose restart&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;out-of-memory&quot;&gt;Out of memory&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Reduce &lt;code&gt;TOP_K&lt;/code&gt; in &lt;code&gt;app/config.py&lt;/code&gt; (default: 5)&lt;/li&gt;
+&lt;li&gt;Reduce &lt;code&gt;CHUNK_SIZE&lt;/code&gt; in &lt;code&gt;app/config.py&lt;/code&gt; (default: 512)&lt;/li&gt;
+&lt;li&gt;Close other applications&lt;/li&gt;
+&lt;li&gt;Restart Docker Desktop&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;slow-responses&quot;&gt;Slow responses&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;This is normal for CPU-only inference with limited pc resources&lt;/li&gt;
+&lt;li&gt;Gemma 2B on CPU typically takes 10-30 seconds per response&lt;/li&gt;
+&lt;li&gt;Consider reducing the amount of context retrieved (TOP_K)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;configuration&quot;&gt;Configuration&lt;/h2&gt;
+&lt;p&gt;Edit &lt;code&gt;app/config.py&lt;/code&gt; to customize:&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;CHUNK_SIZE &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;512&lt;/span&gt;          &lt;span class=&quot;token comment&quot;&gt;# Size of text chunks&lt;/span&gt;
+CHUNK_OVERLAP &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;50&lt;/span&gt;        &lt;span class=&quot;token comment&quot;&gt;# Overlap between chunks&lt;/span&gt;
+TOP_K &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;                 &lt;span class=&quot;token comment&quot;&gt;# Number of chunks to retrieve&lt;/span&gt;
+SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0.7&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;# Minimum similarity score&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Finding Semantically Similar Content</title>
+    <link href="https://shealy2020.github.io/posts/finding-similar-content/" />
     <updated>2025-10-09T00:00:00Z</updated>
-    <id>https://shealy2020.github.io/posts/refactoring-content/</id>
-    <content type="html">&lt;h2 id=&quot;refactoring-content&quot;&gt;Refactoring Content&lt;/h2&gt;
-&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content that may be scattered across multiple departments and revised over an extended period of time. This is a recipe for content bloat and redundancy.&lt;/p&gt;
-&lt;p&gt;All content needs some degree of custodial refactoring. Often refactoring takes the form of &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_deduplication&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;deduplication&lt;/a&gt; processes or merging similar content into a single source of truth &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_source_of_truth&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;(SSOT)&lt;/a&gt;. [[extra need for SSOT in LLMs]]&lt;/p&gt;
-&lt;p&gt;Eventually, I&#39;d like to contain a pool of content in a local LLM for RAG purposes. In taking baby steps toward that goal, I came across txtai and put together a prototype that surfaces semantically same or similar chunks in the form of a report. using a simple Markdown file as input.&lt;/p&gt;
+    <id>https://shealy2020.github.io/posts/finding-similar-content/</id>
+    <content type="html">&lt;p&gt;A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period. This is a recipe for content bloat and redundancy.&lt;/p&gt;
+&lt;p&gt;All content needs some degree of custodial refactoring through &lt;a href=&quot;https://en.wikipedia.org/wiki/Data_deduplication&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;deduplication&lt;/a&gt;, merging similar content into a single source of truth &lt;a href=&quot;https://en.wikipedia.org/wiki/Single_source_of_truth&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;(SSOT)&lt;/a&gt; or by eliminating all but one permutation. Even before the emergence of AI, maintaining clean, unambiguous documentation was essential to avoid the junk in/out scenario. In the foreseeable future, documentation will converted to vectors wholesale,&lt;/p&gt;
+&lt;p&gt;Eventually, I&#39;d like to contain a large set of documentation in a local LLM that can be searched for semantically similar content. A human would need to determine the best course of action on a case-by-case basis. In taking baby steps toward that goal, I came across &lt;a href=&quot;https://github.com/neuml/txtai&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;txtai&lt;/a&gt; and put together a prototype that surfaces semantically same or similar chunks in the form of a report, using a simple Markdown file as input.&lt;/p&gt;
 &lt;p&gt;The processing is straightforward:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -31,18 +865,22 @@
 &lt;p&gt;&lt;strong&gt;report_similarity.py&lt;/strong&gt; - txtai compares paragraph vectors. Reports similarity clusters and vector scores.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;GitHub repo here: &lt;a href=&quot;https://github.com/shealy2020/single-md-txtai-report&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/shealy2020/single-md-txtai-report&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;I set out to use the hierarchical structure of the Markdown file as a vector dimension contributing to vector scores, but I couldn&#39;t figure out how to do that. Instead, I fell back to just comparing paragraph content under headings, so I might as well have compared blocks of text in a *.txt file.&lt;/p&gt;
-&lt;p&gt;My goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly-structured authoring XML format with a lot of tagging and other metadata that could be helpful for vector searches.&lt;/p&gt;
+&lt;p&gt;If you want to look under the hood, you&#39;ll find this package on &lt;a href=&quot;https://github.com/shealy2020/single-md-txtai-report&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;postmortem&quot;&gt;Postmortem&lt;/h3&gt;
+&lt;p&gt;I set out to use the hierarchical structure of the Markdown file as added context to vector scores, which was proved to be too ambitious for this first pass. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I&#39;ve learned about comparing vectorized MD chunks and then apply it to &lt;a href=&quot;https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DITA&lt;/a&gt;, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>LLM Prompt Organizer</title>
     <link href="https://shealy2020.github.io/posts/llm-prompt-org/" />
-    <updated>2025-10-07T00:00:00Z</updated>
+    <updated>2025-09-20T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/llm-prompt-org/</id>
-    <content type="html">&lt;h1 id=&quot;llm-session-limits&quot;&gt;LLM Session Limits&lt;/h1&gt;
-&lt;p&gt;I use the freely available versions of ChatGPT, Claude, and Gemini. These LLMs impose limits on a per session basis, calculated by some combination of request counts and token usage. The table below contains the approximate limitation criteria for non-subscription users.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I use the free versions of LLMs like ChatGPT, Claude, and Gemini that impose limits on a per session basis. LLMs calculate these limits through some combination of request counts and &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/#tokens&quot;&gt;token use&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In an earlier post, I provided some general guidelines on how to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt; with the goal of conserving tokens. For this project, I take &amp;quot;token conservation&amp;quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.&lt;/p&gt;
+&lt;p&gt;Initially, I used highly structured XML as the output container but thought better of it. Instead, I went with semi-structured JSON because its syntax uses fewer characters, thus fewer tokens. Also, this project gave me another opportunity to use &lt;a href=&quot;https://en.wikipedia.org/wiki/Vibe_coding&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;vibe coding&lt;/a&gt; as an aid in building this prompt tool, which I&#39;ll write about in a future post.&lt;/p&gt;
+&lt;p&gt;For your own use, you&#39;ll find the &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LLM Prompt Organizer on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;llm-session-limits&quot;&gt;LLM Session Limits&lt;/h2&gt;
+&lt;p&gt;This table contains approximate limitation criteria for non-subscription users.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -69,9 +907,6 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h1 id=&quot;llm-prompt-organizer&quot;&gt;LLM Prompt Organizer&lt;/h1&gt;
-&lt;p&gt;Given that I use the free LLM versions, I built tool to increase &lt;a href=&quot;https://shealy2020.github.io/posts/prompt-efficiencies/&quot;&gt;prompt efficiencies&lt;/a&gt;, which provides as much bang as possible from my sessions. Also, this project gave me another chance to use [vibe coding] as an aid in building this prompt tool.&lt;/p&gt;
-&lt;p&gt;Clone or download &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LLM Prompt Organizer on Github&lt;/a&gt; here.&lt;/p&gt;
 &lt;h2 id=&quot;why-use-this-tool&quot;&gt;Why Use This Tool?&lt;/h2&gt;
 &lt;h3 id=&quot;the-problem-with-unstructured-prompts&quot;&gt;The Problem with Unstructured Prompts&lt;/h3&gt;
 &lt;ul&gt;
@@ -90,44 +925,56 @@
 &lt;/ol&gt;
 &lt;h2 id=&quot;quick-start&quot;&gt;Quick Start&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;Download the &lt;code&gt;prompt-form-output json-1.html&lt;/code&gt; file from &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Github&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Open it in a web browser.&lt;/li&gt;
-&lt;li&gt;Deactivate any fields irrelevant to your prompt.&lt;br&gt;
-or&lt;br&gt;
-Import an existing JSON prompt file.&lt;/li&gt;
-&lt;li&gt;Add custom fields (Optional).&lt;/li&gt;
-&lt;li&gt;Enter your content in the active fields.&lt;/li&gt;
-&lt;li&gt;Export your prompt by clicking &amp;quot;Download JSON&amp;quot; or &amp;quot;Copy JSON&amp;quot;.&lt;/li&gt;
-&lt;li&gt;Upload the JSON file directly or paste the content into the chat interface.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Download the &lt;code&gt;prompt-form-output json-1.html&lt;/code&gt; file from &lt;a href=&quot;https://github.com/shealy2020/llm-prompt-organizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Open the form in a browser.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://shealy2020.github.io/images/prompt-organizer-form-1.png&quot; alt=&quot;Prompt Organizer&quot; title=&quot;Prompt Organizer&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you don&#39;t need customizations, add content to the default fields.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Export your prompt by clicking &lt;strong&gt;Copy JSON&lt;/strong&gt; or &lt;strong&gt;Download JSON&lt;/strong&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Enter your JSON data into the chatbot&#39;s query field by either pasting the text into the field or by dragging in the JSON file.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&quot;customization-options&quot;&gt;Customization Options&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Once the form opens, click the &lt;strong&gt;Import JSON&lt;/strong&gt; file if you have saved an existing JSON file from a previous query and want to reuse it as the starting point for a new query.&lt;/li&gt;
+&lt;li&gt;In the &lt;strong&gt;Custom Fields&lt;/strong&gt; area, deactivate any fields not relevant to your query. Active field buttons have a dark background; whereas, deactivated field buttons have a light background. Any deactivated field can be re-activated by clicking its associated button.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&quot;json-output-sample&quot;&gt;JSON Output Sample&lt;/h2&gt;
-&lt;p&gt;Your generated JSON will similar to this:&lt;/p&gt;
+&lt;p&gt;Your generated JSON will be similar to this:&lt;/p&gt;
 &lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;instructions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Process and respond to this prompt.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;role&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;You are an experienced data analyst specializing in retail performance.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token property&quot;&gt;&quot;context&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;You are analyzing Q4 2024 sales data for a mid-sized retailer operating in North America. The dataset includes metrics such as total revenue, number of transactions, and product category breakdowns.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;context&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;You are analyzing Q4 2024 sales data for a mid-sized retailer operating in North America.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;task&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Identify the top three sales trends and provide insight into what factors may have contributed to these patterns.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;format&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Present your findings as three concise bullet points, each with one supporting sentence.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;token property&quot;&gt;&quot;examples&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;- Example Trend: Seasonal spike in apparel sales due to holiday promotions.&#92;n- Example Trend: Increased online sales driven by targeted email campaigns.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;examples&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;- Example Trend: Seasonal spike in apparel sales due to holiday promotions.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;constraints&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Focus only on quantitative insights supported by data. Avoid speculation not backed by sales metrics.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;data&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;region,sales,transactions North America,1200000,32000 Europe,900000,28000 Asia,1100000,30000&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;audience&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Retail operations managers looking for actionable insights to guide Q1 2025 planning.&quot;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &lt;code&gt;instructions&lt;/code&gt; key/value is automatically included and tells the LLM how to process the JSON content.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;instructions&lt;/code&gt; key/value tells the LLM what to do with the JSON content. It is included, automatically.&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Prompt Efficiencies</title>
     <link href="https://shealy2020.github.io/posts/prompt-efficiencies/" />
-    <updated>2025-10-01T00:00:00Z</updated>
+    <updated>2025-08-15T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/prompt-efficiencies/</id>
-    <content type="html">&lt;h1 id=&quot;token-efficiency-cheat-sheet&quot;&gt;Token Efficiency Cheat Sheet&lt;/h1&gt;
+    <content type="html">&lt;h2 id=&quot;tokens&quot;&gt;Tokens&lt;/h2&gt;
+&lt;p&gt;A token is a small chunk of text that the AI model uses to process your message and generate a reply. Both what you enter and what the model sends back count toward your token limit. When you write short, focused prompts and ask for concise answers, you use fewer tokens overall. That means your sessions can last longer, responses come faster, and you’re less likely to hit token limits or get cut off mid-reply.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Conserve tokens = longer sessions + faster responses + fewer cutoffs&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;1-prompt-design&quot;&gt;1️⃣ Prompt Design&lt;/h2&gt;
-&lt;p&gt;✅ &lt;strong&gt;Do&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-prompt-design&quot;&gt;1️. Prompt Design&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Do&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Keep prompts concise: use direct verbs (“summarize,” “revise,” “explain briefly”).&lt;/li&gt;
 &lt;li&gt;Reference earlier text instead of re-pasting it.&lt;/li&gt;
@@ -139,14 +986,14 @@ Import an existing JSON prompt file.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;🚫 &lt;strong&gt;Don’t&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Don’t&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Repeat long setup text (“As I mentioned earlier…”).&lt;/li&gt;
-&lt;li&gt;Ask multiple tasks in one prompt if they can be done sequentially.&lt;/li&gt;
+&lt;li&gt;Ask for multiple tasks in one prompt if they can be done sequentially.&lt;/li&gt;
 &lt;li&gt;Use filler (“Could you please kindly explain…”).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;2-conversation-management&quot;&gt;2️⃣ Conversation Management&lt;/h2&gt;
+&lt;h2 id=&quot;2-conversation-management&quot;&gt;2. Conversation Management&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Stay in the same chat thread so context persists.&lt;/li&gt;
 &lt;li&gt;Split long projects:
@@ -159,14 +1006,14 @@ Import an existing JSON prompt file.&lt;/li&gt;
 &lt;li&gt;Delete or summarize unneeded sections before continuing.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;3-handling-large-text&quot;&gt;3️⃣ Handling Large Text&lt;/h2&gt;
+&lt;h2 id=&quot;3-handling-large-text&quot;&gt;3️. Handling Large Text&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Paste &lt;strong&gt;only relevant sections&lt;/strong&gt; (“Here’s the last 30 lines”).&lt;/li&gt;
 &lt;li&gt;Summarize before submission (“This 20-page doc covers X, Y, Z…”).&lt;/li&gt;
 &lt;li&gt;Use &lt;strong&gt;compressed summaries&lt;/strong&gt; or keywords when possible.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;4-service-specific-tips&quot;&gt;4️⃣ Service-Specific Tips&lt;/h2&gt;
+&lt;h2 id=&quot;4-service-specific-tips&quot;&gt;4. Service-Specific Tips&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -190,7 +1037,7 @@ Import an existing JSON prompt file.&lt;/li&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;5-output-control&quot;&gt;5️⃣ Output Control&lt;/h2&gt;
+&lt;h2 id=&quot;5-output-control&quot;&gt;5️. Output Control&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Ask for &lt;strong&gt;structured formats&lt;/strong&gt; (Markdown, table, JSON).&lt;/li&gt;
 &lt;li&gt;Set maximums:
@@ -202,7 +1049,7 @@ Import an existing JSON prompt file.&lt;/li&gt;
 &lt;li&gt;For code: “Return only the function definition.”&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;6-quick-math&quot;&gt;6️⃣ Quick Math&lt;/h2&gt;
+&lt;h2 id=&quot;approximate-token-use&quot;&gt;Approximate Token Use&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;

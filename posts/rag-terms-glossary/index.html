@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RAG Pipeline Terms</title>
+        <meta name="description" content="Glossary for RAG Pipeline Process">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/dist/GJ2lfMfbnc.css">
+        
+        <script src="/assets/js/nav.js"></script>
+    </head>
+    <body>
+        <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+        <header class="site-header">
+            <div class="header-nav-container">
+                <div class="logo-container">
+
+                    <!-- <img src="/images/merge-logo-1.svg" alt="Site Logo" class="site-logo"> -->
+
+                    <a href="/">
+                        
+                            <img src="../../images/merge-logo-1.svg" alt="Site Logo" class="site-logo">
+                        
+                    </a>
+                </div>
+                <nav class="site-nav">
+                    <ul class="nav"><li class="nav-item">
+                                    <a href="/" class="nav-link" data-dropdown-toggle="">
+                                        Home
+                                    </a></li><li class="nav-item">
+                                    <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                        Posts
+                                    </a></li><li class="nav-item">
+                                    <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                        Resources
+                                    </a></li><li class="nav-item has-children">
+                                    <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                        About
+                                    </a><ul class="dropdown"><li>
+                                                    <a href="/resume/" class="dropdown-link">
+                                                        Resume
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/work/" class="dropdown-link">
+                                                        Work
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/contact/" class="dropdown-link">
+                                                        Contact
+                                                    </a>
+                                                </li></ul></li></ul>
+                </nav>
+            </div>
+            <h1 id="rag-pipeline-terms">
+                    RAG Pipeline Terms
+            </h1>
+            <p>
+                    Glossary for RAG Pipeline Process
+            </p>
+        </header></body>
+    
+</html>
+
+<main id="main">
+<heading-anchors>
+    
+
+
+
+<p>Posted on: <time datetime="2025-11-08">08 November 2025</time></p>
+
+<h2 id="approximate-nearest-neighbor">Approximate Nearest Neighbor</h2>
+<p>Approximate Nearest Neighbor (ANN) algorithms are used to search large collections of <a href="./#vector">vectors</a> efficiently. Instead of finding the exact closest match, they quickly identify items that are close enough in meaning for practical use. ANN algorithms trade a small amount of precision for much faster search performance. These techniques make large-scale <a href="./#vector-search">vector search</a> fast and scalable.</p>
+<h2 id="chunks">Chunks</h2>
+<p>Chunks are small, meaningful segments of text derived from larger documents. Each chunk represents a coherent piece of information suitable for analysis by the AI system. Chunks are converted into <a href="./#embeddings">embeddings</a>, allowing semantic comparison between pieces of text. Chunk size affects how well the system captures meaning. Chunking ensures that even large documents can be represented and retrieved efficiently.</p>
+<h2 id="chunking">Chunking</h2>
+<p>Chunking is the process of dividing large documents into smaller, coherent segments called <a href="./#chunks">chunks</a>. Each chunk preserves enough context to be meaningful on its own but remains short enough for processing by an <a href="./#llm">LLM</a>. Chunking helps the system manage long documents efficiently and improves the precision of retrieval.</p>
+<h2 id="context-window">Context Window</h2>
+<p>The context window is the limit on how much text an <a href="./#llm">LLM</a> can read at one time. Every word or symbol the model processes counts toward this limit as <a href="./#tokens">tokens</a>. If too much text is included, the system must choose which chunks to include in the <a href="./#prompt">prompt</a>. This choice affects output accuracy. Understanding context windows ensures that relevant material is prioritized for generation.</p>
+<h2 id="cosine-similarity">Cosine Similarity</h2>
+<p>Cosine similarity is a metric used to measure how similar two vectors are by calculating the cosine of the angle between them in a multi-dimensional space. It ranges from -1 to 1, where 1 indicates the vectors point in exactly the same direction (most similar), 0 indicates they are orthogonal (unrelated), and -1 indicates they point in opposite directions (most dissimilar). In practice, particularly for text embeddings and natural language processing, cosine similarity is widely used because it focuses on the orientation of vectors rather than their magnitude, making it effective for comparing documents or word embeddings regardless of their length. This property makes it especially valuable in information retrieval systems and recommendation engines, where the goal is to find content that is semantically similar to a query or reference item.</p>
+<h2 id="embedding-model">Embedding Model</h2>
+<p>An embedding model is a smaller neural network trained to convert text into numerical <a href="./#embeddings">embeddings</a>. It captures relationships between words and concepts in a way that reflects meaning. These models specialize in understanding relationships between texts, not generating new text like an <a href="./#llm">LLM</a>. Embedding models are used to measure <a href="./#semantic-similarity">semantic similarity</a> between text passages and are often separate from the larger LLM used for generation.</p>
+<h2 id="embeddings">Embeddings</h2>
+<p>Embeddings are numerical representations of text. Each <a href="./#chunks">chunk</a> becomes an embedding that captures its semantic meaning as a <a href="./#vector">vector</a>. By comparing embeddings, the system can determine <a href="./#semantic-similarity">semantic similarity</a> between different pieces of text. This enables retrieval of conceptually related information even if exact wording differs. Embeddings are central to connecting text meaning with mathematical structure.</p>
+<h2 id="fine-tuning">Fine-Tuning</h2>
+<p>Fine-tuning is the process of retraining a preexisting <a href="./#llm">LLM</a> on domain-specific examples to improve its performance for a particular task. Unlike <a href="./#retrieval-augmented-generation-rag">retrieval-augmented generation (RAG)</a>, fine-tuning modifies the model’s parameters. Fine-tuning requires retraining on curated datasets, which is slower and more costly than updating a RAG system’s source content. RAG avoids retraining by retrieving relevant data dynamically, making updates faster and easier to maintain.</p>
+<h2 id="generator">Generator</h2>
+<p>The generator is the stage where the <a href="./#llm">LLM</a> produces new text from the retrieved context. It synthesizes content from the <a href="./#prompt">prompt</a> and organizes it into a coherent response. The generator applies its learned patterns of language to express retrieved facts accurately and clearly. This process completes the transformation of static data into new information products.</p>
+<h2 id="grounding">Grounding</h2>
+<p>Grounding means anchoring an AI model’s responses in real, verifiable data. In <a href="./#retrieval-augmented-generation-rag">RAG</a> systems, grounding occurs when the <a href="./#llm">LLM</a> uses retrieved <a href="./#chunks">chunks</a> from trusted sources as the factual basis for its output. Grounded responses are less likely to contain <a href="./#hallucination">hallucinations</a>. Grounding improves trust in AI systems by ensuring outputs can be traced back to real sources.</p>
+<h2 id="hallucination">Hallucination</h2>
+<p>Hallucination occurs when an <a href="./#llm">LLM</a> generates information not supported by retrieved context. It may result from irrelevant or incomplete data retrieval. While retrieval-based systems reduce this risk, human review remains essential for quality assurance. Hallucination highlights the importance of grounding generative output in verified data.</p>
+<p>While each chunk includes provenance data, the LLM may sometimes blend retrieved facts with its learned linguistic patterns, producing statements that seem factual but lack an exact source match. These mismatches occur because the model generates plausible language rather than verifying data against the index. Continuous validation, feedback tuning, and human review are essential to reduce, but not eliminate, this risk of hallucinations.</p>
+<h2 id="index">Index</h2>
+<p>An index is the data structure built by the <a href="./#vector-database">vector database</a> that allows quick similarity searches among stored <a href="./#vector">vectors</a>. It organizes vectors in a way that enables efficient lookup using mathematical proximity rather than text matching. This structure powers the retrieval stage of a RAG system. Indexes are typically updated automatically when new content is added or existing files are modified.</p>
+<h2 id="indexing">Indexing</h2>
+<p>Indexing is the process of scanning files in the knowledge base and preparing them for processing. Each document is analyzed for text content, structure, and context. The result of indexing is a set of <a href="./#chunks">chunks</a> that are later converted into <a href="./#embeddings">embeddings</a>. Metadata such as document name or modification date is also stored for future filtering. Indexing enables the AI system to organize data for efficient retrieval and reuse. The indexing process is often automated to ensure new or updated content is always reflected in the database.</p>
+<h2 id="inference">Inference</h2>
+<p>Inference is the process of producing output from a trained <a href="./#llm">LLM</a> based on a <a href="./#prompt">prompt</a>. It represents the execution phase where the model interprets embeddings and context to form a final text output. Inference turns the retrieved knowledge into language that users can read and use.</p>
+<h2 id="knowledge-base">Knowledge Base</h2>
+<p>The knowledge base is the collection of documents available for AI processing. It can include structured files such as spreadsheets or unstructured files such as text documents or PDFs. During indexing, these files are scanned and analyzed so that their content can be represented as <a href="./#chunks">chunks</a>. Each chunk carries contextual information through <a href="./#vector-metadata">metadata</a>, which helps track its source and meaning. The knowledge base provides the foundation for document retrieval and generation within a RAG system.</p>
+<h2 id="large-language-model">Large Language Model</h2>
+<p>A Large Language Model (LLM) is an AI system trained on vast amounts of text from the internet and other sources. It learns patterns in language that allow it to generate human-like text, answer questions, and assist with various writing tasks. The &quot;large&quot; refers to both the enormous dataset it learns from and the billions of parameters (adjustable settings) that make up its internal structure. These models predict what words should come next in a sequence, which enables them to have conversations and complete complex language tasks.</p>
+<p>It's crucial to understand what the LLM does and doesn't do. The LLM is not a database. It doesn't store your company's documentation or &quot;memorize&quot; facts. Instead, it's like a highly skilled editor who can read source material you provide and rewrite it into different formats while maintaining accuracy.</p>
+<p>When the LLM generates documentation, it's reading the chunks you retrieved and transforming them—similar to how you might read several related sections and synthesize them into a single document. The LLM has learned patterns of language from its training, so it knows how to structure sentences and organize sections. But every fact in its output should come from the context you provided.</p>
+<p>This is why retrieval is so important. If the system retrieves the wrong chunks, the LLM will generate based on incorrect data. The LLM can also experience <a href="./#hallucination">hallucination</a>, where it confidently states information not present in the provided context.</p>
+<h2 id="metadata-filtering">Metadata Filtering</h2>
+<p>Metadata filtering uses attributes such as author, date, or document type to narrow retrieval results in a <a href="./#vector-database">vector database</a>. This ensures that only relevant or current information is used during <a href="./#generator">generation</a>, improving accuracy and control. For example, metadata filters can limit retrievals to documents authored in the last six months.</p>
+<h2 id="normalization">Normalization</h2>
+<p>Normalization standardizes text before it is analyzed. It removes extra spaces, converts special characters, and ensures consistent encoding, such as UTF-8. This cleaning step makes data uniform across different file types and systems, improving downstream processes such as <a href="./#embeddings">embedding</a> and <a href="./#indexing">indexing</a>.</p>
+<h2 id="prompt">Prompt</h2>
+<p>A prompt is the input given to the <a href="./#llm">LLM</a>. It includes the user's request and the most relevant chunks retrieved from the <a href="./#vector-database">vector database</a>. The quality of the prompt determines the accuracy and clarity of the generated result. A well-constructed prompt keeps context within the <a href="./#context-window">context window</a>. Prompt construction is key to aligning retrieval output with generative performance.</p>
+<h2 id="prompt-template">Prompt Template</h2>
+<p>A prompt template is a predefined text pattern that arranges the user’s request and retrieved <a href="./#chunks">chunks</a> into a complete <a href="./#prompt">prompt</a>. Templates help maintain consistency in how information is presented to the <a href="./#llm">LLM</a>, improving both reliability and style of generated outputs.</p>
+<h2 id="query-embedding">Query Embedding</h2>
+<p>A query embedding is the vector form of a user's request. It is created in the same way as document <a href="./#embeddings">embeddings</a>, allowing direct comparison in the <a href="./#vector-database">vector database</a>. The <a href="./#retriever">retriever</a> uses this embedding to find document chunks most similar in meaning to the query. This mechanism ensures that the LLM receives contextually relevant information for generation.</p>
+<h2 id="retrieval-augmented-generation-rag">Retrieval-Augmented Generation (RAG)</h2>
+<p>Retrieval-Augmented Generation (RAG) combines retrieval of stored knowledge with generative modeling. It ensures that the <a href="./#llm">LLM</a> bases its responses on relevant, factual data. The <a href="./#retriever">retriever</a> finds matching chunks, and the <a href="./#generator">generator</a> creates new text using that context. This integration reduces <a href="./#hallucination">hallucination</a> and improves factual reliability. RAG connects storage, retrieval, and generation into a unified process.</p>
+<h2 id="retriever">Retriever</h2>
+<p>The retriever searches the <a href="./#vector-database">vector database</a> for document chunks most semantically similar to the <a href="./#query-embedding">query embedding</a>. It selects the top-<em>k</em> chunks that best match the user’s request, based on <a href="./#semantic-similarity">semantic similarity</a>. The retriever forms the bridge between stored knowledge and generative processing.</p>
+<h2 id="segmentation">Segmentation</h2>
+<p>Segmentation is the step that divides documents into logical sections before chunking. It identifies structural boundaries such as headings, lists, or paragraphs to keep related content together. Segmentation often uses document structure (like Markdown headings or HTML tags) to determine section boundaries. While segmentation organizes a document for readability, chunking later divides those sections into smaller units suitable for embedding.</p>
+<h2 id="semantic-similarity">Semantic Similarity</h2>
+<p>Semantic similarity measures how closely two <a href="./#embeddings">embeddings</a> represent the same meaning. It is often computed using <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank" rel="noopener">cosine similarity</a>. By comparing embeddings numerically, the system can retrieve information related in meaning rather than identical in wording. Semantic similarity enables the retrieval step in the RAG process.</p>
+<h2 id="temperature">Temperature</h2>
+<p>Temperature is a model parameter that controls randomness in text generation. Lower temperatures (for example, 0.2) make responses more predictable and factual, while higher temperatures (for example, 0.8) encourage creativity and variation. Adjusting temperature helps balance precision and expressiveness in the generated output.</p>
+<h2 id="tokens">Tokens</h2>
+<p>Tokens are the smallest text units an <a href="./#llm">LLM</a> processes, roughly corresponding to words or word fragments. The number of tokens determines how much content fits within the <a href="./#context-window">context window</a>. Managing tokens helps control both response length and computational cost. Tokens are the measurement unit for how the model reads and generates text.</p>
+<h2 id="top-k">Top-k</h2>
+<p>Top-k refers to a sampling parameter used during text generation that limits the model’s next-word choices to the k most probable tokens. The model then selects one token from this reduced set according to their relative probabilities. A smaller k value (for example, 20) makes outputs more focused and deterministic, while a larger k value allows greater diversity and creativity.</p>
+<h2 id="top-p">Top-p</h2>
+<p>Top-p, also known as nucleus sampling, is a probabilistic text generation method that selects from the smallest possible set of tokens whose cumulative probability adds up to p (for example, 0.9). The model samples only from this dynamic subset, allowing a balance between predictability and variation. Lower p values produce more precise responses, while higher p values yield more creative or varied text.</p>
+<h2 id="vector">Vector</h2>
+<p>A vector is a list of numbers representing the meaning of text in mathematical form. Each <a href="./#embeddings">embedding</a> is stored as a vector in a high-dimensional space. The distance between two vectors indicates how similar their meanings are, often measured by <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank" rel="noopener">cosine similarity</a>. Vectors make it possible for computers to perform semantic comparisons across large document sets.</p>
+<h2 id="vector-database">Vector Database</h2>
+<p>A vector database stores <a href="./#vector">vectors</a> and their associated <a href="./#vector-metadata">metadata</a>. It enables rapid search based on <a href="./#semantic-similarity">semantic similarity</a> rather than keyword matching. When a user query is received, the database is searched for vectors most similar to the <a href="./#query-embedding">query embedding</a>. The retrieved chunks are then passed to the LLM for generation. Vector databases are optimized for large-scale similarity searches.</p>
+<h2 id="vector-metadata">Vector Metadata</h2>
+<p>Vector metadata refers to information stored alongside each <a href="./#vector">vector</a>, such as the original file name, section title, or timestamp. Metadata allows filtering or ranking retrieved results to ensure the system selects the most relevant and current content. This layer maintains traceability from generated text back to its original source.</p>
+<h2 id="vector-search">Vector Search</h2>
+<p>Vector search is a method of finding related content by comparing <a href="./#vector">vectors</a> rather than text keywords. It identifies documents or chunks with similar meanings, even when the wording differs. Vector search compares numerical distances between vectors using measures such as <a href="./#cosine-similarity">cosine similarity</a>. This process is central to <a href="./#retrieval-augmented-generation-rag">retrieval-augmented generation</a>, allowing the system to locate contextually relevant information efficiently.</p>
+
+<hr>
+<p>Tagged with:</p>
+<ul>
+  <li><a href="/tags/glossary/">glossary</a></li>
+  <li><a href="/tags/rag/">RAG</a></li>
+</ul>
+<p>More posts:</p>
+<ul><li>Next: <a href="/posts/colab-drive-rag/">Gemini RAG Pipeline</a></li><li>Previous: <a href="/posts/doc-gen-rag-pipeline/">Generating Information Products with RAG</a></li>
+</ul>
+
+
+</heading-anchors>
+</main>
+<footer>
+
+<p>
+    <em>Built with
+        <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+    </em>
+</p>
+</footer>
+<!-- This page `/posts/rag-terms-glossary/` was built on 2025-11-14T05:11:44.956Z -->
+<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+

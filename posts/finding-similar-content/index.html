@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Finding Semantically Similar Content</title>
+        <meta name="description" content="Application to find semantically similar content in Markdown files">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/dist/GJ2lfMfbnc.css">
+        
+        <script src="/assets/js/nav.js"></script>
+    </head>
+    <body>
+        <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+        <header class="site-header">
+            <div class="header-nav-container">
+                <div class="logo-container">
+
+                    <!-- <img src="/images/merge-logo-1.svg" alt="Site Logo" class="site-logo"> -->
+
+                    <a href="/">
+                        
+                            <img src="../../images/merge-logo-1.svg" alt="Site Logo" class="site-logo">
+                        
+                    </a>
+                </div>
+                <nav class="site-nav">
+                    <ul class="nav"><li class="nav-item">
+                                    <a href="/" class="nav-link" data-dropdown-toggle="">
+                                        Home
+                                    </a></li><li class="nav-item">
+                                    <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                        Posts
+                                    </a></li><li class="nav-item">
+                                    <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                        Resources
+                                    </a></li><li class="nav-item has-children">
+                                    <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                        About
+                                    </a><ul class="dropdown"><li>
+                                                    <a href="/resume/" class="dropdown-link">
+                                                        Resume
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/work/" class="dropdown-link">
+                                                        Work
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/contact/" class="dropdown-link">
+                                                        Contact
+                                                    </a>
+                                                </li></ul></li></ul>
+                </nav>
+            </div>
+            <h1 id="finding-semantically-similar-content">
+                    Finding Semantically Similar Content
+            </h1>
+            <p>
+                    Application to find semantically similar content in Markdown files
+            </p>
+        </header></body>
+    
+</html>
+
+<main id="main">
+<heading-anchors>
+    
+
+
+
+<p>Posted on: <time datetime="2025-10-09">09 October 2025</time></p>
+
+<p>A common problem with technical documentation management is that documentation teams tend to have a lot of stressed-out contributors working on shared content, scattered across multiple departments and revised over an extended period. This is a recipe for content bloat and redundancy.</p>
+<p>All content needs some degree of custodial refactoring through <a href="https://en.wikipedia.org/wiki/Data_deduplication" target="_blank" rel="noopener">deduplication</a>, merging similar content into a single source of truth <a href="https://en.wikipedia.org/wiki/Single_source_of_truth" target="_blank" rel="noopener">(SSOT)</a> or by eliminating all but one permutation. Even before the emergence of AI, maintaining clean, unambiguous documentation was essential to avoid the junk in/out scenario. In the foreseeable future, documentation will converted to vectors wholesale,</p>
+<p>Eventually, I'd like to contain a large set of documentation in a local LLM that can be searched for semantically similar content. A human would need to determine the best course of action on a case-by-case basis. In taking baby steps toward that goal, I came across <a href="https://github.com/neuml/txtai" target="_blank" rel="noopener">txtai</a> and put together a prototype that surfaces semantically same or similar chunks in the form of a report, using a simple Markdown file as input.</p>
+<p>The processing is straightforward:</p>
+<ol>
+<li>
+<p><strong>preprocess_markdown.py</strong> - Chunks MD by heading to populate a JSON file.</p>
+</li>
+<li>
+<p><strong>index_chunks.py</strong> - txtai (sentence-transformers/all-MiniLM-L6-v2) indexes JSON file.</p>
+</li>
+<li>
+<p><strong>report_similarity.py</strong> - txtai compares paragraph vectors. Reports similarity clusters and vector scores.</p>
+</li>
+</ol>
+<p>If you want to look under the hood, you'll find this package on <a href="https://github.com/shealy2020/single-md-txtai-report" target="_blank" rel="noopener">GitHub</a>.</p>
+<h3 id="postmortem">Postmortem</h3>
+<p>I set out to use the hierarchical structure of the Markdown file as added context to vector scores, which was proved to be too ambitious for this first pass. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.</p>
+
+<hr>
+<p>Tagged with:</p>
+<ul>
+  <li><a href="/tags/txtai/">txtai</a></li>
+  <li><a href="/tags/semantic/">semantic</a></li>
+</ul>
+<p>More posts:</p>
+<ul><li>Next: <a href="/posts/lrag-in-docker/">Setting up Local RAG Pipeline in Docker</a></li><li>Previous: <a href="/posts/llm-prompt-org/">LLM Prompt Organizer</a></li>
+</ul>
+
+
+</heading-anchors>
+</main>
+<footer>
+
+<p>
+    <em>Built with
+        <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+    </em>
+</p>
+</footer>
+<!-- This page `/posts/finding-similar-content/` was built on 2025-11-14T05:11:44.951Z -->
+<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+

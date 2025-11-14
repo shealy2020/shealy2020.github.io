@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 1100" width="300" height="1100">
+  <defs>
+    <style>
+      .box {
+        fill: #eff6ff;
+        stroke: #2563eb;
+        stroke-width: 2;
+      }
+      .title {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        fill: #1e293b;
+        text-anchor: middle;
+      }
+      .metaphor {
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        fill: #475569;
+        text-anchor: middle;
+      }
+      .arrow {
+        stroke: #2563eb;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2563eb" />
+    </marker>
+  </defs>
+  
+  <!-- Box 1: Source Documents -->
+  <rect class="box" x="15" y="15" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="35">Source Documents</text>
+  <text class="metaphor" x="150" y="52">A library full of books</text>
+  <text class="metaphor" x="150" y="66">Raw knowledge sitting on the shelf</text>
+  <text class="metaphor" x="150" y="80">waiting to be organized</text>
+  
+  <!-- Arrow 1 -->
+  <line class="arrow" x1="150" y1="100" x2="150" y2="125" />
+  
+  <!-- Box 2: Ingestion & Cleaning -->
+  <rect class="box" x="15" y="125" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="145">Ingestion &amp; Cleaning</text>
+  <text class="metaphor" x="150" y="162">A librarian scanning books</text>
+  <text class="metaphor" x="150" y="176">Removing errors and ensuring</text>
+  <text class="metaphor" x="150" y="190">consistent readability</text>
+  
+  <!-- Arrow 2 -->
+  <line class="arrow" x1="150" y1="210" x2="150" y2="235" />
+  
+  <!-- Box 3: Segmentation & Chunking -->
+  <rect class="box" x="15" y="235" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="255">Segmentation &amp; Chunking</text>
+  <text class="metaphor" x="150" y="272">Cutting books into index cards</text>
+  <text class="metaphor" x="150" y="286">Small enough to handle but</text>
+  <text class="metaphor" x="150" y="300">complete and meaningful</text>
+  
+  <!-- Arrow 3 -->
+  <line class="arrow" x1="150" y1="320" x2="150" y2="345" />
+  
+  <!-- Box 4: Embedding & Vectorizing -->
+  <rect class="box" x="15" y="345" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="365">Embedding &amp; Vectorizing</text>
+  <text class="metaphor" x="150" y="382">Turning cards into barcodes</text>
+  <text class="metaphor" x="150" y="396">Similar meanings get similar codes</text>
+  <text class="metaphor" x="150" y="410">and are shelved close together</text>
+  
+  <!-- Arrow 4 -->
+  <line class="arrow" x1="150" y1="430" x2="150" y2="455" />
+  
+  <!-- Box 5: Indexing & Metadata -->
+  <rect class="box" x="15" y="455" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="475">Indexing &amp; Metadata</text>
+  <text class="metaphor" x="150" y="492">Organizing cards into labeled</text>
+  <text class="metaphor" x="150" y="506">drawers with cross references</text>
+  <text class="metaphor" x="150" y="520">for quick and efficient finding</text>
+  
+  <!-- Arrow 5 -->
+  <line class="arrow" x1="150" y1="540" x2="150" y2="565" />
+  
+  <!-- Box 6: Retrieval Engine -->
+  <rect class="box" x="15" y="565" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="585">Retrieval Engine</text>
+  <text class="metaphor" x="150" y="602">A skilled research assistant</text>
+  <text class="metaphor" x="150" y="616">Finding relevant cards by measuring</text>
+  <text class="metaphor" x="150" y="630">how close barcodes match your query</text>
+  
+  <!-- Arrow 6 -->
+  <line class="arrow" x1="150" y1="650" x2="150" y2="675" />
+  
+  <!-- Box 7: Prompt Construction -->
+  <rect class="box" x="15" y="675" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="695">Prompt Construction</text>
+  <text class="metaphor" x="150" y="712">A writer arranging selected cards</text>
+  <text class="metaphor" x="150" y="726">and your question into a clear</text>
+  <text class="metaphor" x="150" y="740">structured outline for the AI</text>
+  
+  <!-- Arrow 7 -->
+  <line class="arrow" x1="150" y1="760" x2="150" y2="785" />
+  
+  <!-- Box 8: LLM Generation & Output -->
+  <rect class="box" x="15" y="785" width="270" height="85" rx="6" ry="6" />
+  <text class="title" x="150" y="805">LLM Generation &amp; Output</text>
+  <text class="metaphor" x="150" y="822">An editor writing a fresh report</text>
+  <text class="metaphor" x="150" y="836">using only the provided cards</text>
+  <text class="metaphor" x="150" y="850">Clear but limited to given sources</text>
+  
+  <!-- Decorative border -->
+  <rect x="5" y="5" width="290" height="1090" rx="8" ry="8" fill="none" stroke="#cbd5e1" stroke-width="2" />
+</svg>
