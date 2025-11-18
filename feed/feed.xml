@@ -70,6 +70,7 @@ FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt
 &lt;h3 id=&quot;4-upload-source-documents-dita-md-html-to-my-drive-gemini-source-index-rag-docs-structured&quot;&gt;4. Upload source documents (.dita, .md, .html) to &lt;code&gt;My Drive/gemini-source-index/rag_docs_structured&lt;/code&gt;.&lt;/h3&gt;
 &lt;h3 id=&quot;5-run-cells&quot;&gt;5. Run Cells&lt;/h3&gt;
 &lt;p&gt;Run each &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1/blob/main/colab-gdrive-rag-ui-1.py&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;cell&lt;/a&gt; in your notebook sequentially. Alternately, run the entire Python script as a single cell. (I prefer to run each functional block of code separately for troubleshooting purposes.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: &lt;em&gt;Prior to running the script, uncomment lines 5 and 6 of Cell 1A if your notebook does not already have these Python libraries loaded.&lt;/em&gt;&lt;/p&gt;
 &lt;h3 id=&quot;step-5-run-notebook&quot;&gt;Step 5: Run notebook.&lt;/h3&gt;
 &lt;p&gt;Execute cells in order:&lt;/p&gt;
 &lt;ol&gt;
@@ -93,7 +94,7 @@ FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt
 &lt;li&gt;Installs LlamaIndex for document processing.&lt;/li&gt;
 &lt;li&gt;Installs supporting libraries (numpy, lxml, ipywidgets).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Must run first before any imports in Cell 1B.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: &lt;em&gt;Prior to running the script, uncomment lines 5 and 6 of Cell 1A if your notebook does not already have these Python libraries loaded.&lt;/em&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&quot;cell-1b&quot;&gt;Cell 1B&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Imports all installed packages and validates your Gemini API key.&lt;/p&gt;
