@@ -90,56 +90,45 @@
 </li>
 </ul>
 <h2 id="prerequisites">Prerequisites</h2>
+<p>You need a Google account with access to <a href="https://colab.research.google.com/" target="_blank" rel="noopener">Google Colab</a>, a <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Gemini API key</a>, and source documents (DITA, Markdown, HTML) stored in Google Drive.</p>
+<p><strong>Note</strong>: The <a href="https://github.com/shealy2020/colab-gdrive-rag-ui-1" target="_blank" rel="noopener">GitHub repo</a> has sample documents that you can upload to your Google Drive.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Follow these steps to set up and run your notebook.</p>
+<h3 id="1-create-your-google-colab-notebook">1. Create Your Google Colab Notebook</h3>
+<p>Go to <a href="https://colab.research.google.com/" target="_blank" rel="noopener">https://colab.research.google.com/</a>, then create a notebook via the <strong>File</strong> menu.</p>
+<h3 id="2-set-up-api-key">2. Set Up API Key</h3>
+<p>The code requires a <strong>Gemini API Key</strong> to communicate with the model. Store this key securely in Colab's <strong>Secrets</strong> tool.</p>
+<ol>
+<li>Get your key from Google AI Studio: <a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener">https://ai.google.dev/gemini-api/docs/api-key</a></li>
+<li>In the Colab Notebook, look for the <strong>Secrets</strong> tab in the left sidebar.</li>
+<li>Click the <strong><code>+</code></strong> icon to add a new secret.</li>
+<li>Set the <strong>Name</strong> exactly to: <code>GEMINI_API_KEY</code></li>
+<li>Set the <strong>Value</strong> to the key you copied in Step 1.</li>
+<li>Ensure the &quot;Notebook access&quot; toggle is <strong>ON</strong> for this secret.</li>
+</ol>
+<h3 id="3-prepare-source-folders-and-documents">3. Prepare Source Folders and Documents</h3>
+<ol>
+<li>
+<p>Create this directory structure in your Google Drive:</p>
 <ul>
-<li>Google account with access to Google Colab</li>
-<li>Google <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Gemini API key</a></li>
-<li>Source documents stored in Google Drive (DITA, Markdown, or HTML format)</li>
+<li>
+<p><code>My Drive/gemini-source-index/rag_docs_structured</code></p>
+<p>This is where you will upload DITA, Markdown, and HTML files.</p>
+</li>
+<li>
+<p><code>My Drive/gemini-source-index/rag_index_gemini_faiss</code></p>
+<p>This is where the FAISS vector index will be saved.</p>
+</li>
 </ul>
-<h2 id="installation-and-setup">Installation &amp; Setup</h2>
-<h3 id="step-1-clone-or-download-the-repository">Step 1: Clone or Download the Repository</h3>
-<p><strong>Option A: Clone via Git</strong></p>
-<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">git</span> clone https://github.com/shealy2020/colab-gdrive-rag-ui-1</code></pre>
-<p><strong>Option B: Download ZIP</strong></p>
-<ol>
-<li>Click the green &quot;Code&quot; button on the GitHub repository page.</li>
-<li>Select &quot;Download ZIP&quot;.</li>
-<li>Extract the ZIP file to your local machine.</li>
-</ol>
-<h3 id="step-2-upload-to-google-colab">Step 2: Upload to Google Colab</h3>
-<ol>
-<li>Go to <a href="https://colab.research.google.com/" target="_blank" rel="noopener">Google Colab</a>.</li>
-<li>Click <strong>File</strong> → <strong>Upload notebook</strong>.</li>
-<li>Select the <code>colab-gdrive-rag-ui-1.py</code> file from the repository.</li>
-<li>Alternatively, open a new notebook and copy-paste each cell from the script.</li>
-</ol>
-<h3 id="step-3-configure-your-gemini-api-key">Step 3: Configure Your Gemini API Key</h3>
-<ol>
-<li>In Google Colab, click the <strong>key icon</strong> in the left sidebar (Secrets).</li>
-<li>Click <strong>Add new secret</strong>.</li>
-<li>Set the name as: <code>GEMINI_API_KEY</code>.</li>
-<li>Paste your Gemini API key as the value.</li>
-<li>Select <strong>Notebook access</strong>.</li>
-</ol>
-<h3 id="step-4-prepare-your-documents">Step 4: Prepare Your Documents</h3>
-<ol>
-<li>
-<p>Create a folder structure in your Google Drive similar to this:</p>
-<pre><code>MyDrive/
-└── gemini-source-index/
-    ├── rag_docs_structured/          # Place your documents here
-    │   └── Model_T_DITA/              # Example DITA folder
-    │       ├── *.ditamap files
-    │       └── *.dita files
-    └── rag_index_gemini_faiss/        # Index will be saved here (auto-created)
-</code></pre>
-</li>
-<li>
-<p>Update the paths in <strong>Cell 2</strong> if you use different folder names:</p>
-<pre class="language-python" tabindex="0"><code class="language-python">DOCS_DIR <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/gemini-source-index/rag_docs_structured'</span>
-FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/gemini-source-index/rag_index_gemini_faiss'</span></code></pre>
+<p><strong>Important</strong>:  Update the paths in <strong>Cell 2</strong> if you use different folder names:</p>
+<pre class="language-python" tabindex="0"><code class="language-python">DOCS_DIR <span class="token operator">=</span> <span class="token string">'/content/drive/[your custom directory path]'</span>
+FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/[your custom directory path]'</span></code></pre>
 </li>
 </ol>
-<h3 id="step-5-run-notebook">Step 5: Run Notebook</h3>
+<h3 id="4-upload-source-documents-dita-md-html-to-my-drive-gemini-source-index-rag-docs-structured">4. Upload source documents (.dita, .md, .html) to <code>My Drive/gemini-source-index/rag_docs_structured</code>.</h3>
+<h3 id="5-run-cells">5. Run Cells</h3>
+<p>Run each <a href="https://github.com/shealy2020/colab-gdrive-rag-ui-1/blob/main/colab-gdrive-rag-ui-1.py" target="_blank" rel="noopener">cell</a> in your notebook sequentially. Alternately, run the entire Python script as a single cell. (I prefer to run each functional block of code separately for troubleshooting purposes.)</p>
+<h3 id="step-5-run-notebook">Step 5: Run notebook.</h3>
 <p>Execute cells in order:</p>
 <ol>
 <li><a href="../../../posts/colab-gdrive-rag-ui/#cell-1a">Cell 1A</a>: Installs dependencies.</li>
@@ -149,7 +138,10 @@ FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string
 <li><a href="../../../posts/colab-gdrive-rag-ui/#cell-4">Cell 4</a>: Generates embeddings and builds FAISS index.</li>
 <li><a href="../../../posts/colab-gdrive-rag-ui/#cell-5">Cell 5</a>: Launches interactive query interface.</li>
 </ol>
-<h4 id="cell-1a">Cell 1A</h4>
+<h3 id="step-6-enter-and-submit-your-query">Step 6: Enter and submit your query.</h3>
+<p><strong>Note</strong>: The LLM will only return response based on the source you provide.</p>
+<h2 id="cell-descriptions">Cell Descriptions</h2>
+<h3 id="cell-1a">Cell 1A</h3>
 <p><strong>Purpose</strong>: Installs all required Python packages before importing them.</p>
 <p><strong>What it does</strong>:</p>
 <ul>
@@ -161,7 +153,7 @@ FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string
 </ul>
 <p><strong>Note</strong>: Must run first before any imports in Cell 1B.</p>
 <hr>
-<h4 id="cell-1b">Cell 1B</h4>
+<h3 id="cell-1b">Cell 1B</h3>
 <p><strong>Purpose</strong>: Imports all installed packages and validates your Gemini API key.</p>
 <p><strong>What it does</strong>:</p>
 <ul>
@@ -171,7 +163,7 @@ FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string
 <li>Sets up the environment for subsequent cells.</li>
 </ul>
 <hr>
-<h4 id="cell-2">Cell 2</h4>
+<h3 id="cell-2">Cell 2</h3>
 <p><strong>Purpose</strong>: Connects to Google Drive and creates source and indexing directories or verifies that these directories exist.</p>
 <p><strong>What it does</strong>:</p>
 <ul>
@@ -186,7 +178,7 @@ FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string
 <li>Validates the file structure.</li>
 </ul>
 <hr>
-<h4 id="cell-3">Cell 3</h4>
+<h3 id="cell-3">Cell 3</h3>
 <p><strong>Purpose</strong>: Loads your documents, parses DITA map structure, and splits content into chunks.</p>
 <p><strong>What it does</strong>:</p>
 <ol>
@@ -223,7 +215,7 @@ FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string
 </li>
 </ol>
 <hr>
-<h4 id="cell-4">Cell 4</h4>
+<h3 id="cell-4">Cell 4</h3>
 <p><strong>Purpose</strong>: Converts text chunks into vector embeddings and builds a searchable FAISS index.</p>
 <p><strong>What it does</strong>:</p>
 <ol>
@@ -259,7 +251,7 @@ FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string
 </ol>
 <p><strong>Note</strong>: This cell only needs to run once. After the index is saved, you can skip to Cell 5 in future sessions.</p>
 <hr>
-<h4 id="cell-5">Cell 5</h4>
+<h3 id="cell-5">Cell 5</h3>
 <p><strong>Purpose</strong>: Provides an interactive interface for querying documents.</p>
 <p><strong>What it does</strong>:</p>
 <ol>
@@ -309,10 +301,7 @@ chunk_overlap<span class="token operator">=</span><span class="token number">20<
 target_extensions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'.md'</span><span class="token punctuation">,</span> <span class="token string">'.dita'</span><span class="token punctuation">,</span> <span class="token string">'.html'</span><span class="token punctuation">]</span>  <span class="token comment"># Supported file types</span></code></pre>
 <p><strong>To Do</strong>: The source directory is hardcoded, so the value of DITA_SUBFOLDER needs to be generated dynamically.</p>
 <h3 id="embedding-model-cell-4">Embedding Model (Cell 4)</h3>
-<pre class="language-python" tabindex="0"><code class="language-python">model_name <span class="token operator">=</span> <span class="token string">"sentence-transformers/multi-qa-distilbert-cos-v1"</span>
-<span class="token comment"># Alternatives:</span>
-<span class="token comment"># - "sentence-transformers/all-MiniLM-L6-v2" (faster, smaller)</span>
-<span class="token comment"># - "sentence-transformers/all-mpnet-base-v2" (more accurate)</span></code></pre>
+<pre class="language-python" tabindex="0"><code class="language-python">model_name <span class="token operator">=</span> <span class="token string">"sentence-transformers/multi-qa-distilbert-cos-v1"</span></code></pre>
 <h3 id="gemini-model-cell-5">Gemini Model (Cell 5)</h3>
 <pre class="language-python" tabindex="0"><code class="language-python">GEMINI_MODEL <span class="token operator">=</span> <span class="token string">"gemini-2.5-flash"</span></code></pre>
 <h2 id="usage-examples">Usage Examples</h2>
@@ -363,7 +352,7 @@ Temperature: 0.4
 </ul>
 <p><strong>Note</strong>: The RAG pipeline was Tested On Google Colab (Python 3.10+).</p>
 <hr>
-<p>Thank you Keith Schengili-Roberts for providing the [Model T Manual transformation to DITA] (https://github.com/DITAWriter/Model_T_Manual_AI_DITA_Conversion/).</p>
+<p>Thank you Keith Schengili-Roberts for providing the <a href="https://github.com/DITAWriter/Model_T_Manual_AI_DITA_Conversion/" target="_blank" rel="noopener">Model T Manual transformation to DITA</a>.</p>
 
 <hr>
 <p>Tagged with:</p>
@@ -388,6 +377,6 @@ Temperature: 0.4
     </em>
 </p>
 </footer>
-<!-- This page `/posts/colab-gdrive-rag-ui/` was built on 2025-11-18T18:20:58.596Z -->
+<!-- This page `/posts/colab-gdrive-rag-ui/` was built on 2025-11-18T19:09:33.734Z -->
 <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 
