@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gemini RAG Pipeline (Improved)</title>
+        <meta name="description" content="A Retrieval-Augmented Generation (RAG) system that processes structured documentation, creates vector embeddings, and provides an interactive query interface with Google&#39;s Gemini AI (free version).">
+        <meta name="generator" content="Eleventy v3.1.2">
+        
+        
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/dist/tm_1tXeKDB.css">
+        
+        <script src="/assets/js/nav.js"></script>
+    </head>
+    <body>
+        <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+        <header class="site-header">
+            <div class="header-nav-container">
+                <div class="logo-container">
+
+                    <!-- <img src="/images/merge-logo-1.svg" alt="Site Logo" class="site-logo"> -->
+
+                    <a href="/">
+                        
+                            <img src="..\..\images\merge-logo-1.svg" alt="Site Logo" class="site-logo">
+                        
+                    </a>
+                </div>
+                <nav class="site-nav">
+                    <ul class="nav"><li class="nav-item">
+                                    <a href="/" class="nav-link" data-dropdown-toggle="">
+                                        Home
+                                    </a></li><li class="nav-item">
+                                    <a href="/posts/" class="nav-link" data-dropdown-toggle="">
+                                        Posts
+                                    </a></li><li class="nav-item">
+                                    <a href="/resources/" class="nav-link" data-dropdown-toggle="">
+                                        Resources
+                                    </a></li><li class="nav-item has-children">
+                                    <a href="/about/" class="nav-link" data-dropdown-toggle="">
+                                        About
+                                    </a><ul class="dropdown"><li>
+                                                    <a href="/resume/" class="dropdown-link">
+                                                        Resume
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/work/" class="dropdown-link">
+                                                        Work
+                                                    </a>
+                                                </li><li>
+                                                    <a href="/contact/" class="dropdown-link">
+                                                        Contact
+                                                    </a>
+                                                </li></ul></li></ul>
+                </nav>
+            </div>
+            <h1 id="gemini-rag-pipeline-improved">
+                    Gemini RAG Pipeline (Improved)
+            </h1>
+            <p>
+                    A Retrieval-Augmented Generation (RAG) system that processes structured documentation, creates vector embeddings, and provides an interactive query interface with Google&#39;s Gemini AI (free version).
+            </p>
+        </header></body>
+    
+</html>
+
+<main id="main">
+<heading-anchors>
+    
+
+
+
+<p>Posted on: <time datetime="2025-11-13">13 November 2025</time></p>
+
+<p>For your own use, you'll find my Colab Notebook cells, which are written in Python <a href="https://github.com/shealy2020/colab-gdrive-rag-ui-1" target="_blank" rel="noopener">on GitHub</a>, as well as test source.</p>
+<h2 id="features">Features</h2>
+<p>While this script is similar to <a href="posts/colab-drive-rag">Gemini RAG Pipeline (Basic)</a>, I improved this pipeline by adding these features:</p>
+<ul>
+<li><strong>Structure-Aware Document Processing</strong>: Supports DITA maps, Markdown, HTML, and preserves document hierarchy.</li>
+<li><strong>FAISS Vector Search</strong>: Fast similarity search using Facebook's FAISS library.</li>
+<li><strong>multi-qa-distilbert-cos-v1</strong>: A more robust sentence transformer.</li>
+<li><strong>Interactive UI</strong>: Jupyter widgets for easy query testing with these retrieval parameters:
+<ul>
+<li><strong>Top-K</strong>: A sampling method that limits the model’s next-token choices to the K most likely candidates.</li>
+<li><strong>Similarity Threshold</strong>: A minimum score that determines how similar two vector embeddings must be for a match to be considered relevant.</li>
+<li><strong>Temperature</strong>: A setting that controls randomness in a model’s output, where higher values produce more varied and creative responses.</li>
+<li><strong>Maximum Tokens</strong>: The upper limit on how many tokens a model can generate in a single response.</li>
+</ul>
+</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Google account with access to Google Colab</li>
+<li>Google <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Gemini API key</a></li>
+<li>Source documents stored in Google Drive (DITA, Markdown, or HTML format)</li>
+</ul>
+<h2 id="installation-and-setup">Installation &amp; Setup</h2>
+<h3 id="step-1-clone-or-download-the-repository">Step 1: Clone or Download the Repository</h3>
+<p><strong>Option A: Clone via Git</strong></p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">git</span> clone https://github.com/shealy2020/colab-gdrive-rag-ui-1</code></pre>
+<p><strong>Option B: Download ZIP</strong></p>
+<ol>
+<li>Click the green &quot;Code&quot; button on the GitHub repository page.</li>
+<li>Select &quot;Download ZIP&quot;.</li>
+<li>Extract the ZIP file to your local machine.</li>
+</ol>
+<h3 id="step-2-upload-to-google-colab">Step 2: Upload to Google Colab</h3>
+<ol>
+<li>Go to <a href="https://colab.research.google.com/" target="_blank" rel="noopener">Google Colab</a>.</li>
+<li>Click <strong>File</strong> → <strong>Upload notebook</strong>.</li>
+<li>Select the <code>colab-gdrive-rag-ui-1.py</code> file from the repository.</li>
+<li>Alternatively, open a new notebook and copy-paste each cell from the script.</li>
+</ol>
+<h3 id="step-3-configure-your-gemini-api-key">Step 3: Configure Your Gemini API Key</h3>
+<ol>
+<li>In Google Colab, click the <strong>key icon</strong> in the left sidebar (Secrets).</li>
+<li>Click <strong>Add new secret</strong>.</li>
+<li>Set the name as: <code>GEMINI_API_KEY</code>.</li>
+<li>Paste your Gemini API key as the value.</li>
+<li>Select <strong>Notebook access</strong>.</li>
+</ol>
+<h3 id="step-4-prepare-your-documents">Step 4: Prepare Your Documents</h3>
+<ol>
+<li>
+<p>Create a folder structure in your Google Drive similar to this:</p>
+<pre><code>MyDrive/
+└── gemini-source-index/
+    ├── rag_docs_structured/          # Place your documents here
+    │   └── Model_T_DITA/              # Example DITA folder
+    │       ├── *.ditamap files
+    │       └── *.dita files
+    └── rag_index_gemini_faiss/        # Index will be saved here (auto-created)
+</code></pre>
+</li>
+<li>
+<p>Update the paths in <strong>Cell 2</strong> if you use different folder names:</p>
+<pre class="language-python" tabindex="0"><code class="language-python">DOCS_DIR <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/gemini-source-index/rag_docs_structured'</span>
+FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/gemini-source-index/rag_index_gemini_faiss'</span></code></pre>
+</li>
+</ol>
+<h3 id="step-5-run-notebook">Step 5: Run Notebook</h3>
+<p>Execute cells in order:</p>
+<ol>
+<li><a href="../../../posts/colab-gdrive-rag-ui/#cell-1a">Cell 1A</a>: Installs dependencies.</li>
+<li><a href="../../../posts/colab-gdrive-rag-ui/#cell-1b">Cell 1B</a>: Imports libraries and validate API key.</li>
+<li><a href="../../../posts/colab-gdrive-rag-ui/#cell-2">Cell 2</a>: Mounts Google Drive and configures paths.</li>
+<li><a href="../../../posts/colab-gdrive-rag-ui/#cell-3">Cell 3</a>: LlamaIndex structure-aware document loading and chunking.</li>
+<li><a href="../../../posts/colab-gdrive-rag-ui/#cell-4">Cell 4</a>: Generates embeddings and builds FAISS index.</li>
+<li><a href="../../../posts/colab-gdrive-rag-ui/#cell-5">Cell 5</a>: Launches interactive query interface.</li>
+</ol>
+<h4 id="cell-1a">Cell 1A</h4>
+<p><strong>Purpose</strong>: Installs all required Python packages before importing them.</p>
+<p><strong>What it does</strong>:</p>
+<ul>
+<li>Installs FAISS (Facebook AI Similarity Search) for vector indexing.</li>
+<li>Installs Sentence Transformers for text embeddings.</li>
+<li>Installs Google Generative AI SDK (Gemini API client).</li>
+<li>Installs LlamaIndex for document processing.</li>
+<li>Installs supporting libraries (numpy, lxml, ipywidgets).</li>
+</ul>
+<p><strong>Note</strong>: Must run first before any imports in Cell 1B.</p>
+<hr>
+<h4 id="cell-1b">Cell 1B</h4>
+<p><strong>Purpose</strong>: Imports all installed packages and validates your Gemini API key.</p>
+<p><strong>What it does</strong>:</p>
+<ul>
+<li>Imports core libraries (FAISS, transformers, Gemini client).</li>
+<li>Retrieves your <code>GEMINI_API_KEY</code> from Colab Secrets.</li>
+<li>Validates the API key is accessible.</li>
+<li>Sets up the environment for subsequent cells.</li>
+</ul>
+<hr>
+<h4 id="cell-2">Cell 2</h4>
+<p><strong>Purpose</strong>: Connects to Google Drive and creates source and indexing directories or verifies that these directories exist.</p>
+<p><strong>What it does</strong>:</p>
+<ul>
+<li>Mounts your Google Drive to the Colab runtime.</li>
+<li>Defines paths:
+<ul>
+<li><code>DOCS_DIR</code>: Where your source documents are stored.</li>
+<li><code>FAISS_INDEX_PATH</code>: Where the vector index will be saved.</li>
+</ul>
+</li>
+<li>Creates directories if they don't exist.</li>
+<li>Validates the file structure.</li>
+</ul>
+<hr>
+<h4 id="cell-3">Cell 3</h4>
+<p><strong>Purpose</strong>: Loads your documents, parses DITA map structure, and splits content into chunks.</p>
+<p><strong>What it does</strong>:</p>
+<ol>
+<li>
+<p><strong>DITA Map Parsing</strong>:</p>
+<ul>
+<li>Recursively parses <code>.ditamap</code> files to extract document hierarchy.</li>
+<li>Builds a path map (e.g., &quot;Manual &gt; Chapter 1 &gt; Topic Name&quot;).</li>
+<li>Preserves structural context for better retrieval.</li>
+</ul>
+</li>
+<li>
+<p><strong>Document Loading</strong>:</p>
+<ul>
+<li>Scans for <code>.md</code>, <code>.dita</code>, and <code>.html</code> files.</li>
+<li>Recursively searches subdirectories.</li>
+<li>Loads full document content.</li>
+</ul>
+</li>
+<li>
+<p><strong>Metadata Enhancement</strong>:</p>
+<ul>
+<li>Adds DITA map paths to document metadata.</li>
+<li>Includes file paths and filenames for citation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Chunking</strong>:</p>
+<ul>
+<li>Splits documents into 128-token chunks with 20-token overlap.</li>
+<li>Creates <code>TextNode</code> objects with preserved metadata.</li>
+<li>Generates final chunk list for embedding.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="cell-4">Cell 4</h4>
+<p><strong>Purpose</strong>: Converts text chunks into vector embeddings and builds a searchable FAISS index.</p>
+<p><strong>What it does</strong>:</p>
+<ol>
+<li>
+<p><strong>Embedding Model Loading</strong>:</p>
+<ul>
+<li>Loads <code>multi-qa-distilbert-cos-v1</code> transformer model.</li>
+<li>Optimized for question-answering tasks.</li>
+</ul>
+</li>
+<li>
+<p><strong>Vector Generation</strong>:</p>
+<ul>
+<li>Embeds all chunk texts into 768-dimensional vectors.</li>
+<li>Uses float32 format for FAISS compatibility.</li>
+</ul>
+</li>
+<li>
+<p><strong>FAISS Index Creation</strong>:</p>
+<ul>
+<li>Builds an L2 (Euclidean distance) index.</li>
+<li>Adds all vectors to the index.</li>
+</ul>
+</li>
+<li>
+<p><strong>Persistence</strong>:</p>
+<ul>
+<li>Saves FAISS index (<code>my_faiss_index.bin</code>) to Google Drive.</li>
+<li>Saves chunk metadata (<code>chunk_data.pkl</code>) using pickle.</li>
+<li>Preserves the link between vectors and original text.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Note</strong>: This cell only needs to run once. After the index is saved, you can skip to Cell 5 in future sessions.</p>
+<hr>
+<h4 id="cell-5">Cell 5</h4>
+<p><strong>Purpose</strong>: Provides an interactive interface for querying documents.</p>
+<p><strong>What it does</strong>:</p>
+<ol>
+<li>
+<p><strong>Component Loading</strong>:</p>
+<ul>
+<li>Loads the saved FAISS index from Google Drive.</li>
+<li>Loads chunk metadata from pickle file.</li>
+<li>Initializes the embedding model and Gemini client.</li>
+</ul>
+</li>
+<li>
+<p><strong>Retrieval Function</strong> (<code>retrieve_context</code>):</p>
+<ul>
+<li>Embeds user queries into vectors.</li>
+<li>Searches FAISS index for similar chunks.</li>
+<li>Filters results by similarity threshold.</li>
+<li>Formats context with metadata for LLM.</li>
+</ul>
+</li>
+<li>
+<p><strong>Interactive UI</strong>:</p>
+<ul>
+<li><strong>Query Input</strong>: Text area for queries</li>
+<li><strong>Top K Chunks</strong>: Controls number of retrieved chunks (1-20)</li>
+<li><strong>Similarity Threshold</strong>: Filters for relevance (0-50, lower = stricter)</li>
+<li><strong>Temperature</strong>: Controls response creativity (0-1, lower = focused, higher = creative)</li>
+<li><strong>Max Tokens</strong>: Limits response length (64-4096)</li>
+</ul>
+</li>
+<li>
+<p><strong>RAG Process</strong>:</p>
+<ul>
+<li>Retrieves relevant context from your documents.</li>
+<li>Constructs a grounded prompt with citations.</li>
+<li>Sends to Gemini API for generation.</li>
+<li>Displays response with source provenance.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="configuration-options">Configuration Options</h2>
+<h3 id="document-processing-cell-3">Document Processing (Cell 3)</h3>
+<pre class="language-python" tabindex="0"><code class="language-python">DITA_SUBFOLDER <span class="token operator">=</span> <span class="token string">'Model_T_DITA'</span>  <span class="token comment"># Change to your DITA folder name</span>
+chunk_size<span class="token operator">=</span><span class="token number">128</span>                     <span class="token comment"># Tokens per chunk</span>
+chunk_overlap<span class="token operator">=</span><span class="token number">20</span>                   <span class="token comment"># Overlap between chunks</span>
+target_extensions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'.md'</span><span class="token punctuation">,</span> <span class="token string">'.dita'</span><span class="token punctuation">,</span> <span class="token string">'.html'</span><span class="token punctuation">]</span>  <span class="token comment"># Supported file types</span></code></pre>
+<p><strong>To Do</strong>: The source directory is hardcoded, so the value of DITA_SUBFOLDER needs to be generated dynamically.</p>
+<h3 id="embedding-model-cell-4">Embedding Model (Cell 4)</h3>
+<pre class="language-python" tabindex="0"><code class="language-python">model_name <span class="token operator">=</span> <span class="token string">"sentence-transformers/multi-qa-distilbert-cos-v1"</span>
+<span class="token comment"># Alternatives:</span>
+<span class="token comment"># - "sentence-transformers/all-MiniLM-L6-v2" (faster, smaller)</span>
+<span class="token comment"># - "sentence-transformers/all-mpnet-base-v2" (more accurate)</span></code></pre>
+<h3 id="gemini-model-cell-5">Gemini Model (Cell 5)</h3>
+<pre class="language-python" tabindex="0"><code class="language-python">GEMINI_MODEL <span class="token operator">=</span> <span class="token string">"gemini-2.5-flash"</span></code></pre>
+<h2 id="usage-examples">Usage Examples</h2>
+<h3 id="example-query-1-factual-question">Example Query 1: Factual Question</h3>
+<pre><code>Query: &quot;Which car was named after a breed of horse?&quot;
+Top K: 5
+Threshold: 10.0
+Temperature: 0.2
+</code></pre>
+<h3 id="example-query-2-complex-analysis">Example Query 2: Complex Analysis</h3>
+<pre><code>Query: &quot;Compare the engine specifications across different Model T variants&quot;
+Top K: 10
+Threshold: 15.0
+Temperature: 0.4
+</code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="no-module-named-faiss-error">&quot;No module named 'faiss'&quot; Error</h3>
+<ul>
+<li><strong>Cause</strong>: Cell 1A not run or failed to install.</li>
+<li><strong>Solution</strong>: Run Cell 1A, wait for completion, then run Cell 1B.</li>
+</ul>
+<h3 id="gemini-api-key-not-found-error">&quot;GEMINI_API_KEY not found&quot; Error</h3>
+<ul>
+<li><strong>Cause</strong>: API key not set in Colab Secrets.</li>
+<li><strong>Solution</strong>: Follow Step 3 in setup, ensure &quot;Notebook access&quot; is enabled.</li>
+</ul>
+<h3 id="could-not-load-faiss-index-error">&quot;Could not load FAISS index&quot; Error</h3>
+<ul>
+<li><strong>Cause</strong>: Cell 4 hasn't been run yet or index path is incorrect.</li>
+<li><strong>Solution</strong>: Run Cell 4 first to create the index.</li>
+</ul>
+<h3 id="no-chunks-met-the-similarity-threshold-warning">&quot;No chunks met the similarity threshold&quot; Warning</h3>
+<ul>
+<li><strong>Cause</strong>: Threshold too strict for the query.</li>
+<li><strong>Solution</strong>: Increase the similarity threshold slider or try a different query.</li>
+</ul>
+<h3 id="empty-response-from-gemini">Empty Response from Gemini</h3>
+<ul>
+<li><strong>Cause</strong>: Safety filters triggered or context too large.</li>
+<li><strong>Solution</strong>: Reduce Top K chunks or rephrase query.</li>
+</ul>
+<h2 id="main-components">main Components</h2>
+<ul>
+<li><a href="https://www.llamaindex.ai/" target="_blank" rel="noopener">LlamaIndex</a> for document processing</li>
+<li><a href="https://github.com/facebookresearch/faiss" target="_blank" rel="noopener">FAISS</a> by Facebook AI Research</li>
+<li><a href="https://www.sbert.net/" target="_blank" rel="noopener">Sentence Transformers</a> by UKP Lab</li>
+<li><a href="https://deepmind.google/technologies/gemini/" target="_blank" rel="noopener">Google Gemini</a> API</li>
+</ul>
+<p><strong>Note</strong>: The RAG pipeline was Tested On Google Colab (Python 3.10+).</p>
+<hr>
+<p>Thank you Keith Schengili-Roberts for providing the [Model T Manual transformation to DITA] (https://github.com/DITAWriter/Model_T_Manual_AI_DITA_Conversion/).</p>
+
+<hr>
+<p>Tagged with:</p>
+<ul>
+  <li><a href="/tags/rag/">RAG</a></li>
+  <li><a href="/tags/gemini/">Gemini</a></li>
+  <li><a href="/tags/colab/">Colab</a></li>
+  <li><a href="/tags/ui/">UI</a></li>
+</ul>
+<p>More posts:</p>
+<ul><li>Previous: <a href="/posts/colab-drive-rag/">Gemini RAG Pipeline (Basic)</a></li>
+</ul>
+
+
+</heading-anchors>
+</main>
+<footer>
+
+<p>
+    <em>Built with
+        <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+    </em>
+</p>
+</footer>
+<!-- This page `/posts/colab-gdrive-rag-ui/` was built on 2025-11-18T18:20:58.596Z -->
+<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+

@@ -82,7 +82,12 @@
 	</url>
 	
 	<url>
-		<loc>https://shealy2020.github.io/feed/feed.xml</loc>
+		<loc>https://shealy2020.github.io/posts/colab-gdrive-rag-ui/</loc>
 		<lastmod>2025-11-13</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://shealy2020.github.io/feed/feed.xml</loc>
+		<lastmod>2025-11-18</lastmod>
 	</url>
 </urlset>

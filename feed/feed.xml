@@ -11,14 +11,312 @@
     <name>Sean Healy</name>
   </author>
   <entry>
-    <title>Gemini RAG Pipeline</title>
+    <title>Gemini RAG Pipeline (Improved)</title>
+    <link href="https://shealy2020.github.io/posts/colab-gdrive-rag-ui/" />
+    <updated>2025-11-13T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/colab-gdrive-rag-ui/</id>
+    <content type="html">&lt;p&gt;For your own use, you&#39;ll find my Colab Notebook cells, which are written in Python &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on GitHub&lt;/a&gt;, as well as test source.&lt;/p&gt;
+&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
+&lt;p&gt;While this script is similar to &lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/posts/colab-drive-rag&quot;&gt;Gemini RAG Pipeline (Basic)&lt;/a&gt;, I improved this pipeline by adding these features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Structure-Aware Document Processing&lt;/strong&gt;: Supports DITA maps, Markdown, HTML, and preserves document hierarchy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FAISS Vector Search&lt;/strong&gt;: Fast similarity search using Facebook&#39;s FAISS library.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;multi-qa-distilbert-cos-v1&lt;/strong&gt;: A more robust sentence transformer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interactive UI&lt;/strong&gt;: Jupyter widgets for easy query testing with these retrieval parameters:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Top-K&lt;/strong&gt;: A sampling method that limits the model’s next-token choices to the K most likely candidates.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Similarity Threshold&lt;/strong&gt;: A minimum score that determines how similar two vector embeddings must be for a match to be considered relevant.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temperature&lt;/strong&gt;: A setting that controls randomness in a model’s output, where higher values produce more varied and creative responses.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Maximum Tokens&lt;/strong&gt;: The upper limit on how many tokens a model can generate in a single response.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Google account with access to Google Colab&lt;/li&gt;
+&lt;li&gt;Google &lt;a href=&quot;https://aistudio.google.com/app/apikey&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Gemini API key&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Source documents stored in Google Drive (DITA, Markdown, or HTML format)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;installation-and-setup&quot;&gt;Installation &amp;amp; Setup&lt;/h2&gt;
+&lt;h3 id=&quot;step-1-clone-or-download-the-repository&quot;&gt;Step 1: Clone or Download the Repository&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Option A: Clone via Git&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;git&lt;/span&gt; clone https://github.com/shealy2020/colab-gdrive-rag-ui-1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Option B: Download ZIP&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Click the green &amp;quot;Code&amp;quot; button on the GitHub repository page.&lt;/li&gt;
+&lt;li&gt;Select &amp;quot;Download ZIP&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Extract the ZIP file to your local machine.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;step-2-upload-to-google-colab&quot;&gt;Step 2: Upload to Google Colab&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;File&lt;/strong&gt; → &lt;strong&gt;Upload notebook&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select the &lt;code&gt;colab-gdrive-rag-ui-1.py&lt;/code&gt; file from the repository.&lt;/li&gt;
+&lt;li&gt;Alternatively, open a new notebook and copy-paste each cell from the script.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;step-3-configure-your-gemini-api-key&quot;&gt;Step 3: Configure Your Gemini API Key&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;In Google Colab, click the &lt;strong&gt;key icon&lt;/strong&gt; in the left sidebar (Secrets).&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Add new secret&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Set the name as: &lt;code&gt;GEMINI_API_KEY&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Paste your Gemini API key as the value.&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;Notebook access&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;step-4-prepare-your-documents&quot;&gt;Step 4: Prepare Your Documents&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create a folder structure in your Google Drive similar to this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;MyDrive/
+└── gemini-source-index/
+    ├── rag_docs_structured/          # Place your documents here
+    │   └── Model_T_DITA/              # Example DITA folder
+    │       ├── *.ditamap files
+    │       └── *.dita files
+    └── rag_index_gemini_faiss/        # Index will be saved here (auto-created)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update the paths in &lt;strong&gt;Cell 2&lt;/strong&gt; if you use different folder names:&lt;/p&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;DOCS_DIR &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/content/drive/MyDrive/gemini-source-index/rag_docs_structured&#39;&lt;/span&gt;
+FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/content/drive/MyDrive/gemini-source-index/rag_index_gemini_faiss&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;step-5-run-notebook&quot;&gt;Step 5: Run Notebook&lt;/h3&gt;
+&lt;p&gt;Execute cells in order:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-1a&quot;&gt;Cell 1A&lt;/a&gt;: Installs dependencies.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-1b&quot;&gt;Cell 1B&lt;/a&gt;: Imports libraries and validate API key.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-2&quot;&gt;Cell 2&lt;/a&gt;: Mounts Google Drive and configures paths.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-3&quot;&gt;Cell 3&lt;/a&gt;: LlamaIndex structure-aware document loading and chunking.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-4&quot;&gt;Cell 4&lt;/a&gt;: Generates embeddings and builds FAISS index.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-5&quot;&gt;Cell 5&lt;/a&gt;: Launches interactive query interface.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;cell-1a&quot;&gt;Cell 1A&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Installs all required Python packages before importing them.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it does&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Installs FAISS (Facebook AI Similarity Search) for vector indexing.&lt;/li&gt;
+&lt;li&gt;Installs Sentence Transformers for text embeddings.&lt;/li&gt;
+&lt;li&gt;Installs Google Generative AI SDK (Gemini API client).&lt;/li&gt;
+&lt;li&gt;Installs LlamaIndex for document processing.&lt;/li&gt;
+&lt;li&gt;Installs supporting libraries (numpy, lxml, ipywidgets).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Must run first before any imports in Cell 1B.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;cell-1b&quot;&gt;Cell 1B&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Imports all installed packages and validates your Gemini API key.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it does&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Imports core libraries (FAISS, transformers, Gemini client).&lt;/li&gt;
+&lt;li&gt;Retrieves your &lt;code&gt;GEMINI_API_KEY&lt;/code&gt; from Colab Secrets.&lt;/li&gt;
+&lt;li&gt;Validates the API key is accessible.&lt;/li&gt;
+&lt;li&gt;Sets up the environment for subsequent cells.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;cell-2&quot;&gt;Cell 2&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Connects to Google Drive and creates source and indexing directories or verifies that these directories exist.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it does&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mounts your Google Drive to the Colab runtime.&lt;/li&gt;
+&lt;li&gt;Defines paths:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DOCS_DIR&lt;/code&gt;: Where your source documents are stored.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FAISS_INDEX_PATH&lt;/code&gt;: Where the vector index will be saved.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Creates directories if they don&#39;t exist.&lt;/li&gt;
+&lt;li&gt;Validates the file structure.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;cell-3&quot;&gt;Cell 3&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Loads your documents, parses DITA map structure, and splits content into chunks.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it does&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;DITA Map Parsing&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Recursively parses &lt;code&gt;.ditamap&lt;/code&gt; files to extract document hierarchy.&lt;/li&gt;
+&lt;li&gt;Builds a path map (e.g., &amp;quot;Manual &amp;gt; Chapter 1 &amp;gt; Topic Name&amp;quot;).&lt;/li&gt;
+&lt;li&gt;Preserves structural context for better retrieval.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Document Loading&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scans for &lt;code&gt;.md&lt;/code&gt;, &lt;code&gt;.dita&lt;/code&gt;, and &lt;code&gt;.html&lt;/code&gt; files.&lt;/li&gt;
+&lt;li&gt;Recursively searches subdirectories.&lt;/li&gt;
+&lt;li&gt;Loads full document content.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Metadata Enhancement&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds DITA map paths to document metadata.&lt;/li&gt;
+&lt;li&gt;Includes file paths and filenames for citation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Chunking&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Splits documents into 128-token chunks with 20-token overlap.&lt;/li&gt;
+&lt;li&gt;Creates &lt;code&gt;TextNode&lt;/code&gt; objects with preserved metadata.&lt;/li&gt;
+&lt;li&gt;Generates final chunk list for embedding.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;cell-4&quot;&gt;Cell 4&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Converts text chunks into vector embeddings and builds a searchable FAISS index.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it does&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Embedding Model Loading&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Loads &lt;code&gt;multi-qa-distilbert-cos-v1&lt;/code&gt; transformer model.&lt;/li&gt;
+&lt;li&gt;Optimized for question-answering tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Vector Generation&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Embeds all chunk texts into 768-dimensional vectors.&lt;/li&gt;
+&lt;li&gt;Uses float32 format for FAISS compatibility.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;FAISS Index Creation&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Builds an L2 (Euclidean distance) index.&lt;/li&gt;
+&lt;li&gt;Adds all vectors to the index.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Persistence&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Saves FAISS index (&lt;code&gt;my_faiss_index.bin&lt;/code&gt;) to Google Drive.&lt;/li&gt;
+&lt;li&gt;Saves chunk metadata (&lt;code&gt;chunk_data.pkl&lt;/code&gt;) using pickle.&lt;/li&gt;
+&lt;li&gt;Preserves the link between vectors and original text.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: This cell only needs to run once. After the index is saved, you can skip to Cell 5 in future sessions.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;cell-5&quot;&gt;Cell 5&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Provides an interactive interface for querying documents.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What it does&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Component Loading&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Loads the saved FAISS index from Google Drive.&lt;/li&gt;
+&lt;li&gt;Loads chunk metadata from pickle file.&lt;/li&gt;
+&lt;li&gt;Initializes the embedding model and Gemini client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Retrieval Function&lt;/strong&gt; (&lt;code&gt;retrieve_context&lt;/code&gt;):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Embeds user queries into vectors.&lt;/li&gt;
+&lt;li&gt;Searches FAISS index for similar chunks.&lt;/li&gt;
+&lt;li&gt;Filters results by similarity threshold.&lt;/li&gt;
+&lt;li&gt;Formats context with metadata for LLM.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Interactive UI&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Query Input&lt;/strong&gt;: Text area for queries&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Top K Chunks&lt;/strong&gt;: Controls number of retrieved chunks (1-20)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Similarity Threshold&lt;/strong&gt;: Filters for relevance (0-50, lower = stricter)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temperature&lt;/strong&gt;: Controls response creativity (0-1, lower = focused, higher = creative)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Max Tokens&lt;/strong&gt;: Limits response length (64-4096)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;RAG Process&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Retrieves relevant context from your documents.&lt;/li&gt;
+&lt;li&gt;Constructs a grounded prompt with citations.&lt;/li&gt;
+&lt;li&gt;Sends to Gemini API for generation.&lt;/li&gt;
+&lt;li&gt;Displays response with source provenance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;configuration-options&quot;&gt;Configuration Options&lt;/h2&gt;
+&lt;h3 id=&quot;document-processing-cell-3&quot;&gt;Document Processing (Cell 3)&lt;/h3&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;DITA_SUBFOLDER &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;Model_T_DITA&#39;&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;# Change to your DITA folder name&lt;/span&gt;
+chunk_size&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;128&lt;/span&gt;                     &lt;span class=&quot;token comment&quot;&gt;# Tokens per chunk&lt;/span&gt;
+chunk_overlap&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;20&lt;/span&gt;                   &lt;span class=&quot;token comment&quot;&gt;# Overlap between chunks&lt;/span&gt;
+target_extensions &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;.md&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;.dita&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;.html&#39;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;# Supported file types&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;To Do&lt;/strong&gt;: The source directory is hardcoded, so the value of DITA_SUBFOLDER needs to be generated dynamically.&lt;/p&gt;
+&lt;h3 id=&quot;embedding-model-cell-4&quot;&gt;Embedding Model (Cell 4)&lt;/h3&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;model_name &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;sentence-transformers/multi-qa-distilbert-cos-v1&quot;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# Alternatives:&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# - &quot;sentence-transformers/all-MiniLM-L6-v2&quot; (faster, smaller)&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;# - &quot;sentence-transformers/all-mpnet-base-v2&quot; (more accurate)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;gemini-model-cell-5&quot;&gt;Gemini Model (Cell 5)&lt;/h3&gt;
+&lt;pre class=&quot;language-python&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;GEMINI_MODEL &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;gemini-2.5-flash&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;usage-examples&quot;&gt;Usage Examples&lt;/h2&gt;
+&lt;h3 id=&quot;example-query-1-factual-question&quot;&gt;Example Query 1: Factual Question&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;Query: &amp;quot;Which car was named after a breed of horse?&amp;quot;
+Top K: 5
+Threshold: 10.0
+Temperature: 0.2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;example-query-2-complex-analysis&quot;&gt;Example Query 2: Complex Analysis&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;Query: &amp;quot;Compare the engine specifications across different Model T variants&amp;quot;
+Top K: 10
+Threshold: 15.0
+Temperature: 0.4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;/h2&gt;
+&lt;h3 id=&quot;no-module-named-faiss-error&quot;&gt;&amp;quot;No module named &#39;faiss&#39;&amp;quot; Error&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cause&lt;/strong&gt;: Cell 1A not run or failed to install.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Run Cell 1A, wait for completion, then run Cell 1B.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;gemini-api-key-not-found-error&quot;&gt;&amp;quot;GEMINI_API_KEY not found&amp;quot; Error&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cause&lt;/strong&gt;: API key not set in Colab Secrets.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Follow Step 3 in setup, ensure &amp;quot;Notebook access&amp;quot; is enabled.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;could-not-load-faiss-index-error&quot;&gt;&amp;quot;Could not load FAISS index&amp;quot; Error&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cause&lt;/strong&gt;: Cell 4 hasn&#39;t been run yet or index path is incorrect.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Run Cell 4 first to create the index.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;no-chunks-met-the-similarity-threshold-warning&quot;&gt;&amp;quot;No chunks met the similarity threshold&amp;quot; Warning&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cause&lt;/strong&gt;: Threshold too strict for the query.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Increase the similarity threshold slider or try a different query.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;empty-response-from-gemini&quot;&gt;Empty Response from Gemini&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cause&lt;/strong&gt;: Safety filters triggered or context too large.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Solution&lt;/strong&gt;: Reduce Top K chunks or rephrase query.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;main-components&quot;&gt;main Components&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.llamaindex.ai/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;LlamaIndex&lt;/a&gt; for document processing&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/facebookresearch/faiss&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;FAISS&lt;/a&gt; by Facebook AI Research&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.sbert.net/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Sentence Transformers&lt;/a&gt; by UKP Lab&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://deepmind.google/technologies/gemini/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Gemini&lt;/a&gt; API&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The RAG pipeline was Tested On Google Colab (Python 3.10+).&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Thank you Keith Schengili-Roberts for providing the [Model T Manual transformation to DITA] (https://github.com/DITAWriter/Model_T_Manual_AI_DITA_Conversion/).&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Gemini RAG Pipeline (Basic)</title>
     <link href="https://shealy2020.github.io/posts/colab-drive-rag/" />
     <updated>2025-11-13T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/colab-drive-rag/</id>
     <content type="html">&lt;h1 id=&quot;gemini-rag-pipeline&quot;&gt;Gemini RAG Pipeline&lt;/h1&gt;
 &lt;p&gt;This repository contains a &lt;em&gt;simple&lt;/em&gt;, five-cell &lt;a href=&quot;https://research.google.com/colaboratory/faq.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab notebook&lt;/a&gt; demonstrating a &lt;strong&gt;Retrieval-Augmented Generation (RAG)&lt;/strong&gt; pipeline built from scratch (without frameworks like LangChain). This prototype uses free (no subscription) and open source tools and core Python libraries (&lt;code&gt;faiss&lt;/code&gt;, &lt;code&gt;sentence-transformers&lt;/code&gt;, &lt;code&gt;google-genai&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;The pipeline processes documents stored in Google Drive and uses the &lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt; model returning responses from queries.&lt;/p&gt;
-&lt;p&gt;For your own use, you&#39;ll find my &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Colab Notebook cells on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For your own use, you&#39;ll find my &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Colab Notebook cells on GitHub&lt;/a&gt;, written in Python, as well as test source.&lt;/p&gt;
 &lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -104,8 +402,9 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;4-run-cells&quot;&gt;4.  Run Cells&lt;/h3&gt;
-&lt;p&gt;Run each cell in notebook sequentially. Be sure to customize the query in Cell 5 to run against the subject matter of the uploaded source files.&lt;/p&gt;
-&lt;h2 id=&quot;python-cells-for-notebook-entries&quot;&gt;Python Cells for Notebook Entries&lt;/h2&gt;
+&lt;p&gt;Run each &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1/tree/main/notebook-cells&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;cell&lt;/a&gt; in your notebook sequentially. Alternately, concatenate the Python code into a single notebook cell, then run it. (I prefer to run each functional block of code separately for troubleshooting purposes.)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt;: Be sure to modify the query in &lt;em&gt;Cell 5&lt;/em&gt; to run against the content in the uploaded source.&lt;/p&gt;
+&lt;h2 id=&quot;python-cells-for-notebook&quot;&gt;Python Cells for Notebook&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-1&quot;&gt;Setup&lt;/a&gt;: Installs dependencies and loads the Gemini API Key.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-drive-rag/#cell-2&quot;&gt;Environment&lt;/a&gt;: Mounts Google Drive and defines necessary file paths.&lt;/li&gt;

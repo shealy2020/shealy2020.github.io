@@ -3,21 +3,24 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Gemini RAG Pipeline</title>
+        <title>Gemini RAG Pipeline (Basic)</title>
         <meta name="description" content="Prototypes use of Colab notebook to run RAG pipeline on Google resources for free.">
         <meta name="generator" content="Eleventy v3.1.2">
         
         
-        <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="/dist/tm_1tXeKDB.css">
         
-        <script src="../assets/js/nav.js"></script>
+        <script src="/assets/js/nav.js"></script>
     </head>
     <body>
         <a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
         <header class="site-header">
             <div class="header-nav-container">
                 <div class="logo-container">
+
+                    <!-- <img src="/images/merge-logo-1.svg" alt="Site Logo" class="site-logo"> -->
+
                     <a href="/">
                         
                             <img src="..\..\images\merge-logo-1.svg" alt="Site Logo" class="site-logo">
@@ -52,25 +55,28 @@
                                                 </li></ul></li></ul>
                 </nav>
             </div>
-            <h1 id="gemini-rag-pipeline">
-                    Gemini RAG Pipeline
+            <h1 id="gemini-rag-pipeline-basic">
+                    Gemini RAG Pipeline (Basic)
             </h1>
             <p>
                     Prototypes use of Colab notebook to run RAG pipeline on Google resources for free.
             </p>
-        </header>
-        <main id="main">
-            <heading-anchors>
-                
+        </header></body>
+    
+</html>
+
+<main id="main">
+<heading-anchors>
+    
 
 
 
 <p>Posted on: <time datetime="2025-11-13">13 November 2025</time></p>
 
-<h1 id="gemini-rag-pipeline-2">Gemini RAG Pipeline</h1>
+<h1 id="gemini-rag-pipeline">Gemini RAG Pipeline</h1>
 <p>This repository contains a <em>simple</em>, five-cell <a href="https://research.google.com/colaboratory/faq.html" target="_blank" rel="noopener">Google Colab notebook</a> demonstrating a <strong>Retrieval-Augmented Generation (RAG)</strong> pipeline built from scratch (without frameworks like LangChain). This prototype uses free (no subscription) and open source tools and core Python libraries (<code>faiss</code>, <code>sentence-transformers</code>, <code>google-genai</code>).</p>
 <p>The pipeline processes documents stored in Google Drive and uses the <strong>Gemini 2.5 Flash</strong> model returning responses from queries.</p>
-<p>For your own use, you'll find my <a href="https://github.com/shealy2020/colab-gdrive-rag-1" target="_blank" rel="noopener">Colab Notebook cells on GitHub</a>.</p>
+<p>For your own use, you'll find my <a href="https://github.com/shealy2020/colab-gdrive-rag-1" target="_blank" rel="noopener">Colab Notebook cells on GitHub</a>, written in Python, as well as test source.</p>
 <h2 id="rag-pipeline-components">RAG Pipeline Components</h2>
 <table>
 <thead>
@@ -156,8 +162,9 @@
 </li>
 </ol>
 <h3 id="4-run-cells">4.  Run Cells</h3>
-<p>Run each cell in notebook sequentially. Be sure to customize the query in Cell 5 to run against the subject matter of the uploaded source files.</p>
-<h2 id="python-cells-for-notebook-entries">Python Cells for Notebook Entries</h2>
+<p>Run each <a href="https://github.com/shealy2020/colab-gdrive-rag-1/tree/main/notebook-cells" target="_blank" rel="noopener">cell</a> in your notebook sequentially. Alternately, concatenate the Python code into a single notebook cell, then run it. (I prefer to run each functional block of code separately for troubleshooting purposes.)</p>
+<p><strong>Important</strong>: Be sure to modify the query in <em>Cell 5</em> to run against the content in the uploaded source.</p>
+<h2 id="python-cells-for-notebook">Python Cells for Notebook</h2>
 <ol>
 <li><a href="../../../posts/colab-drive-rag/#cell-1">Setup</a>: Installs dependencies and loads the Gemini API Key.</li>
 <li><a href="../../../posts/colab-drive-rag/#cell-2">Environment</a>: Mounts Google Drive and defines necessary file paths.</li>
@@ -483,21 +490,20 @@ response <span class="token operator">=</span> client<span class="token punctuat
   <li><a href="/tags/colab/">Colab</a></li>
 </ul>
 <p>More posts:</p>
-<ul><li>Previous: <a href="/posts/rag-terms-glossary/">RAG Pipeline Terms</a></li>
+<ul><li>Next: <a href="/posts/colab-gdrive-rag-ui/">Gemini RAG Pipeline (Improved)</a></li><li>Previous: <a href="/posts/rag-terms-glossary/">RAG Pipeline Terms</a></li>
 </ul>
 
 
-            </heading-anchors>
-        </main>
-        <footer>
-            
-            <p>
-                <em>Built with
-                    <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
-                </em>
-            </p>
-        </footer>
-        <!-- This page `/posts/colab-drive-rag/` was built on 2025-11-13T23:35:03.917Z -->
-        <script type="module" src="/dist/xbxy_EL6cU.js"></script>
-    </body>
-</html>
+</heading-anchors>
+</main>
+<footer>
+
+<p>
+    <em>Built with
+        <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
+    </em>
+</p>
+</footer>
+<!-- This page `/posts/colab-drive-rag/` was built on 2025-11-18T18:20:58.595Z -->
+<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+
