@@ -125,10 +125,14 @@
 FAISS_INDEX_PATH <span class="token operator">=</span> <span class="token string">'/content/drive/MyDrive/[your custom directory path]'</span></code></pre>
 </li>
 </ol>
-<h3 id="4-upload-source-documents-dita-md-html-to-my-drive-gemini-source-index-rag-docs-structured">4. Upload source documents (.dita, .md, .html) to <code>My Drive/gemini-source-index/rag_docs_structured</code>.</h3>
+<h3 id="4-upload-source-documents">4. Upload source documents</h3>
+<p>Upload source files (i.e., .dita, .md, .html) to <code>My Drive/gemini-source-index/rag_docs_structured</code>.</p>
 <h3 id="5-run-cells">5. Run Cells</h3>
 <p>Run each <a href="https://github.com/shealy2020/colab-gdrive-rag-ui-1/blob/main/colab-gdrive-rag-ui-1.py" target="_blank" rel="noopener">cell</a> in your notebook sequentially. Alternately, run the entire Python script as a single cell. (I prefer to run each functional block of code separately for troubleshooting purposes.)</p>
-<p><strong>Important</strong>: <em>Prior to running the script, uncomment lines 5 and 6 of Cell 1A if your notebook does not already have these Python libraries loaded.</em></p>
+<p><strong>Important</strong>: <em>Prior to running the script, uncomment lines 5 and 6 of Cell 1A if your notebook does not already have these Python libraries installed.</em></p>
+<pre><code># !pip install -q faiss-cpu sentence-transformers google-genai numpy llama-index lxml ipywidgets
+# print(&quot;All dependencies installed successfully. Please proceed to Cell 1B.&quot;)
+</code></pre>
 <h3 id="step-5-run-notebook">Step 5: Run notebook.</h3>
 <p>Execute cells in order:</p>
 <ol>
@@ -378,6 +382,6 @@ Temperature: 0.4
     </em>
 </p>
 </footer>
-<!-- This page `/posts/colab-gdrive-rag-ui/` was built on 2025-11-18T19:45:28.586Z -->
+<!-- This page `/posts/colab-gdrive-rag-ui/` was built on 2025-11-18T19:56:35.461Z -->
 <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 
