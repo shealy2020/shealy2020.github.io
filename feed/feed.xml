@@ -5,7 +5,7 @@
   <subtitle>Navigating the intersections of technical communication and AI</subtitle>
   <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
   <link href="https://shealy2020.github.io/" />
-  <updated>2025-11-13T00:00:00Z</updated>
+  <updated>2025-11-18T00:00:00Z</updated>
   <id>https://shealy2020.github.io/</id>
   <author>
     <name>Sean Healy</name>
@@ -13,7 +13,7 @@
   <entry>
     <title>Gemini RAG Pipeline (Improved)</title>
     <link href="https://shealy2020.github.io/posts/colab-gdrive-rag-ui/" />
-    <updated>2025-11-13T00:00:00Z</updated>
+    <updated>2025-11-18T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/colab-gdrive-rag-ui/</id>
     <content type="html">&lt;p&gt;For your own use, you&#39;ll find my Colab Notebook cells, which are written in Python &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on GitHub&lt;/a&gt;, as well as test source.&lt;/p&gt;
 &lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
@@ -297,7 +297,6 @@ Temperature: 0.4
 &lt;li&gt;&lt;a href=&quot;https://www.sbert.net/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Sentence Transformers&lt;/a&gt; by UKP Lab&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://deepmind.google/technologies/gemini/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Gemini&lt;/a&gt; API&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The RAG pipeline was Tested On Google Colab (Python 3.10+).&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Thank you Keith Schengili-Roberts for providing the &lt;a href=&quot;https://github.com/DITAWriter/Model_T_Manual_AI_DITA_Conversion/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Model T Manual transformation to DITA&lt;/a&gt;.&lt;/p&gt;
 </content>
