@@ -90,7 +90,7 @@
 </ol>
 <p>If you want to look under the hood, you'll find this package on <a href="https://github.com/shealy2020/single-md-txtai-report" target="_blank" rel="noopener">GitHub</a>.</p>
 <h3 id="postmortem">Postmortem</h3>
-<p>I set out to use the hierarchical structure of the Markdown file as added context to vector scores, which was proved to be too ambitious for this first pass. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured authoring XML format with a lot of tagging and other metadata that could be contributing vector dimensions.</p>
+<p>I set out to use the hierarchical structure of the Markdown file as added context to vector scores, which was proved to be too ambitious for this first pass. Instead, I fell back to just comparing paragraph content under each Markdown heading. In retrospect, I might as well have done similarity searches across text in a *.txt file. Ultimately, my goal is to leverage what I've learned about comparing vectorized MD chunks and then apply it to <a href="https://en.wikipedia.org/wiki/Darwin_Information_Typing_Architecture" target="_blank" rel="noopener">DITA</a>, which is a highly structured XML format with its own metadata that could contribute to better query results.</p>
 
 <hr>
 <p>Tagged with:</p>
@@ -113,6 +113,6 @@
     </em>
 </p>
 </footer>
-<!-- This page `/posts/finding-similar-content/` was built on 2025-11-19T18:30:29.825Z -->
+<!-- This page `/posts/finding-similar-content/` was built on 2025-11-19T23:58:05.200Z -->
 <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 
