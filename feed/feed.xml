@@ -15,7 +15,7 @@
     <link href="https://shealy2020.github.io/posts/colab-gdrive-rag-ui/" />
     <updated>2025-11-18T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/colab-gdrive-rag-ui/</id>
-    <content type="html">&lt;p&gt;For your own use, you&#39;ll find my Colab Notebook cells, which are written in Python &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on GitHub&lt;/a&gt;, as well as test source.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Google Colab is a free, browser-based coding environment and a real asset for those, like me, who have scarce GPU resources. I use Colab and its Jupyter Notebook platform to run AI pipelines. You&#39;ll find my Colab Notebook cells, which are written in Python &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on GitHub&lt;/a&gt;, plus some test documents.&lt;/p&gt;
 &lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
 &lt;p&gt;While this script is similar to &lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/posts/colab-drive-rag&quot;&gt;Gemini RAG Pipeline (Basic)&lt;/a&gt;, I improved this pipeline by adding these features:&lt;/p&gt;
 &lt;ul&gt;
@@ -37,15 +37,16 @@
 &lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
 &lt;p&gt;Follow these steps to set up and run your notebook.&lt;/p&gt;
 &lt;h3 id=&quot;1-create-your-google-colab-notebook&quot;&gt;1. Create Your Google Colab Notebook&lt;/h3&gt;
-&lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://colab.research.google.com/&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
+&lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
 &lt;h3 id=&quot;2-set-up-api-key&quot;&gt;2. Set Up API Key&lt;/h3&gt;
-&lt;p&gt;The code requires a &lt;strong&gt;Gemini API Key&lt;/strong&gt; to communicate with the model. Store this key securely in Colab&#39;s &lt;strong&gt;Secrets&lt;/strong&gt; tool.&lt;/p&gt;
+&lt;p&gt;The code requires a &lt;strong&gt;Gemini API Key&lt;/strong&gt; to communicate with the model. Store this key in Colab&#39;s &lt;strong&gt;Secrets&lt;/strong&gt; tool.&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Get your key from Google AI Studio: &lt;a href=&quot;https://ai.google.dev/gemini-api/docs/api-key&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://ai.google.dev/gemini-api/docs/api-key&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;In the Colab Notebook, look for the &lt;strong&gt;Secrets&lt;/strong&gt; tab in the left sidebar.&lt;/li&gt;
+&lt;li&gt;Create your key in &lt;a href=&quot;https://ai.google.dev/gemini-api/docs/api-key&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google AI Studio&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Copy your key for use later.&lt;/li&gt;
+&lt;li&gt;In your Colab notebook, look for the &lt;strong&gt;Secrets&lt;/strong&gt; tab in the left sidebar.&lt;/li&gt;
 &lt;li&gt;Click the &lt;strong&gt;&lt;code&gt;+&lt;/code&gt;&lt;/strong&gt; icon to add a new secret.&lt;/li&gt;
-&lt;li&gt;Set the &lt;strong&gt;Name&lt;/strong&gt; exactly to: &lt;code&gt;GEMINI_API_KEY&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Set the &lt;strong&gt;Value&lt;/strong&gt; to the key you copied in Step 1.&lt;/li&gt;
+&lt;li&gt;Set the &lt;strong&gt;Name&lt;/strong&gt; to: &lt;code&gt;GEMINI_API_KEY&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Set the &lt;strong&gt;Value&lt;/strong&gt; to the key you copied.&lt;/li&gt;
 &lt;li&gt;Ensure the &amp;quot;Notebook access&amp;quot; toggle is &lt;strong&gt;ON&lt;/strong&gt; for this secret.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;3-prepare-source-folders-and-documents&quot;&gt;3. Prepare Source Folders and Documents&lt;/h3&gt;
