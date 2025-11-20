@@ -17,7 +17,7 @@
     <id>https://shealy2020.github.io/posts/colab-gdrive-rag-ui/</id>
     <content type="html">&lt;p&gt;Google Colab is a free, browser-based coding environment and a real asset for those, like me, who have scarce GPU resources. I use Colab and its Jupyter Notebook platform to run AI pipelines. You&#39;ll find my Colab Notebook cells, which are written in Python &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;on GitHub&lt;/a&gt;, plus some test documents.&lt;/p&gt;
 &lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
-&lt;p&gt;While this script is similar to &lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/posts/colab-drive-rag&quot;&gt;Gemini RAG Pipeline (Basic)&lt;/a&gt;, I improved this pipeline by adding these features:&lt;/p&gt;
+&lt;p&gt;While this script is similar to &lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/posts/colab-drive-rag&quot;&gt;Gemini RAG Pipeline (Basic)&lt;/a&gt;, I improved the original pipeline by adding these features:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Structure-Aware Document Processing&lt;/strong&gt;: Supports DITA maps, Markdown, HTML, and preserves document hierarchy.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;FAISS Vector Search&lt;/strong&gt;: Fast similarity search using Facebook&#39;s FAISS library.&lt;/li&gt;
