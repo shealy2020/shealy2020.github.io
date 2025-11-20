@@ -36,6 +36,7 @@
 &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-ui-1/tree/main/rag_docs_structured&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub repo&lt;/a&gt; has sample documents that you can upload to your Google Drive.&lt;/p&gt;
 &lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
 &lt;p&gt;Follow these steps to set up and run your notebook.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: As of November 13, 2025, Google provides a &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Google.colab&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;VS Code extension&lt;/a&gt; that allows you to run Colab from within a local instance of VS Code. As VS Code is my IDE of choice, I took the extension for a test spin with high hopes. I found it to be buggy, so I&#39;ll still use the browser-based Colab platform for now, but I expect I&#39;ll be running my Colab notebook pipelines from VS Code when the extension matures.&lt;/p&gt;
 &lt;h3 id=&quot;1-create-your-google-colab-notebook&quot;&gt;1. Create Your Google Colab Notebook&lt;/h3&gt;
 &lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
 &lt;h3 id=&quot;2-set-up-api-key&quot;&gt;2. Set Up API Key&lt;/h3&gt;
@@ -363,6 +364,7 @@ Temperature: 0.4
 &lt;/table&gt;
 &lt;h2 id=&quot;getting-started&quot;&gt;Getting Started&lt;/h2&gt;
 &lt;p&gt;Follow these steps to set up and run your notebook.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: As of November 13, 2025, Google provides a &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Google.colab&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;VS Code extension&lt;/a&gt; that allows you to run Colab from within a local instance of VS Code. As VS Code is my IDE of choice, I took the extension for a test spin with high hopes. I found it to be buggy, so I&#39;ll still use the browser-based Colab platform for now, but I expect I&#39;ll be running my Colab notebook pipelines from VS Code when the extension matures.&lt;/p&gt;
 &lt;h3 id=&quot;1-create-your-google-colab-notebook&quot;&gt;1. Create Your Google Colab Notebook&lt;/h3&gt;
 &lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://colab.research.google.com/&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
 &lt;h3 id=&quot;2-set-up-api-key&quot;&gt;2. Set Up API Key&lt;/h3&gt;
