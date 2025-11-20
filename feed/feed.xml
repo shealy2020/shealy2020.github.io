@@ -224,11 +224,11 @@ FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Interactive UI&lt;/strong&gt;:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Query Input&lt;/strong&gt;: Text area for queries&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Top K Chunks&lt;/strong&gt;: Controls number of retrieved chunks (1-20)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Similarity Threshold&lt;/strong&gt;: Filters for relevance (0-50, lower = stricter)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Temperature&lt;/strong&gt;: Controls response creativity (0-1, lower = focused, higher = creative)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Max Tokens&lt;/strong&gt;: Limits response length (64-4096)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Query Input&lt;/strong&gt;: Text area for queries.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Top K Chunks&lt;/strong&gt;: Controls number of retrieved chunks (1-20).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Similarity Threshold&lt;/strong&gt;: Filters for relevance (0-50, lower = stricter).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Temperature&lt;/strong&gt;: Controls response creativity (0-1, lower = focused, higher = creative).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Max Tokens&lt;/strong&gt;: Limits response length (64-4096).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
