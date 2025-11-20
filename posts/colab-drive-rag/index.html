@@ -222,7 +222,7 @@ FAISS_INDEX_FILE <span class="token operator">=</span> <span class="token string
     
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\nGoogle Drive mounted and environment paths set."</span><span class="token punctuation">)</span></code></pre>
 <h3 id="cell-3">Cell 3</h3>
-<p>These embeddings are then stored in a FAISS index, which is a highly efficient structure for quickly searching through millions of vectors, and the original text is saved separately for persistence.</p>
+<p>These embeddings are then stored in a FAISS index, which is a structure for quickly searching through millions of vectors. The original text is saved separately for persistence.</p>
 <pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 3: Manual Document Loading and Chunking</span>
 
 <span class="token keyword">import</span> os
@@ -316,7 +316,7 @@ raw_documents <span class="token operator">=</span> load_all_text_files<span cla
 <span class="token keyword">else</span><span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Warning: No chunks were created."</span><span class="token punctuation">)</span></code></pre>
 <h3 id="cell-4">Cell 4</h3>
-<p>User queries are converted into a vector and then used to search the FAISS index to retrieve the top 3 most relevant context chunks.</p>
+<p>User queries are converted into a vector and then used to search the FAISS index to retrieve the top <em>n</em> most relevant context chunks.</p>
 <pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 4: Embeddings and FAISS Indexing</span>
 
 <span class="token keyword">import</span> os
@@ -369,7 +369,7 @@ chunk_data_file <span class="token operator">=</span> os<span class="token punct
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Indexing and Persistence steps completed."</span><span class="token punctuation">)</span></code></pre>
 <h3 id="cell-5">Cell 5</h3>
-<p>Finally, this retrieved context is combined with the original question into a prompt that is sent to the Gemini 2.5 Flash model, which generates an answer based only on the provided source information.</p>
+<p>Finally, this retrieved context is combined with the original question into a prompt that is sent to the Gemini 2.5 Flash model, which generates an answer <em>based only on the provided source content</em> — not from any external source.</p>
 <pre class="language-python" tabindex="0"><code class="language-python"><span class="token comment"># Cell 5: Retrieval and Response Generation (NEW QUERY)</span>
 
 <span class="token keyword">import</span> os
@@ -504,6 +504,6 @@ response <span class="token operator">=</span> client<span class="token punctuat
     </em>
 </p>
 </footer>
-<!-- This page `/posts/colab-drive-rag/` was built on 2025-11-20T18:32:40.359Z -->
+<!-- This page `/posts/colab-drive-rag/` was built on 2025-11-20T18:40:25.381Z -->
 <script type="module" src="/dist/xbxy_EL6cU.js"></script>
 
