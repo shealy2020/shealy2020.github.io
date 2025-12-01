@@ -308,7 +308,7 @@ Temperature: 0.4
     <link href="https://shealy2020.github.io/posts/colab-drive-rag/" />
     <updated>2025-11-13T00:00:00Z</updated>
     <id>https://shealy2020.github.io/posts/colab-drive-rag/</id>
-    <content type="html">&lt;p&gt;This repository contains a &lt;em&gt;simple&lt;/em&gt;, five-cell &lt;a href=&quot;https://research.google.com/colaboratory/faq.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab notebook&lt;/a&gt; demonstrating a &lt;strong&gt;Retrieval-Augmented Generation (RAG)&lt;/strong&gt; pipeline built from scratch (without frameworks like LangChain). This prototype uses free (no subscription) and open source tools and core Python libraries (&lt;code&gt;faiss&lt;/code&gt;, &lt;code&gt;sentence-transformers&lt;/code&gt;, &lt;code&gt;google-genai&lt;/code&gt;).&lt;/p&gt;
+    <content type="html">&lt;p&gt;This repository contains a &lt;em&gt;simple&lt;/em&gt;, five-cell &lt;a href=&quot;https://research.google.com/colaboratory/faq.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Google Colab notebook&lt;/a&gt; demonstrating a &lt;strong&gt;Retrieval-Augmented Generation (RAG)&lt;/strong&gt; pipeline built from scratch (without frameworks like LangChain). This prototype uses free (no subscription) and open source tools and core Python libraries (i.e., &lt;code&gt;faiss&lt;/code&gt;, &lt;code&gt;sentence-transformers&lt;/code&gt;, &lt;code&gt;google-genai&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;The pipeline processes documents stored in Google Drive and uses the &lt;strong&gt;Gemini 2.5 Flash&lt;/strong&gt; model to return responses from queries.&lt;/p&gt;
 &lt;p&gt;For your own use, you&#39;ll find my &lt;a href=&quot;https://github.com/shealy2020/colab-gdrive-rag-1&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Colab Notebook cells on GitHub&lt;/a&gt;, written in Python, as well as test source.&lt;/p&gt;
 &lt;h2 id=&quot;rag-pipeline-components&quot;&gt;RAG Pipeline Components&lt;/h2&gt;
@@ -366,7 +366,7 @@ Temperature: 0.4
 &lt;p&gt;Follow these steps to set up and run your notebook.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: As of November 13, 2025, Google provides a &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Google.colab&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;VS Code extension&lt;/a&gt; that allows you to run Colab from within a local instance of VS Code. As VS Code is my IDE of choice, I took the extension for a test spin with high hopes. I found it to be buggy, so I&#39;ll still use the browser-based Colab platform for now, but I expect I&#39;ll be running my Colab notebook pipelines from VS Code when the extension matures.&lt;/p&gt;
 &lt;h3 id=&quot;1-create-your-google-colab-notebook&quot;&gt;1. Create Your Google Colab Notebook&lt;/h3&gt;
-&lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://colab.research.google.com/&lt;/a&gt;, then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
+&lt;p&gt;Go to &lt;a href=&quot;https://colab.research.google.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://colab.research.google.com/&lt;/a&gt; then create a notebook via the &lt;strong&gt;File&lt;/strong&gt; menu.&lt;/p&gt;
 &lt;h3 id=&quot;2-set-up-api-key&quot;&gt;2. Set Up API Key&lt;/h3&gt;
 &lt;p&gt;The code requires a &lt;strong&gt;Gemini API Key&lt;/strong&gt; to communicate with the model. Store this key securely in Colab&#39;s &lt;strong&gt;Secrets&lt;/strong&gt; tool.&lt;/p&gt;
 &lt;ol&gt;
@@ -1253,7 +1253,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;data&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;region,sales,transactions North America,1200000,32000 Europe,900000,28000 Asia,1100000,30000&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
     &lt;span class=&quot;token property&quot;&gt;&quot;audience&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Retail operations managers looking for actionable insights to guide Q1 2025 planning.&quot;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The &lt;code&gt;instructions&lt;/code&gt; key/value tells the LLM what to do with the JSON content. It is included, automatically.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The &lt;code&gt;instructions&lt;/code&gt; key/value tells the LLM what to do with the JSON content. It is included, automatically.&lt;/p&gt;
 </content>
   </entry>
   <entry>
