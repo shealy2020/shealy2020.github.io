@@ -70,7 +70,7 @@
 <p>Posted on: <time datetime="2025-09-20">20 September 2025</time></p>
 
 <p>I use the free versions of LLMs like ChatGPT, Claude, and Gemini that impose limits on a per session basis. LLMs calculate these limits through some combination of request counts and <a href="/posts/prompt-efficiencies/#tokens">token use</a>.</p>
-<p>In an earlier post, I provided some general guidelines on how to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a> with the goal of conserving tokens. For this project, I take &quot;token conservation&quot; further by building a tool that helps to organize the initial LLM prompt, then it generates a JSON file as input for the LLM. The tool reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.</p>
+<p>In an earlier post, I provided some general guidelines on how to increase <a href="/posts/prompt-efficiencies/">prompt efficiencies</a> with the goal of conserving tokens. For this project, I take &quot;token conservation&quot; further by building a tool that helps to organize the initial LLM prompt. The tool generates a JSON file as input for the LLM. The goal here is to reduces the overall number of input tokens by streamlining the query into a clear set of prompt instructions.</p>
 <p>Initially, I used highly structured XML as the output container but thought better of it. Instead, I went with semi-structured JSON because its syntax uses fewer characters, thus fewer tokens. Also, this project gave me another opportunity to use <a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">vibe coding</a> as an aid in building this prompt tool, which I'll write about in a future post.</p>
 <p>For your own use, you'll find the <a href="https://github.com/shealy2020/llm-prompt-organizer" target="_blank" rel="noopener">LLM Prompt Organizer on GitHub</a>.</p>
 <h2 id="llm-session-limits">LLM Session Limits</h2>
@@ -154,7 +154,7 @@
     <span class="token property">"data"</span><span class="token operator">:</span> <span class="token string">"region,sales,transactions North America,1200000,32000 Europe,900000,28000 Asia,1100000,30000"</span><span class="token punctuation">,</span>
     <span class="token property">"audience"</span><span class="token operator">:</span> <span class="token string">"Retail operations managers looking for actionable insights to guide Q1 2025 planning."</span>
 <span class="token punctuation">}</span></code></pre>
-<p><strong>Note</strong>: The <code>instructions</code> key/value tells the LLM what to do with the JSON content. It is included, automatically.</p>
+<p><strong>Note</strong>: The <code>instructions</code> key/value tells the LLM what to do with the JSON content. It is included in the JSON out, automatically. If you'd like to revise the value, change line 502 of the <code>prompt-form-output json-1.html</code> file.</p>
 
 <hr>
 <p>More posts:</p>
@@ -168,4 +168,4 @@
     <em>Built with
         <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
     </em>
-</p></footer><!-- This page `/posts/llm-prompt-org/` was built on 2025-12-01T19:05:54.242Z --><script type="module" src="/dist/xbxy_EL6cU.js"></script>
+</p></footer><!-- This page `/posts/llm-prompt-org/` was built on 2025-12-02T19:49:23.619Z --><script type="module" src="/dist/xbxy_EL6cU.js"></script>
