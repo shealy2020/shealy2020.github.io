@@ -88,7 +88,7 @@ FAISS_INDEX_PATH &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt
 &lt;li&gt;&lt;a href=&quot;https://shealy2020.github.io/posts/colab-gdrive-rag-ui/#cell-5&quot;&gt;Cell 5&lt;/a&gt;: Launches interactive query interface.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3 id=&quot;step-6-enter-and-submit-your-query&quot;&gt;Step 6: Enter and submit your query.&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The LLM will only return response based on the source you provide.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: The LLM will only return responses based on the source &lt;em&gt;you&lt;/em&gt; provide and not from any external sources. This ensures that you control the &amp;quot;source of truth.&amp;quot;&lt;/p&gt;
 &lt;h2 id=&quot;cell-descriptions&quot;&gt;Cell Descriptions&lt;/h2&gt;
 &lt;h3 id=&quot;cell-1a&quot;&gt;Cell 1A&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Purpose&lt;/strong&gt;: Installs all required Python packages before importing them.&lt;/p&gt;
