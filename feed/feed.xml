@@ -5,11 +5,92 @@
   <subtitle>Navigating the intersections of technical communication and AI</subtitle>
   <link href="https://shealy2020.github.io/feed/feed.xml" rel="self" />
   <link href="https://shealy2020.github.io/" />
-  <updated>2025-11-18T00:00:00Z</updated>
+  <updated>2025-12-02T00:00:00Z</updated>
   <id>https://shealy2020.github.io/</id>
   <author>
     <name>Sean Healy</name>
   </author>
+  <entry>
+    <title>Evaluating Prompt Organizer</title>
+    <link href="https://shealy2020.github.io/posts/evaluating-llm-prompt-org/" />
+    <updated>2025-12-02T00:00:00Z</updated>
+    <id>https://shealy2020.github.io/posts/evaluating-llm-prompt-org/</id>
+    <content type="html">&lt;p&gt;A few months ago, I created an &lt;a href=&quot;https://shealy2020.github.io/posts/llm-prompt-org/&quot;&gt;LLM Prompt Organizer&lt;/a&gt; that reduces token counts while providing a framework for a more disciplined approach to &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#prompt&quot;&gt;prompt&lt;/a&gt; engineering. It&#39;s simply an HTML form that provides default prompt elements such as context, constraints, audience, etc. Users can disable elements or add custom ones. Once users populate the form fields, they can drop the JSON prompt into the LLM of their choice.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://shealy2020.github.io/images/prompt-organizer-form-1.png&quot; alt=&quot;Prompt Organizer&quot; title=&quot;Prompt Organizer&quot;&gt;&lt;/p&gt;
+&lt;p&gt;After several months of use, was this JSON approach to prompt construction effective for overall token conservation?&lt;/p&gt;
+&lt;p&gt;A strong &lt;em&gt;maybe&lt;/em&gt;, with caveats...&lt;/p&gt;
+&lt;p&gt;It stands to reason that concise prompts pare down the number of overall request tokens leading to longer sessions with fewer cutoffs than by submitting requests in paragraph form, but I wasn&#39;t sure if an LLM used fewer tokens in its &lt;em&gt;response&lt;/em&gt;. I ran an ad hoc, not-so-scientific test to see if I could quantify the token use delta for JSON vs. paragraph formatting.&lt;/p&gt;
+&lt;p&gt;Here&#39;s the JSON prompt and a semantically similar paragraph I submitted to ChatGPT for the token comparison:&lt;/p&gt;
+&lt;h4 id=&quot;json&quot;&gt;JSON&lt;/h4&gt;
+&lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;instructions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Process and respond to this prompt.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;role&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Computer science educator for AI concepts&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;context&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;User seeks basic transformer model understanding&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;task&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Explain architecture, key components, importance for LLMs&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;format&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Introduction, three main components, brief conclusion&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;examples&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Attention mechanism like highlighting key words for context&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;constraints&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;No heavy math, use analogies, under 400 words&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;token property&quot;&gt;&quot;audience&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Basic tech literacy, no ML background&quot;&lt;/span&gt; 
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;h4 id=&quot;paragraph&quot;&gt;Paragraph&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I&#39;m a computer science educator who specializes in making complex AI concepts accessible to beginners.
+This explanation is intended for someone with basic tech literacy but no deep machine learning background.
+Explain the transformer architecture, its key components, and why it&#39;s important for LLMs.
+Structure your response with an introduction, followed by three main components
+(attention mechanism, architecture overview, and practical significance), and end
+with a brief conclusion. Keep the explanation clear, avoid heavy mathematical notation,
+and limit your response to under 400 words. Use analogies to illustrate
+concepts, for example, think of the attention mechanism like highlighting important words in a sentence to understand context better.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I used &lt;a href=&quot;https://platform.openai.com/tokenizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;OpenAI&#39;s tokenizer tool&lt;/a&gt; to generate an token count for the initial prompt request and its LLM response for the JSON structure and its paragraph version, assuming one token corresponds to approximately four characters of text.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://shealy2020.github.io/images/openai-tokenizer-1.png&quot; alt=&quot;OpenAI&#39;s Tokenizer Tool&quot; title=&quot;OpenAI&#39;s Tokenizer Tool&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
+&lt;table border=&quot;1&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th rowspan=&quot;2&quot;&gt;&lt;/th&gt;
+      &lt;th colspan=&quot;2&quot;&gt;JSON&lt;/th&gt;
+      &lt;th colspan=&quot;2&quot;&gt;Paragraph&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Chars&lt;/th&gt;
+      &lt;th&gt;Tokens&lt;/th&gt;
+      &lt;th&gt;Chars&lt;/th&gt;
+      &lt;th&gt;Tokens&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Request&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;522&lt;/td&gt;
+      &lt;td&gt;114&lt;/td&gt;
+      &lt;td&gt;853&lt;/td&gt;
+      &lt;td&gt;143&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Response&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;3006&lt;/td&gt;
+      &lt;td&gt;585&lt;/td&gt;
+      &lt;td&gt;3460&lt;/td&gt;
+      &lt;td&gt;671&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Total&lt;br&gt;Tokens&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;699&lt;/td&gt;
+      &lt;td&gt;&lt;/td&gt;
+      &lt;td&gt;814&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The JSON request and subsequent response used 115 fewer tokens than did its natural language counterpart with similar semantics, written in a more conversational way.&lt;/p&gt;
+&lt;h3 id=&quot;postmortem&quot;&gt;Postmortem&lt;/h3&gt;
+&lt;p&gt;One of my test&#39;s fatal flaws is that I had no way to quantify other factors contributing to the duration of the LLM session such as computational resources used, which are outside the scope of token count. Moreover, each LLM has its own algorithm for this purpose. ONe of the principle downsides of the organizer itself is that, in trying to conserve tokens, I kneecapped a key strength of LLMs by favoring JSON formatted prompts over natural language ones. Also, the organizer is overkill for  a lot of my simple prompts like &#39;Is Brookings Oregon really in a &amp;quot;banana belt,&amp;quot; and what&#39;s a banana belt anyway?&#39;&lt;/p&gt;
+&lt;p&gt;A virtuous byproduct of the LLM Prompt Organizer, as its name implies, provides a framework to assemble prompts, helps me tighten up the language within the prompt, and delivers a solid base for follow-up prompts. The organizer is also flexible enough to replace any default field with a custom one.&lt;/p&gt;
+&lt;p&gt;Currently, users must copy JSON-formatted prompts into their LLM. If I were to improve tool&#39;s workflow, I&#39;d pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API to extract the generated text from the model.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Gemini RAG Pipeline (Improved)</title>
     <link href="https://shealy2020.github.io/posts/colab-gdrive-rag-ui/" />
