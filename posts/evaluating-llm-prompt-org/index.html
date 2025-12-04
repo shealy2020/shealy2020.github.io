@@ -97,7 +97,7 @@ with a brief conclusion. Keep the explanation clear, avoid heavy mathematical no
 and limit your response to under 400 words. Use analogies to illustrate
 concepts, for example, think of the attention mechanism like highlighting important words in a sentence to understand context better.</p>
 </blockquote>
-<p>I used <a href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener">OpenAI's tokenizer tool</a> to generate an token count for the initial prompt request and its LLM response for the JSON structure and its paragraph version, assuming one token corresponds to approximately four characters of text.</p>
+<p>I used <a href="https://platform.openai.com/tokenizer" target="_blank" rel="noopener">OpenAI's Tokenizer</a> to generate token counts for the initial prompt request and its LLM response. I ran the tokenizer for both the JSON structure and the paragraph version. In each case, one token corresponds to approximately four characters of text.</p>
 <p><img src="..\..\images\openai-tokenizer-1.png" alt="OpenAI's Tokenizer Tool" title="OpenAI's Tokenizer Tool"></p>
 <h3 id="results">Results</h3>
 <table border="1">
@@ -138,11 +138,11 @@ concepts, for example, think of the attention mechanism like highlighting import
     </tr>
   </tbody>
 </table>
-<p>The JSON request and subsequent response used 115 fewer tokens than did its natural language counterpart with similar semantics, written in a more conversational way.</p>
+<p>The JSON request and subsequent response used a total of 115 fewer tokens than did its natural language counterpart.</p>
 <h3 id="postmortem">Postmortem</h3>
-<p>One of my test's fatal flaws is that I had no way to quantify other factors contributing to the duration of the LLM session such as computational resources used, which are outside the scope of token count. Moreover, each LLM has its own algorithm for this purpose. ONe of the principle downsides of the organizer itself is that, in trying to conserve tokens, I kneecapped a key strength of LLMs by favoring JSON formatted prompts over natural language ones. Also, the organizer is overkill for  a lot of my simple prompts like 'Is Brookings Oregon really in a &quot;banana belt,&quot; and what's a banana belt anyway?'</p>
-<p>A virtuous byproduct of the LLM Prompt Organizer, as its name implies, provides a framework to assemble prompts, helps me tighten up the language within the prompt, and delivers a solid base for follow-up prompts. The organizer is also flexible enough to replace any default field with a custom one.</p>
-<p>Currently, users must copy JSON-formatted prompts into their LLM. If I were to improve tool's workflow, I'd pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API to extract the generated text from the model.</p>
+<p>One of my test's fatal flaws is that I had no way to quantify other factors contributing to the duration of the LLM session such as computational resources used. Moreover, each LLM has its own algorithm for this purpose. One of the principle downsides of the organizer itself is that, in trying to conserve tokens, I kneecapped a key strength of LLMs by favoring JSON-formatted prompts over natural language ones. Also, the organizer is overkill for a lot of my simple prompts like 'Is Brookings Oregon really in a &quot;banana belt,&quot; and what's a banana belt anyway?'</p>
+<p>A virtuous byproduct of the LLM Prompt Organizer, as its name implies, provides a framework to assemble prompts in a consistent way. It also helps me tighten up the language within the prompt and serves as a solid base for follow-up prompts, while being flexible enough to replace default fields with a custom ones.</p>
+<p>Currently, users must copy JSON-formatted prompts into their LLM manually. If I were to improve the tool's workflow, I'd pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API to extract the generated text from the model.</p>
 
 <hr>
 <p>More posts:</p>
@@ -156,4 +156,4 @@ concepts, for example, think of the attention mechanism like highlighting import
     <em>Built with
         <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
     </em>
-</p></footer><!-- This page `/posts/evaluating-llm-prompt-org/` was built on 2025-12-03T21:29:42.580Z --><script type="module" src="/dist/xbxy_EL6cU.js"></script>
+</p></footer><!-- This page `/posts/evaluating-llm-prompt-org/` was built on 2025-12-04T01:22:09.317Z --><script type="module" src="/dist/xbxy_EL6cU.js"></script>
