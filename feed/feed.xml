@@ -17,10 +17,10 @@
     <id>https://shealy2020.github.io/posts/evaluating-llm-prompt-org/</id>
     <content type="html">&lt;p&gt;A few months ago, I created an &lt;a href=&quot;https://shealy2020.github.io/posts/llm-prompt-org/&quot;&gt;LLM Prompt Organizer&lt;/a&gt; that reduces token counts while providing a framework for a more disciplined approach to &lt;a href=&quot;https://shealy2020.github.io/posts/rag-terms-glossary/#prompt&quot;&gt;prompt&lt;/a&gt; engineering. It&#39;s simply an HTML form that provides default prompt elements such as context, constraints, audience, etc. Users can disable elements or add custom ones. Once users populate the form fields, they can drop the JSON prompt into the LLM of their choice.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://shealy2020.github.io/images/prompt-organizer-form-1.png&quot; alt=&quot;Prompt Organizer&quot; title=&quot;Prompt Organizer&quot;&gt;&lt;/p&gt;
-&lt;p&gt;After several months of use, was this JSON approach to prompt construction effective for overall token conservation?&lt;/p&gt;
-&lt;p&gt;A strong &lt;em&gt;maybe&lt;/em&gt;, with caveats...&lt;/p&gt;
-&lt;p&gt;It stands to reason that concise prompts pare down the number of overall request tokens leading to longer sessions with fewer cutoffs than by submitting requests in paragraph form, but I wasn&#39;t sure if an LLM used fewer tokens in its &lt;em&gt;response&lt;/em&gt;. I ran an ad hoc, not-so-scientific test to see if I could quantify the token use delta for JSON vs. paragraph formatting.&lt;/p&gt;
-&lt;p&gt;Here&#39;s the JSON prompt and a semantically similar paragraph I submitted to ChatGPT for the token comparison:&lt;/p&gt;
+&lt;p&gt;Was this JSON approach to prompt construction effective for overall token conservation?&lt;/p&gt;
+&lt;p&gt;After several months of use, I give it a strong &lt;em&gt;maybe&lt;/em&gt;, with caveats...&lt;/p&gt;
+&lt;p&gt;It stands to reason that concise prompts pare down the number of request tokens, leading to longer sessions with fewer cutoffs than by submitting requests in paragraph form. I wasn&#39;t sure if an LLM used fewer tokens in its &lt;em&gt;response&lt;/em&gt;, so I ran an ad hoc, not-so-scientific test in Gemini to quantify the total token delta for both JSON vs. paragraph formatting.&lt;/p&gt;
+&lt;p&gt;Here&#39;s the JSON prompt and a semantically similar paragraph, submitted to Gemini for the token comparison:&lt;/p&gt;
 &lt;h4 id=&quot;json&quot;&gt;JSON&lt;/h4&gt;
 &lt;pre class=&quot;language-json&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; 
 &lt;span class=&quot;token property&quot;&gt;&quot;instructions&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Process and respond to this prompt.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
@@ -43,7 +43,7 @@ with a brief conclusion. Keep the explanation clear, avoid heavy mathematical no
 and limit your response to under 400 words. Use analogies to illustrate
 concepts, for example, think of the attention mechanism like highlighting important words in a sentence to understand context better.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;I used &lt;a href=&quot;https://platform.openai.com/tokenizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;OpenAI&#39;s Tokenizer&lt;/a&gt; to generate token counts for the initial prompt request and its LLM response. I ran the tokenizer for both the JSON structure and the paragraph version. In each case, one token corresponds to approximately four characters of text.&lt;/p&gt;
+&lt;p&gt;I used &lt;a href=&quot;https://platform.openai.com/tokenizer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;OpenAI&#39;s Tokenizer&lt;/a&gt; to generate token counts for the initial prompt request and its response and ran the tokenizer for both the JSON structure and the paragraph version, where one token corresponds to approximately four characters of text.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://shealy2020.github.io/images/openai-tokenizer-1.png&quot; alt=&quot;OpenAI&#39;s Tokenizer Tool&quot; title=&quot;OpenAI&#39;s Tokenizer Tool&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;results&quot;&gt;Results&lt;/h3&gt;
 &lt;table border=&quot;1&quot;&gt;
@@ -84,11 +84,12 @@ concepts, for example, think of the attention mechanism like highlighting import
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;The JSON request and subsequent response used a total of 115 fewer tokens than did its natural language counterpart.&lt;/p&gt;
+&lt;p&gt;The JSON request and subsequent LLM response used a total of 115 fewer tokens than did its natural language counterpart. Rate limits are based, in part, by tokens per minute (TPM) use, so any token efficiencies are likely to length LLM sessions.&lt;/p&gt;
 &lt;h3 id=&quot;postmortem&quot;&gt;Postmortem&lt;/h3&gt;
-&lt;p&gt;One of my test&#39;s fatal flaws is that I had no way to quantify other factors contributing to the duration of the LLM session such as computational resources used. Moreover, each LLM has its own algorithm for this purpose. One of the principle downsides of the organizer itself is that, in trying to conserve tokens, I kneecapped a key strength of LLMs by favoring JSON-formatted prompts over natural language ones. Also, the organizer is overkill for a lot of my simple prompts like &#39;Is Brookings Oregon really in a &amp;quot;banana belt,&amp;quot; and what&#39;s a banana belt anyway?&#39;&lt;/p&gt;
-&lt;p&gt;A virtuous byproduct of the LLM Prompt Organizer, as its name implies, provides a framework to assemble prompts in a consistent way. It also helps me tighten up the language within the prompt and serves as a solid base for follow-up prompts, while being flexible enough to replace default fields with a custom ones.&lt;/p&gt;
-&lt;p&gt;Currently, users must copy JSON-formatted prompts into their LLM manually. If I were to improve the tool&#39;s workflow, I&#39;d pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API to extract the generated text from the model.&lt;/p&gt;
+&lt;p&gt;A fatal flaw of my test, and with counting tokens in general, is that I was not able to quantify other factors contributing to the duration of an LLM session, such as computational resources, used and how these other factors are weighted. Moreover, each LLM has its own algorithm for this purpose. One of the principle downsides of the organizer itself is that, in trying to conserve tokens, the tool kneecaps a key strength of LLMs by favoring JSON-formatted prompts over natural language ones. Also, the organizer is overkill for simple prompts like &#39;Is Brookings Oregon really in a &amp;quot;banana belt,&amp;quot; and what&#39;s a banana belt anyway?&#39;&lt;/p&gt;
+&lt;p&gt;A virtuous byproduct of the LLM Prompt Organizer, as its name implies, is that it provides a framework to assemble prompts in a consistent, repeatable way, while flexible enough to accommodate custom elements. The tool also helps to tighten up the language within the prompt to avoid ambiguity and serves as a solid base for follow-up prompts.&lt;/p&gt;
+&lt;p&gt;In sum, the prompt organizer is a blunt tool for gaming the rate limits of LLMs. One the other hand, it still holds up as a prompt templating tool, which was my primary reason for creating it.&lt;/p&gt;
+&lt;p&gt;Currently, users must copy JSON-formatted prompts into their LLM manually. If I were to improve the tool, I&#39;d pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API within the prompt organizer.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -1260,7 +1261,7 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;Service&lt;/th&gt;
+&lt;th&gt;LLM&lt;/th&gt;
 &lt;th&gt;Key Usage Limits&lt;/th&gt;
 &lt;th&gt;Approx. Token / Context Window&lt;/th&gt;
 &lt;/tr&gt;
@@ -1389,11 +1390,11 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;li&gt;Use &lt;strong&gt;compressed summaries&lt;/strong&gt; or keywords when possible.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&quot;4-service-specific-tips&quot;&gt;4. Service-Specific Tips&lt;/h2&gt;
+&lt;h2 id=&quot;4-llm-specific-tips&quot;&gt;4. LLM-Specific Tips&lt;/h2&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;Service&lt;/th&gt;
+&lt;th&gt;LLM&lt;/th&gt;
 &lt;th&gt;Efficiency Tactics&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
@@ -1448,8 +1449,6 @@ SIMILARITY_THRESHOLD &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;Goal:&lt;/strong&gt; Short, direct, scoped prompts → 3–5× token savings.&lt;/p&gt;
 </content>
   </entry>
 </feed>
