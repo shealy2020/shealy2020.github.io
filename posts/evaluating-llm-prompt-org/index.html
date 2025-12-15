@@ -140,10 +140,10 @@ concepts, for example, think of the attention mechanism like highlighting import
 </table>
 <p>The JSON request and subsequent LLM response used a total of 115 fewer tokens than did its natural language counterpart. Rate limits are based, in part, by tokens per minute (TPM) use, so any token efficiencies are likely to length LLM sessions.</p>
 <h3 id="postmortem">Postmortem</h3>
-<p>A fatal flaw of my test, and with counting tokens in general, is that I was not able to quantify other factors contributing to the duration of an LLM session, such as computational resources, used and how these other factors are weighted. Moreover, each LLM has its own algorithm for this purpose. One of the principle downsides of the organizer itself is that, in trying to conserve tokens, the tool kneecaps a key strength of LLMs by favoring JSON-formatted prompts over natural language ones. Also, the organizer is overkill for simple prompts like 'Is Brookings Oregon really in a &quot;banana belt,&quot; and what's a banana belt anyway?'</p>
+<p>A fatal flaw of my test, and with counting tokens in general, is that I was not able to quantify other factors contributing to the duration of an LLM session, such as computational resources used, and how these other factors are weighted. Moreover, each LLM has its own algorithm for this purpose. One of the principle downsides of the organizer itself is that, in trying to conserve tokens, the tool kneecaps a key strength of LLMs by favoring JSON-formatted prompts over natural language ones. Also, the organizer is overkill for simple prompts like 'Is Brookings Oregon really in a &quot;banana belt,&quot; and what's a banana belt anyway?'</p>
 <p>A virtuous byproduct of the LLM Prompt Organizer, as its name implies, is that it provides a framework to assemble prompts in a consistent, repeatable way, while flexible enough to accommodate custom elements. The tool also helps to tighten up the language within the prompt to avoid ambiguity and serves as a solid base for follow-up prompts.</p>
 <p>In sum, the prompt organizer is a blunt tool for gaming the rate limits of LLMs. One the other hand, it still holds up as a prompt templating tool, which was my primary reason for creating it.</p>
-<p>Currently, users must copy JSON-formatted prompts into their LLM manually. If I were to improve the tool, I'd pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API within the prompt organizer.</p>
+<p>Currently, users must copy JSON-formatted prompts into their LLM manually. If I were to improve the tool, I'd pass the JSON prompt and other necessary parameters to the LLM API and handle the response received from the API within the prompt organizer. That way, users would have a more frictionless experience using the tool.</p>
 
 <hr>
 <p>More posts:</p>
@@ -157,4 +157,4 @@ concepts, for example, think of the attention mechanism like highlighting import
     <em>Built with
         <a href="https://www.11ty.dev/">Eleventy v3.1.2</a>
     </em>
-</p></footer><!-- This page `/posts/evaluating-llm-prompt-org/` was built on 2025-12-04T17:18:57.615Z --><script type="module" src="/dist/xbxy_EL6cU.js"></script>
+</p></footer><!-- This page `/posts/evaluating-llm-prompt-org/` was built on 2025-12-15T20:36:27.643Z --><script type="module" src="/dist/xbxy_EL6cU.js"></script>
